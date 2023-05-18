@@ -2,7 +2,8 @@ import sys
 
 import Controller.MenuController as menucontroller
 import Controller.OperacionController as operacioncontroller
-
+import Controller.ClienteController as clientecontroller
+clientes = []
 print("Bienvenido")
 def selecciona_menu():
     """Función para seleccionar opción del menú principal"""
@@ -36,7 +37,6 @@ def selecciona_menu():
                 inicio = False
                 sys.exit(0)
 
-opc_menu = selecciona_menu()
 def selecciona_operacion(nromenu):
     """Opción para escoger el formulario"""
     inicio = True
@@ -107,7 +107,39 @@ def mostrar_seleccionados(nromenu, nrooperacion, nroaccion):
     print("Usted ha seleccionado estas opciones:" , nombre_seleccionado)
     print("Gracias por su visita")
 
-opc_menu = selecciona_menu()
-opc_operacion= selecciona_operacion(opc_menu)
-opc_accion = seleccionar_acciones_formulario_operacion()
-mostrar_seleccionados(opc_menu,opc_operacion,opc_accion)
+def agregar_cliente():
+    """Registrar los clientes"""
+    clientes.append(clientecontroller.registrar_cliente())
+    print("¡CLIENTE REGISTRADO!")
+iniciar_principal = True
+while iniciar_principal:
+    opc_menu = selecciona_menu()
+    if opc_menu == 3:
+        iniciar_principal = False
+        break
+    iniciar_operacion = True
+    while iniciar_operacion:
+        opc_operacion= selecciona_operacion(opc_menu)
+        if opc_operacion == 3:
+            iniciar_operacion = False
+            break
+        iniciar_accion = True
+        while iniciar_accion:
+            opc_accion = seleccionar_acciones_formulario_operacion()
+            if opc_accion == 6:
+                iniciar_accion = False
+                break
+            mostrar_seleccionados(opc_menu,opc_operacion,opc_accion)
+            match opc_accion:
+                case 1:
+                    agregar_cliente()
+                case 2:
+                    print("Modificar")
+                case 3:
+                    print("Consultar")
+                case 4:
+                    print("Estado")
+                case 5:
+                    print("Listar")
+                    for dato in clientes:
+                        clientecontroller.listado_clientes(dato)
