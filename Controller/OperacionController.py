@@ -1,8 +1,8 @@
 import Model.Operacion as operacion
 
-# lISTADO DE LAS OPCIONES
+# LISTADO DE LAS OPCIONES
 def listado_opciones_por_menu(idmenu):
-    """Mustra las opciones a realizar por cada cliente"""
+    """Muestra las opciones a realizar por cada usuario"""
     listado = operacion.opcion_fuera.get(idmenu)
     for valor in listado:
         for idx, dato in valor.items():
@@ -14,6 +14,15 @@ def listado_opciones_formulario():
     """Mustra las opciones del formulario"""
     for idx, dato in accion_formulario.items():
         print(idx,dato)
+
+def cantidad_opciones_por_menu(idmenu):
+    """Cantidad de Opciones por Menú Principal"""
+    listado = operacion.opcion_fuera.get(idmenu)
+    cantidad:int
+    for valor in listado:
+        cantidad = len(valor)
+    return cantidad
+
 def cantidad_opciones_formulario():
     """Cantidad de las opciones de los formularios de operacioens"""
     return len(accion_formulario)

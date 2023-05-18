@@ -3,8 +3,6 @@ import Model.Cliente as cliente
 cliente_clase = cliente.Cliente()
 cliente_clase.set_codigo("000001")
 
-clientes = []
-
 def registrar_cliente():
     """Función de Registro de Clientes"""
     print("REGISTRO DEL CLIENTE")
@@ -20,12 +18,10 @@ def registrar_cliente():
 
 def listado_clientes(clientes):
     """Muestra las clientes registrados"""
-    print()
     cantidad = 0
-    if len(clientes) ==0:
-        print("No hay clientes para mostrar")
-    cantidad += 1
     print("LISTADO DE LOS CLIENTES")
-    print(f"Cliente nro {cantidad}")
-    for idx, dato in clientes.items():
-        print(str(idx).upper()+ ": ",dato)
+    for dato in clientes:
+        cantidad += 1
+        print(f"CLIENTE NRO. {cantidad}")
+        for idx, valor in dato.items():
+            print(str(idx).upper()+ ": ",valor)

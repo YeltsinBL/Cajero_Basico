@@ -1,23 +1,42 @@
 # Cajero Automático Básico
 Proyecto final para la universidad
 
-Explicación de lo realizado:
+## Arquitectura
+- MVC: Lo primero que se realicé es la creación de las carpetas para tener ordenado, por el momento esta arquitectura se acopla mejor, con forme los avances quizás se cambie a otra arquitectura.
 
-- Lo primero que se realicé es la creación de las carpetas para tener ordenado los archivos por MVC, que por el momento esta arquitectura se acopla mejor, con forme los avances quizás se cambie a otra arquitectura.
-- Listado del Menú Principal.
-- Listado de las Operaciones de acuerdo a la selección del Menú Principal.
-- Listado de las opciones de los formularios de Operaciones por Administrador.
-- Formulario de Clientes
-  - Registrar
-  - Listar
+### Carpetas
 
-### Menú Principal
+#### Common
+Funciones globales que se repetiran constantemente.
+- Validacion
+  - Mensaje validación por dato ingresado
+
+#### Controller
+Funciones que utilizaré en los archivos de View.
+- MenuController
+  - Listado del Menú Principal.
+- OperacionController
+  - Listado de las Operaciones de acuerdo a la selección del Menú Principal.
+  - Listado de las opciones de los formularios por Operación.
+- ClienteController
+  - Registrar Cliente
+  - Listar Cliente
+
+#### View
+- MenuView: aún no está separado las acciones e ingreso de datos.
+  - Seleccionar Menú Principal
+  - Seleccionar Operación
+  - Seleccionar Acción de Formulario
+
+### Formulario
+
+#### Menú Principal
 Las opciones del Menú principal son:
 - Cliente
 - Administrador
 - Salir
 
-### Operaciones
+#### Operaciones
 Las operaciones si dividen en 2 por el tipo de Menú Principal:
 - Operaciones por Cliente
   - Depositar
@@ -32,7 +51,7 @@ Las operaciones si dividen en 2 por el tipo de Menú Principal:
   - Gestionar Dispensador
   - Salir
 
-### Acciones de los Formularios de Operaciones por Administrador
+#### Acciones de los Formularios de Operaciones por Administrador
 Las acciones de los formularios de Operaciones por Administrador son los mismos para ambos:
 - Agregar
 - Modificar
