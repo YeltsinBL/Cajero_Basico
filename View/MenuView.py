@@ -95,6 +95,10 @@ def agregar_cliente():
     """Registrar los clientes"""
     clientes.append(clientecontroller.registrar_cliente())
     print("¡CLIENTE REGISTRADO!")
+def modificar_cliente():
+    """Modififcar Cliente"""
+    _ = clientecontroller.modificar_cliente(clientes=clientes)
+    print("¡CLIENTE MODIFICADO!")
 
 iniciar_principal = True
 while iniciar_principal:
@@ -126,7 +130,7 @@ while iniciar_principal:
                         _ = agregar_cliente() if opc_operacion == 1 \
                             else print("Registrar Dispensador")
                     case 2:
-                        _ = print("Modificar Cliente") if opc_operacion == 1 \
+                        _ = modificar_cliente() if opc_operacion == 1 \
                             else print("Modificar Dispensador")
                     case 3:
                         _ = print("Consultar Cliente") if opc_operacion == 1 \

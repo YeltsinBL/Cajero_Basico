@@ -9,7 +9,9 @@ Proyecto final para la universidad
 #### Common
 Funciones globales que se repetiran constantemente.
 - Validacion
-  - Mensaje validación por dato ingresado
+  - Mensaje validación por selección de menú.
+  - Mensaje validación por dato ingresado.
+  - Verificar si el valor ingresado solo tiene un punto decimal.
 
 #### Controller
 Funciones que utilizaré en los archivos de View.
@@ -21,6 +23,7 @@ Funciones que utilizaré en los archivos de View.
 - ClienteController
   - Registrar Cliente
   - Listar Cliente
+  - Modificar Cliente
 
 #### View
 - MenuView: aún no está separado las acciones e ingreso de datos.

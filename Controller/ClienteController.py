@@ -16,13 +16,13 @@ def registrar_cliente():
         codigo = input("CÓDIGO: ")
         vali_cod = not validacion.valores_ingresados("código",codigo,4)
     while vali_nom:
-        nombre = input("NOMBRE:")
+        nombre = input("NOMBRE: ")
         vali_nom = not validacion.valores_ingresados("nombre",nombre,3)
     while vali_nrocta:
         nrocuentasoles = input("NRO CUENTA SOLES: ")
         vali_nrocta = not validacion.valores_ingresados("nro cuenta soles",nrocuentasoles,1)
     while vali_saldo:
-        saldo = input("SALDO:")
+        saldo = input("SALDO: ")
         vali_saldo = not validacion.valores_ingresados("saldo",saldo,2)
     clave = input("CLAVE: ")
     return {"codigo":codigo, "nombre": nombre,
@@ -39,3 +39,32 @@ def listado_clientes(clientes):
         for idx, valor in dato.items():
             if not idx.lower() == "clave":
                 print(str(idx).upper()+ ": ",valor)
+
+def modificar_cliente(clientes:list):
+    """Función para Modificar Cliente"""
+    print("MODIFICAR CLIENTE")
+    vali_cod = True
+    while vali_cod:
+        codigo_cliente = input("CÓDIGO: ")
+        vali_cod = not validacion.valores_ingresados("código",codigo_cliente,4)
+    for dato in clientes:
+        if dato["codigo"]==codigo_cliente:
+            vali_nom=True
+            vali_nrocta = True
+            vali_saldo = True
+            print("NOMBRE ACTUAL:", dato["nombre"])
+            while vali_nom:
+                nombre = input("NUEVO NOMBRE: ")
+                vali_nom = not validacion.valores_ingresados("nombre",nombre,3)
+            print("NRO CUENTA SOLES ACTUAL:", dato["nroCuentaSoles"])
+            while vali_nrocta:
+                nrocuentasoles = input("NUEVO NRO CUENTA SOLES: ")
+                vali_nrocta = not validacion.valores_ingresados("nro cuenta soles",nrocuentasoles,1)
+            print("SALDO ACTUAL:", dato["saldo"])
+            while vali_saldo:
+                saldo = input("NUEVO SALDO: ")
+                vali_saldo = not validacion.valores_ingresados("saldo",saldo,2)
+            dato["nombre"] = nombre
+            dato["nroCuentaSoles"] = nrocuentasoles
+            dato["saldo"] = saldo
+            return clientes
