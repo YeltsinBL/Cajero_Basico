@@ -1,3 +1,4 @@
+"""Funciones que interactúan con las opciones de Operaciones"""
 import Model.Operacion as operacion
 
 # LISTADO DE LAS OPCIONES
@@ -11,9 +12,14 @@ def listado_opciones_por_menu(idmenu):
 accion_formulario = {1:"Agregar", 2:"Modificar", 3:"Consultar",
                 4: "Estado", 5:"Listar", 6:"Salir"}
 def listado_opciones_formulario():
-    """Mustra las opciones del formulario"""
+    """Muestra las opciones del formulario"""
     for idx, dato in accion_formulario.items():
         print(idx,dato)
+
+def listado_estados_clientes():
+    """Muestra las opciones de estado del cliente"""
+    for idk, valor in operacion.opcion_estado_cliente.items():
+        print(idk,valor)
 
 def cantidad_opciones_por_menu(idmenu):
     """Cantidad de Opciones por Menú Principal"""

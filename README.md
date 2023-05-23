@@ -24,12 +24,24 @@ Funciones que utilizaré en los archivos de View.
   - Registrar Cliente
   - Listar Cliente
   - Modificar Cliente
+  - Consultar por código
+  - Listado por estado
 
 #### View
-- MenuView: aún no está separado las acciones e ingreso de datos.
+- MenuView
   - Seleccionar Menú Principal
-  - Seleccionar Operación
-  - Seleccionar Acción de Formulario
+
+- operaciones_view
+  - Seleccionar Formulario para Administrador (Cliente 100% - Dispensador 0%)
+  - Seleccionar Formulario para Cliente 0%
+
+
+- administrador_view: aún está al 50%
+  - Seleccionar Acciones para Clientes: 100%
+  - Seleccionar Acciones para Dispensador: 0%
+  - Funciones de las acciones para Clientes: 100%
+  - Funciones de las acciones para Dispensadores: 0%
+
 
 ### Formulario
 

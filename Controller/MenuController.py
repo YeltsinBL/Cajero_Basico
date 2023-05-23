@@ -1,3 +1,5 @@
+"""Función que interactúa con la opción del Menú"""
+
 import Model.Menu as menu
 
 def listado_menu():

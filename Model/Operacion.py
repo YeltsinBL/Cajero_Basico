@@ -12,3 +12,4 @@ opcion_fuera = {1:[{1:"Depositar", 2:"Retirar", 3:"Transferir",
                   6:"Consultar Movimiento", 7:"Salir"}],
               2:[{1:"Gestionar Clientes",
                   2:"Gestionar Dispensador", 3:"Salir"}]}
+opcion_estado_cliente = {1:"Activo", 2:"Desactivo", 3:"Salir"}
