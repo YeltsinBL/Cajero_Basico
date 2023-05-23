@@ -6,6 +6,10 @@ Proyecto final para la universidad
 
 ### Carpetas
 
+### Api
+Simular que hay un servicio que devuelve los datos.
+- Lista del Dispensador
+
 #### Common
 Funciones globales que se repetiran constantemente.
 - Validacion
@@ -26,22 +30,28 @@ Funciones que utilizaré en los archivos de View.
   - Modificar Cliente
   - Consultar por código
   - Listado por estado
+- dispensador_controller
+  - Registrar Cliente
+  - Listar Cliente
+  - Modificar Cliente
+  - Consultar por código
+  - Listado por estado
 
 #### View
 - MenuView
   - Seleccionar Menú Principal
 
 - operaciones_view
-  - Seleccionar Formulario para Administrador (Cliente 100% - Dispensador 0%)
+  - Seleccionar Formulario para Administrador (Cliente 100% - Dispensador 100%)
   - Seleccionar Formulario para Cliente 0%
 
-
-- administrador_view: aún está al 50%
+- administrador_view:
   - Seleccionar Acciones para Clientes: 100%
-  - Seleccionar Acciones para Dispensador: 0%
+  - Seleccionar Acciones para Dispensador: 100%
   - Funciones de las acciones para Clientes: 100%
-  - Funciones de las acciones para Dispensadores: 0%
+  - Funciones de las acciones para Dispensadores: 100%
 
+- operacion_cliente_view: 0%
 
 ### Formulario
 

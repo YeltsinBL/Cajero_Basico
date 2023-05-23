@@ -5,6 +5,7 @@ import Common.Validacion as validacion
 cliente_clase = cliente.Cliente()
 cliente_clase.set_codigo("000001")
 
+# region Funciones
 def registrar_cliente():
     """Función de Registro de Clientes"""
     print("REGISTRO DEL CLIENTE")
@@ -62,7 +63,8 @@ def modificar_cliente(clientes:list):
                 print("NRO CUENTA SOLES ACTUAL:", dato["nroCuentaSoles"])
                 while vali_nrocta:
                     nrocuentasoles = input("NUEVO NRO CUENTA SOLES: ")
-                    vali_nrocta = not validacion.valores_ingresados("nro cuenta soles",nrocuentasoles,1)
+                    vali_nrocta = not validacion.valores_ingresados("nro cuenta soles",\
+                                                                    nrocuentasoles,1)
                 print("SALDO ACTUAL:", dato["saldo"])
                 while vali_saldo:
                     saldo = input("NUEVO SALDO: ")
@@ -99,7 +101,7 @@ def consultar_cliente(clientes:list):
         print("=======================================")
 
 def activo_cliente(clientes:list, nro_estado):
-    """Función para Buscar los clientes activos"""
+    """Función para Buscar los clientes por estado"""
     cantidad = 0
     estado="activo" if nro_estado ==1 else "desactivo"
     print("CLIENTES", estado.upper()+"S")
@@ -111,3 +113,4 @@ def activo_cliente(clientes:list, nro_estado):
             if not idx.lower() == "clave":
                 print(str(idx).upper()+ ": ",valor)
         print("=======================================")
+# endregion

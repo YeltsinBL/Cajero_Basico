@@ -1,12 +1,13 @@
-"""Vista para el Administrador"""
+"""Vista para las Operaciones por Administrador"""
 # region importaciones
 import Common.Validacion as validacion
 import Controller.ClienteController as clientecontroller
+import Controller.dispensador_controller as dispensadorcontroller
 import Controller.OperacionController as operacioncontroller
 import View.MenuView as menuview
 # endregion
 
-# region Función para seleccionar formulario
+# region Función para SELECCIONAR FORMULARIO
 
 def seleccionar_acciones_formulario_operacion():
     """Opción para Mostrar las acciones de los formularios"""
@@ -49,7 +50,7 @@ def seleccionar_acciones_formulario_operacion_inicial():
 
 # endregion
 
-# region Funciones para los clientes
+# region Funciones para los CLIENTES
 def selecciona_estado_cliente():
     """Selecciona el tipo a listar de los Clientes por estado"""
     inicio = True
@@ -70,13 +71,19 @@ def selecciona_estado_cliente():
             validacion.mensaje_validacion(cont)
 
 def agregar_cliente():
-    """Registrar los clientes"""
+    """Registrar Cliente"""
     menuview.clientes.append(clientecontroller.registrar_cliente())
     print("============================")
     print("¡CLIENTE REGISTRADO!")
     print("============================")
     print("")
-
+def listado_cliente():
+    """Listado de los Clientes"""
+    clientecontroller.listado_clientes(menuview.clientes)
+    print("============================")
+    print("¡LISTA DE LOS CLIENTES!")
+    print("============================")
+    print("")
 def modificar_cliente():
     """Modififcar Cliente"""
     _ = clientecontroller.modificar_cliente(clientes=menuview.clientes)
@@ -103,6 +110,51 @@ def estado_cliente():
     print("")
 # endregion
 
+# region Funciones para los DISPENSADORES
+def agregar_dispensador():
+    """Registrar Dispensador"""
+    dispensadorcontroller.registrar_dispensador()
+    print("============================")
+    print("DISPENSADOR REGISTRADO!")
+    print("============================")
+    print("")
+def listado_dispensdores():
+    """Listar los Dispensadores"""
+    dispensadorcontroller.listado_dispensadores()
+    print("============================")
+    print("¡LISTA DE DISPENSADORES!")
+    print("============================")
+    print("")
+
+def modificar_dispensador():
+    """Modififcar Dispensdaor"""
+    dispensadorcontroller.modificar_dispensador()
+    print("============================")
+    print("¡DISPENSADOR MODIFICADO!")
+    print("============================")
+    print("")
+
+def consultar_dispensador():
+    """Consultar Dispensador"""
+    dispensadorcontroller.consultar_dispensador()
+    print("============================")
+    print("¡DISPENSADOR POR CÓDIGO!")
+    print("============================")
+    print("")
+
+def estado_dispensador():
+    """Lista de los Dispensadores por estado"""
+    nro_estado = selecciona_estado_cliente()
+    if nro_estado == 3:
+        return
+    dispensadorcontroller.activo_dispensador(nro_estado)
+    estado = "activo" if nro_estado == 1 else "desactivo"
+    print("============================================")
+    print("¡TODOS LOS DISPENSADORES", estado.upper()+"S!")
+    print("============================================")
+    print("")
+#endregion
+
 # region Función de Administrador
 
 
@@ -112,19 +164,19 @@ def seleccion_accion_formulario(opc_accion, opc_operacion):
     match opc_accion:
         case 1:
             _ = agregar_cliente() if opc_operacion == 1 \
-                else print("Registrar Dispensador")
+                else agregar_dispensador()
         case 2:
             _ = modificar_cliente() if opc_operacion == 1 \
-                else print("Modificar Dispensador")
+                else modificar_dispensador()
         case 3:
             _ = consultar_cliente() if opc_operacion == 1 \
-                else print("Consultar Dispensador")
+                else consultar_dispensador()
         case 4:
             _ = estado_cliente() if opc_operacion == 1 \
-                else print("Estado Dispensador")
+                else estado_dispensador()
         case 5:
-            _ = clientecontroller.listado_clientes(menuview.clientes) if opc_operacion == 1 \
-                else print("Listar Dispensador")
+            _ = listado_cliente() if opc_operacion == 1 \
+                else listado_dispensdores()
 
 
 def seleccion_formulario(opc_operacion):
@@ -133,7 +185,7 @@ def seleccion_formulario(opc_operacion):
     while iniciar_accion:
         opc_accion: int | None
         if (opc_operacion == 1 and len(menuview.clientes) == 0) or \
-                (opc_operacion == 2 and len(menuview.dispensadores) == 0):
+                (opc_operacion == 2 and len(dispensadorcontroller.lista_dispensadores()) == 0):
             opc_accion = seleccionar_acciones_formulario_operacion_inicial()
         else:
             opc_accion = seleccionar_acciones_formulario_operacion()
