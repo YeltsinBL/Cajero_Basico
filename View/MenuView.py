@@ -5,8 +5,8 @@ import Common.Validacion as validacion
 import View.operaciones_view as operacionview
 # endregion
 
-clientes = []
-dispensadores = []
+#clientes = []
+#dispensadores = []
 print("Bienvenido")
 
 # region Funciones para seleccionar
