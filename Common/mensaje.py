@@ -6,52 +6,65 @@ class Mensaje:
         pass
 
 # region Inicio Formulario
-    def mensaje_frm_registro(self, nombre):
-        """Mensaje que inicia el formulario de registro"""
-        return f"¡REGISTRO DE {nombre}!"
-    def mensaje_frm_modifica(self, nombre):
-        """Mensaje que inicia el formulario de modificar"""
-        return f"¡MODIFICAR {nombre}!"
-    def mensaje_frm_buscar(self, nombre):
-        """Mensaje que inicia el formulario de buscar"""
-        return f"¡BUSCAR {nombre} POR CÓDIGO!"
-    def mensaje_frm_listar_estado(self, nombre, estado):
-        """Mensaje que inicia el listado por estado"""
-        return f"¡LISTA DE LOS {nombre} {estado}!"
-    def mensaje_frm_lista(self, nombre):
-        """Mensaje que inicia el listado"""
-        return f"¡LISTA DE LOS {nombre}!"
+    def mensaje_frm_registro(self, nombre:str):
+        """Mensaje: ¡REGISTRO DE {nombre}! """
+        return f"¡REGISTRO DE {nombre.upper()}!"
+    def mensaje_frm_modifica(self, nombre:str):
+        """Mensaje: ¡MODIFICAR {nombre}!"""
+        return f"¡MODIFICAR {nombre.upper()}!"
+    def mensaje_frm_buscar(self, nombre:str):
+        """Mensaje: ¡BUSCAR {nombre} POR CÓDIGO"""
+        return f"¡BUSCAR {nombre.upper()} POR CÓDIGO!"
+    def mensaje_frm_listar_estado(self, nombre:str, estado:str):
+        """Mensaje: ¡LISTA DE LOS {nombre} {estado}!"""
+        return f"¡LISTA DE LOS {nombre.upper()} {estado.upper()}!"
+    def mensaje_frm_lista(self, nombre:str):
+        """Mensaje: ¡LISTA DE LOS {nombre}!"""
+        return f"¡LISTA DE LOS {nombre.upper()}!"
+    def mensaje_frm_vista_previa(self, nombre:str):
+        """Mensaje: ¡VISTA PREVIA DEL {nombre}!"""
+        return f"¡VISTA PREVIA DEL {nombre.upper()}!"
 # endregion
 
 # region Exito
-    def mensaje_existe(self, nombre):
-        """Mensaje cuando existe un elemento buscado"""
-        return f"¡{nombre} ENCONTRADO!"
-    def mensaje_modificar(self, nombre):
-        """Mensaje cuando se modificó"""
-        return f"¡{nombre} MODIFICADO!"
-    def mensaje_encontro_por_estado(self,nombre, estado):
-        """Mensaje cuando encontro un elemento por su estado"""
-        return f"¡TODOS LOS {nombre} {estado}!"
-    def mensaje_registrado(self, nombre):
-        """Mensaje cuando se registró"""
-        return f"¡{nombre} REGISTRADO!"
-    def mensaje_listado(self, nombre):
-        """Mensaje cuando se listó"""
-        return f"¡TODOS LOS {nombre}!"
+    def mensaje_existe(self, nombre:str):
+        """Mensaje: ¡{nombre} ENCONTRADO!"""
+        return f"¡{nombre.upper()} ENCONTRADO!"
+    def mensaje_modificar(self, nombre:str):
+        """Mensaje: ¡{nombre} MODIFICADO!"""
+        return f"¡{nombre.upper()} MODIFICADO!"
+    def mensaje_encontro_por_estado(self,nombre:str, estado:str):
+        """Mensaje: ¡TODOS LOS {nombre} {estado}!"""
+        return f"¡TODOS LOS {nombre.upper()} {estado.upper()}!"
+    def mensaje_registrado(self, nombre:str):
+        """Mensaje: ¡{nombre} REGISTRADO!"""
+        return f"¡{nombre.upper()} REGISTRADO!"
+    def mensaje_listado(self, nombre:str):
+        """Mensaje: ¡TODOS LOS {nombre}!"""
+        return f"¡TODOS LOS {nombre.upper()}!"
 # endregion
 
 # region ERRORES
-    def mensaje_no_existe(self, nombre):
-        """Mensaje cuando no existe un elemento buscado"""
-        return f"¡EL {nombre} INGRESADO NO EXISTE!"
-    def mensaje_error_modificar(self, nombre):
-        """Mensaje cuando hubo un error al modificar"""
-        return f"¡HUBO UN ERROR AL MODIFICAR EL {nombre}!"
-    def mensaje_error_buscar(self, nombre):
-        """Mensaje cuando hubo un error al buscar"""
-        return f"¡HUBO UN ERROR AL BUSCAR EL {nombre}!"
-    def mensaje_no_encontro_por_estado(self, nombre, estado):
-        """Mensaje cuando no encontro un elemento por su estado"""
-        return f"¡NO HAY {nombre} {estado}!"
+    def mensaje_no_existe(self, nombre:str):
+        """Mensaje: ¡EL {nombre} INGRESADO NO EXISTE! """
+        return f"¡EL {nombre.upper()} INGRESADO NO EXISTE!"
+    def mensaje_error_modificar(self, nombre:str):
+        """Mensaje: ¡HUBO UN ERROR AL MODIFICAR EL {nombre}!"""
+        return f"¡HUBO UN ERROR AL MODIFICAR EL {nombre.upper()}!"
+    def mensaje_error_buscar(self, nombre:str):
+        """Mensaje: ¡HUBO UN ERROR AL BUSCAR EL {nombre}!"""
+        return f"¡HUBO UN ERROR AL BUSCAR EL {nombre.upper()}!"
+    def mensaje_no_encontro_por_estado(self, nombre:str, estado:str):
+        """Mensaje: ¡NO HAY {nombre} {estado}!"""
+        return f"¡NO HAY {nombre.upper()} {estado.upper()}!"
+    def mensaje_error_registrar(self, nombre:str):
+        """Mensaje: ¡HUBO UN ERROR AL REGISTRAR EL {nombre}!"""
+        return f"¡HUBO UN ERROR AL REGISTRAR EL {nombre.upper()}!"
+    def mensaje_error_confirmar(self):
+        """Mensaje: ¡INGRESE SI O NO!"""
+        print("¡INGRESE SI O NO!")
+    def mensaje_cancelar_confirmacion(self, nombre:str):
+        """Mensaje: ¡USTES HA CANCELADO EL REGISTRO DEL {nombre}!"""
+        return f"¡USTES HA CANCELADO EL REGISTRO DEL {nombre.upper()}!"
+
 #endregion

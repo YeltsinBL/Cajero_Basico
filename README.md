@@ -11,6 +11,7 @@ Proyecto final para la universidad
 Simular que hay un servicio que devuelve los datos.
 - Lista del Dispensador
 - Lista de Clientes
+- Lista de Depósitos
 
 #### Common
 Funciones globales que se repetiran constantemente.
@@ -29,6 +30,8 @@ Funciones globales que se repetiran constantemente.
   - Clase Cliente
 - Dispensador
   - Clase Dispensador
+- Depositar
+  - Clase Depositar
 
 #### ViewModel
 - Cliente_ViewModel: clase con funciones para el cliente
@@ -45,6 +48,9 @@ Funciones globales que se repetiran constantemente.
   - Modificar Dispensador
   - Buscar Dispensador por Código
   - Listar Dispensador por Estado
+- Depositar_ViewModel: clase con función para el depósito
+  - Registro Depósito
+  - Agregar Billetes al Dispensador
 
 #### Controller
 Funciones que utilizaré en los archivos de View.
@@ -67,6 +73,8 @@ Funciones que utilizaré en los archivos de View.
   - Modificar Dispensador
   - Buscar Dispensador por Código
   - Listado Dispensador por estado
+- depositar_controller
+  - Registro Depósito
 
 #### View
 - MenuView
@@ -81,6 +89,12 @@ Funciones que utilizaré en los archivos de View.
   - Seleccionar Acciones del Formulario del Dispensador: 100%
 
 - operacion_cliente_view: 0%
+  - Seleccionar formulario para operaciones del cliente
+
+- operacion_cliente:
+  - cliente_depositar_view:
+    - Registrar Depósito
+    - Vista Previa Registro
 
 ### Formulario
 

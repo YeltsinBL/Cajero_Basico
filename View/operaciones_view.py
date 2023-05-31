@@ -3,6 +3,7 @@
 import Controller.OperacionController as operacioncontroller
 import Common.Validacion as validacion
 import View.administrador_view as administradorview
+import View.operacion_cliente_view as operacionclienteview
 # endregion
 
 # region Funciones de Opciones
@@ -46,5 +47,5 @@ def seleccionar_operaciones(opc_menu):
         elif opc_menu == 2 :
             administradorview.seleccion_formulario(opc_operacion)
         else:
-            administradorview.seleccion_formulario(opc_operacion)
+            operacionclienteview.seleccion_formulario_operacion_cliente(opc_operacion)
 #endregion

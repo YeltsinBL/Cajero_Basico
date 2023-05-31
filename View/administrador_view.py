@@ -263,8 +263,8 @@ def frm_agregar_dispensador():
         while vali_bill_10:
             billete_10 = input("Billetes de 10: ")
             vali_bill_10 = not validacion.valores_ingresados("billetes de 10",billete_10,1)
-        billetes.append({200:billete_200, 100:billete_100, 50:billete_50, 20:billete_20,\
-                         10:billete_10})
+        billetes.append({200:int(billete_200), 100:int(billete_100), 50:int(billete_50),
+                         20:int(billete_20), 10:int(billete_10)})
         vali_billetes = False
     dispensadorcontroller.registro_dispensador({"codigo":cant_disp+1,"lugar":lugar,
                                                        "billete": billetes,"estado": "Activo"})
@@ -285,8 +285,8 @@ def frm_listado_dispensadores():
         print(f"DISPENSADOR NRO. {cantidad}")
         print("CODIGO:", dato.codigo)
         print("LUGAR:", dato.lugar)
+        print("BILLETES:")
         for valor in dato.billete:
-            print("BILLETES:")
             for nro_billete, vbillete in valor.items():
                 print(str(nro_billete).upper()+ ": ",vbillete)
         print("ESTADO:", dato.estado)

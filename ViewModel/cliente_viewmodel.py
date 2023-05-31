@@ -22,12 +22,10 @@ class  ClienteViewModel:
 
     def verifica_cliente_codigo(self, codigo):
         """Buscar Cliente por Código"""
-        existe= False
         for dato in service.clientes:
-            existe = dato.codigo == codigo
-            if existe:
-                return existe
-        return existe
+            if dato.codigo == codigo:
+                return True
+        return False
 
     def modificar_cliente(self, dicts:dict[str,any]):
         """Modificar Cliente"""
