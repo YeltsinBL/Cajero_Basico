@@ -55,8 +55,9 @@ def seleccionar_acciones_formulario_operacion_inicial():
 # region Formulario Cliente
 def frm_registrar_cliente():
     """Registro de Clientes"""
+    print("======================")
     print(msj.mensaje_frm_registro("CLIENTE"))
-    print("Ingrese la información")
+    print("======================")
     vali_cod = True
     vali_nom= True
     vali_nrocta= True
@@ -77,9 +78,9 @@ def frm_registrar_cliente():
     clientecontroller.registro_cliente({"codigo":codigo, "nombre": nombre,
                                         "nrocuentasoles": int(nrocuentasoles),
                                         "saldo": float(saldo), "clave":clave, "estado": "Activo"})
-    print("============================")
+    print("======================")
     print(msj.mensaje_registrado("CLIENTE"))
-    print("============================")
+    print("======================")
     print("")
 
 def frm_modificar_cliente():
@@ -87,7 +88,9 @@ def frm_modificar_cliente():
     vali_cod = True
     datos_cliente:dict[str,any]
     while vali_cod:
+        print("====================")
         print(msj.mensaje_frm_modifica("CLIENTE"))
+        print("====================")
         codigo_cliente = input("CÓDIGO: ")
         vali_cod = not validacion.valores_ingresados("código",codigo_cliente,4)
         existe_clientes = clientecontroller.verifica_cliente_codigo(codigo_cliente)
@@ -96,68 +99,71 @@ def frm_modificar_cliente():
             vali_nrocta = True
             vali_estado = True
             while vali_nom:
-                nombre = input("NUEVO NOMBRE: ")
+                nombre = input("NOMBRE: ")
                 vali_nom = not validacion.valores_ingresados("nombre",nombre,3)
             while vali_nrocta:
-                nrocuentasoles = input("NUEVO NRO CUENTA SOLES: ")
+                nrocuentasoles = input("NRO CUENTA SOLES: ")
                 vali_nrocta = not validacion.valores_ingresados("nro cuenta soles",\
                                                                     nrocuentasoles,1)
             while vali_estado:
-                estado = input("NUEVO ESTADO: ")
+                estado = input("ESTADO: ")
                 vali_estado = not validacion.valores_ingresados("estado",estado,5)
             datos_cliente = {"codigo":codigo_cliente, "nombre": nombre,
                      "nrocuentasoles": int(nrocuentasoles), "estado": estado.capitalize()}
             vali_cod = False
         else:
             vali_cod = True
+            print("===============================")
             print(msj.mensaje_no_existe("CÓDIGO"))
-            print("=======================================")
+            print("===============================")
             print("")
             frm_listado_cliente()
-            print("=======================================")
     respt= clientecontroller.modificar_cliente(datos_cliente)
-    print("============================")
+    print("=====================")
     if respt:
         print(msj.mensaje_modificar("CLIENTE"))
     else:
         print(msj.mensaje_error_modificar("CLIENTE"))
-    print("============================")
+    print("=====================")
     print("")
 
 def frm_buscar_cliente():
     """Función para Buscar un cliente por su código"""
+    print("===========================")
     print(msj.mensaje_frm_buscar("CLIENTE"))
+    print("===========================")
     vali_cod = True
     while vali_cod:
         codigo_cliente = input("CÓDIGO: ")
         vali_cod = not validacion.valores_ingresados("código",codigo_cliente,4)
-    #return codigo_cliente
     respt = clientecontroller.buscar_cliente_codigo(codigo_cliente)
     if not isinstance(respt,list):
         print("NOMBRE:",respt.nombre)
         print("NRO. CUENTA SOLES:",respt.nrocuentasoles)
         print("SALDO:",respt.saldo)
         print("ESTADO:",respt.estado)
-        print("============================")
+        print("====================")
         print(msj.mensaje_existe("CLIENTE"))
+        print("====================")
     else:
+        print("====================================")
         print(msj.mensaje_error_buscar("CLIENTE"))
+        print("====================================")
         existe_clientes = clientecontroller.verifica_cliente_codigo(codigo_cliente)
         if not existe_clientes:
             print(msj.mensaje_no_existe("CÓDIGO"))
-            print("=======================================")
+            print("================================")
             print("")
             frm_listado_cliente()
-    print("=======================================")
     print("")
 
 def frm_listado_cliente():
     """Listado de los Clientes"""
     clientes = clientecontroller.listado_cliente()
     cantidad = 0
-    print("============================")
+    print("=======================")
     print(msj.mensaje_frm_lista("CLIENTES"))
-    print("============================")
+    print("=======================")
     for dato in clientes:
         cantidad += 1
         print(f"CLIENTE NRO. {cantidad}")
@@ -166,9 +172,9 @@ def frm_listado_cliente():
         print("NRO. CUENTA SOLES:",dato.nrocuentasoles)
         print("SALDO:",dato.saldo)
         print("ESTADO:",dato.estado)
-        print("=======================================")
+        print("=======================")
     print(msj.mensaje_listado("CLIENTES"))
-    print("============================================")
+    print("=======================")
     print("")
 
 def selecciona_estado_cliente():
@@ -199,70 +205,224 @@ def frm_estado_cliente():
     respt = clientecontroller.listado_cliente_estado(estado)
     if len(respt)>0:
         cantidad = 0
+        print("=================================")
+        print(msj.mensaje_frm_listar_estado("CLIENTE", estado.upper()+"S"))
+        print("=================================")
         for dato in respt:
             cantidad += 1
-            print(msj.mensaje_frm_listar_estado("CLIENTE", estado.upper()+"S"))
             print(f"CLIENTE NRO. {cantidad}")
             print("CÓDIGO:",dato.codigo)
             print("NOMBRE:",dato.nombre)
             print("NRO. CUENTA SOLES:",dato.nrocuentasoles)
             print("SALDO:",dato.saldo)
             print("ESTADO:",dato.estado)
-            print("============================================")
+            print("===============================")
         print(msj.mensaje_encontro_por_estado("CLIENTES", estado.upper()+"S"))
-        print("============================================")
+        print("===============================")
         print("")
     else:
-        print("============================================")
+        print("============================")
         print(msj.mensaje_no_encontro_por_estado("CLIENTES", estado.upper()+"S"))
-        print("============================================")
+        print("============================")
         print("")
 
 # endregion
 
-# region Funciones para los DISPENSADORES
-def agregar_dispensador():
+# region Formulario DISPENSADOR
+def frm_agregar_dispensador():
     """Registrar Dispensador"""
-    dispensadorcontroller.registrar_dispensador()
     print("============================")
-    print("DISPENSADOR REGISTRADO!")
+    print(msj.mensaje_frm_registro("DISPENSADOR"))
+    print("============================")
+    vali_lugar = True
+    vali_billetes= True
+    vali_bill_200=True
+    vali_bill_100=True
+    vali_bill_50=True
+    vali_bill_20=True
+    vali_bill_10=True
+    cant_disp= len(dispensadorcontroller.listado_dispensador())
+    billetes=[]
+    while vali_lugar:
+        lugar = input("LUGAR: ")
+        vali_lugar = not validacion.valores_ingresados("lugar",lugar,3)
+    while vali_billetes:
+        print("Cantidad de Billetes")
+        while vali_bill_200:
+            billete_200 = input("Billetes de 200: ")
+            vali_bill_200 = not validacion.valores_ingresados("billetes de 200",billete_200,1)
+        while vali_bill_100:
+            billete_100 = input("Billetes de 100: ")
+            vali_bill_100 = not validacion.valores_ingresados("billetes de 100",billete_100,1)
+        while vali_bill_50:
+            billete_50 = input("Billetes de 50: ")
+            vali_bill_50 = not validacion.valores_ingresados("billetes de 50",billete_50,1)
+        while vali_bill_20:
+            billete_20 = input("Billetes de 20: ")
+            vali_bill_20 = not validacion.valores_ingresados("billetes de 20",billete_20,1)
+        while vali_bill_10:
+            billete_10 = input("Billetes de 10: ")
+            vali_bill_10 = not validacion.valores_ingresados("billetes de 10",billete_10,1)
+        billetes.append({200:billete_200, 100:billete_100, 50:billete_50, 20:billete_20,\
+                         10:billete_10})
+        vali_billetes = False
+    dispensadorcontroller.registro_dispensador({"codigo":cant_disp+1,"lugar":lugar,
+                                                       "billete": billetes,"estado": "Activo"})
+    print("============================")
+    print(msj.mensaje_registrado("DISPENSADOR"))
     print("============================")
     print("")
-def listado_dispensdores():
+
+def frm_listado_dispensadores():
     """Listar los Dispensadores"""
-    dispensadorcontroller.listado_dispensadores()
+    dispensa = dispensadorcontroller.listado_dispensador()
+    cantidad = 0
     print("============================")
-    print("¡LISTA DE DISPENSADORES!")
+    print(msj.mensaje_frm_lista("DISPENSADORES"))
+    print("============================")
+    for dato in dispensa:
+        cantidad += 1
+        print(f"DISPENSADOR NRO. {cantidad}")
+        print("CODIGO:", dato.codigo)
+        print("LUGAR:", dato.lugar)
+        for valor in dato.billete:
+            print("BILLETES:")
+            for nro_billete, vbillete in valor.items():
+                print(str(nro_billete).upper()+ ": ",vbillete)
+        print("ESTADO:", dato.estado)
+        print("============================")
+    print(msj.mensaje_listado("DISPENSADORES"))
     print("============================")
     print("")
 
-def modificar_dispensador():
+def frm_modificar_dispensador():
     """Modififcar Dispensdaor"""
-    dispensadorcontroller.modificar_dispensador()
+    vali_cod = True
+    datos_dispensador:dict[str,any]
+    billetes=[]
+    while vali_cod:
+        print("============================")
+        print(msj.mensaje_frm_modifica("DISPENSADOR"))
+        print("============================")
+        codigo_dispensador = input("CÓDIGO: ")
+        vali_cod = not validacion.valores_ingresados("código",codigo_dispensador,1)
+        existe_dispensador = dispensadorcontroller\
+                                .verifica_dispensador_codigo(int(codigo_dispensador))
+        if existe_dispensador:
+            vali_lugar = True
+            vali_bill_200=True
+            vali_bill_100=True
+            vali_bill_50=True
+            vali_bill_20=True
+            vali_bill_10=True
+            vali_estado = True
+            while vali_lugar:
+                lugar = input("NUEVO LUGAR: ")
+                vali_lugar = not validacion.valores_ingresados("lugar",lugar,3)
+            print("Cantidad de Billetes")
+            while vali_bill_200:
+                billete_200 = input("Billetes de 200: ")
+                vali_bill_200 = not validacion.valores_ingresados("billetes de 200",billete_200,1)
+            while vali_bill_100:
+                billete_100 = input("Billetes de 100: ")
+                vali_bill_100 = not validacion.valores_ingresados("billetes de 100",billete_100,1)
+            while vali_bill_50:
+                billete_50 = input("Billetes de 50: ")
+                vali_bill_50 = not validacion.valores_ingresados("billetes de 50",billete_50,1)
+            while vali_bill_20:
+                billete_20 = input("Billetes de 20: ")
+                vali_bill_20 = not validacion.valores_ingresados("billetes de 20",billete_20,1)
+            while vali_bill_10:
+                billete_10 = input("Billetes de 10: ")
+                vali_bill_10 = not validacion.valores_ingresados("billetes de 10",billete_10,1)
+            while vali_estado:
+                estado = input("NUEVO ESTADO: ")
+                vali_estado = not validacion.valores_ingresados("estado",estado,5)
+            billetes.append({200:billete_200, 100:billete_100, 50:billete_50, 20:billete_20,\
+                         10:billete_10})
+            datos_dispensador={"codigo":int(codigo_dispensador),"lugar":lugar,
+                               "billete": billetes,"estado": estado.capitalize()}
+            vali_cod = False
+        else:
+            vali_cod = True
+            print(msj.mensaje_no_existe("CÓDIGO"))
+            print("=======================================")
+            print("")
+            frm_listado_dispensadores()
+            print("=======================================")
+    respt = dispensadorcontroller.modificar_dispensador(datos_dispensador)
     print("============================")
-    print("¡DISPENSADOR MODIFICADO!")
+    if respt:
+        print(msj.mensaje_modificar("DISPENSADOR"))
+    else:
+        print(msj.mensaje_error_modificar("DISPENSADOR"))
     print("============================")
     print("")
 
-def consultar_dispensador():
-    """Consultar Dispensador"""
-    dispensadorcontroller.consultar_dispensador()
-    print("============================")
-    print("¡DISPENSADOR POR CÓDIGO!")
-    print("============================")
+def frm_buscar_dispensador():
+    """Buscar Dispensador por Código"""
+    print("================================")
+    print(msj.mensaje_frm_buscar("DISPENSADOR"))
+    print("================================")
+    vali_cod = True
+    while vali_cod:
+        codigo_dispensador = input("CÓDIGO: ")
+        vali_cod = not validacion.valores_ingresados("código",codigo_dispensador,1)
+    respt = dispensadorcontroller.buscar_dispensador_codigo(int(codigo_dispensador))
+    if not isinstance(respt,list):
+        print("LUGAR:",respt.lugar)
+        for valor in respt.billete:
+            print("BILLETES:")
+            for nro_billete, vbillete in valor.items():
+                print(str(nro_billete).upper()+ ": ",vbillete)
+        print("ESTADO:",respt.estado)
+        print("============================")
+        print(msj.mensaje_existe("DISPENSADOR"))
+        print("============================")
+    else:
+        print("===========================================")
+        print(msj.mensaje_error_buscar("DISPENSADOR"))
+        print("===========================================")
+        existe_dispensador = dispensadorcontroller.\
+                                verifica_dispensador_codigo(int(codigo_dispensador))
+        if not existe_dispensador:
+            print(msj.mensaje_no_existe("CÓDIGO"))
+            print("===============================")
+            print("")
+            frm_listado_dispensadores()
     print("")
 
-def estado_dispensador():
+def frm_estado_dispensador():
     """Lista de los Dispensadores por estado"""
     nro_estado = selecciona_estado_cliente()
     if nro_estado == 3:
         return
-    dispensadorcontroller.activo_dispensador(nro_estado)
     estado = "activo" if nro_estado == 1 else "desactivo"
-    print("============================================")
-    print("¡TODOS LOS DISPENSADORES", estado.upper()+"S!")
-    print("============================================")
-    print("")
+    respt = dispensadorcontroller.listado_dispensador_estado(estado)
+    if len(respt)>0:
+        cantidad = 0
+        print("=====================================")
+        print(msj.mensaje_frm_listar_estado("DISPENSADOR", estado.upper()+"S"))
+        print("=====================================")
+        for dato in respt:
+            cantidad += 1
+            print(f"DISPENSADOR NRO. {cantidad}")
+            print("CÓDIGO:",dato.codigo)
+            print("LUGAR:",dato.lugar)
+            for valor in dato.billete:
+                print("BILLETES:")
+                for nro_billete, vbillete in valor.items():
+                    print(str(nro_billete).upper()+ ": ",vbillete)
+            print("ESTADO:",dato.estado)
+            print("====================================")
+        print(msj.mensaje_encontro_por_estado("DISPENSADORES", estado.upper()+"S"))
+        print("====================================")
+        print("")
+    else:
+        print("==================================")
+        print(msj.mensaje_no_encontro_por_estado("DISPENSADORES", estado.upper()+"S"))
+        print("==================================")
+        print("")
 #endregion
 
 # region Función de Administrador
@@ -273,19 +433,19 @@ def seleccion_accion_formulario(opc_accion, opc_operacion):
     match opc_accion:
         case 1:
             _ = frm_registrar_cliente() if opc_operacion == 1 \
-                else agregar_dispensador()
+                else frm_agregar_dispensador()
         case 2:
             _ = frm_modificar_cliente() if opc_operacion == 1 \
-                else modificar_dispensador()
+                else frm_modificar_dispensador()
         case 3:
             _ = frm_buscar_cliente() if opc_operacion == 1 \
-                else consultar_dispensador()
+                else frm_buscar_dispensador()
         case 4:
             _ = frm_estado_cliente() if opc_operacion == 1 \
-                else estado_dispensador()
+                else frm_estado_dispensador()
         case 5:
             _ = frm_listado_cliente() if opc_operacion == 1 \
-                else listado_dispensdores()
+                else frm_listado_dispensadores()
 
 def seleccion_formulario(opc_operacion):
     """Selección del Formulario"""
@@ -293,7 +453,7 @@ def seleccion_formulario(opc_operacion):
     while iniciar_accion:
         opc_accion: int | None
         if (opc_operacion == 1 and len(clientecontroller.listado_cliente()) == 0) or \
-                (opc_operacion == 2 and len(dispensadorcontroller.lista_dispensadores()) == 0):
+            (opc_operacion == 2 and len(dispensadorcontroller.listado_dispensador()) == 0):
             opc_accion = seleccionar_acciones_formulario_operacion_inicial()
         else:
             opc_accion = seleccionar_acciones_formulario_operacion()

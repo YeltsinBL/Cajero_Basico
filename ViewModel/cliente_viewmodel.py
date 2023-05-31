@@ -21,7 +21,7 @@ class  ClienteViewModel:
         service.clientes.append(clien)
 
     def verifica_cliente_codigo(self, codigo):
-        """Buscar Cliente por Id"""
+        """Buscar Cliente por Código"""
         existe= False
         for dato in service.clientes:
             existe = dato.codigo == codigo

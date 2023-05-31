@@ -4,10 +4,10 @@ import Controller.MenuController as menucontroller
 import Common.Validacion as validacion
 import View.operaciones_view as operacionview
 # endregion
-
-#clientes = []
-#dispensadores = []
-print("Bienvenido")
+print("")
+print("==============")
+print("¡BIENVENIDO!")
+print("==============")
 
 # region Funciones para seleccionar
 def selecciona_menu():

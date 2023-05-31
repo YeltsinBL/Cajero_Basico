@@ -27,6 +27,8 @@ Funciones globales que se repetiran constantemente.
 - Cliente
   - Clase Persona
   - Clase Cliente
+- Dispensador
+  - Clase Dispensador
 
 #### ViewModel
 - Cliente_ViewModel: clase con funciones para el cliente
@@ -36,6 +38,13 @@ Funciones globales que se repetiran constantemente.
   - Modificar Cliente
   - Buscar Cliente por Código
   - Listar Cliente por Estado
+- Dispensador_ViewModel: clase con funciones para el dispensador
+  - Listar Dispensador
+  - Registrar Dispensador
+  - Verificar Dispensador por Código
+  - Modificar Dispensador
+  - Buscar Dispensador por Código
+  - Listar Dispensador por Estado
 
 #### Controller
 Funciones que utilizaré en los archivos de View.
@@ -52,11 +61,12 @@ Funciones que utilizaré en los archivos de View.
   - Buscar Cliente por código
   - Listado Cliente por estado
 - dispensador_controller
-  - Registrar Cliente
-  - Listar Cliente
-  - Modificar Cliente
-  - Consultar por código
-  - Listado por estado
+  - Registrar Dispensador
+  - Listado Dispensador
+  - Verificar Dispensador por Código
+  - Modificar Dispensador
+  - Buscar Dispensador por Código
+  - Listado Dispensador por estado
 
 #### View
 - MenuView
@@ -68,7 +78,7 @@ Funciones que utilizaré en los archivos de View.
 
 - administrador_view:
   - Seleccionar Acciones del Formulario de Clientes: 100%
-  - Seleccionar Acciones para Dispensador: 100%
+  - Seleccionar Acciones del Formulario del Dispensador: 100%
 
 - operacion_cliente_view: 0%
 

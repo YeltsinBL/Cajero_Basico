@@ -8,7 +8,7 @@ def registro_cliente(datos_cliente:dict[str,any]):
     """Registro Cliente"""
     clientevm.registrar_cliente(datos_cliente)
 def listado_cliente():
-    """Verificar si hay existen Clientes"""
+    """Verificar si hay Clientes"""
     return clientevm.lista_cliente()
 def verifica_cliente_codigo(codigo):
     """Verifica Cliente por Código"""
