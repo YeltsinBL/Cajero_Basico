@@ -22,4 +22,7 @@ def buscar_cliente_codigo(codigo):
 def listado_cliente_estado(estado):
     """Listar los Clientes por su estado"""
     return clientevm.lista_cliente_estado(estado)
+def verifica_cliente_codigo_clave(codigo, clave):
+    """Verificar Cliente por Código y Clave"""
+    return clientevm.verifica_cliente_codigo_clave(codigo, clave)
 # endregion

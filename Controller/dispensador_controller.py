@@ -30,4 +30,7 @@ def buscar_dispensador_codigo(codigo:int):
 def listado_dispensador_estado(estado:str):
     """Listar los Dispensadores por su estado"""
     return dispensador_vm.lista_dispensador_estado(estado)
+def verificar_monto_dispensador(codigo_dispensador:int, monto:float):
+    """Verificar el Monto del Dispensador"""
+    return dispensador_vm.verificar_monto_dispensador(codigo_dispensador, monto)
 # endregion

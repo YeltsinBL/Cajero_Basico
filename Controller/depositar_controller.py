@@ -4,10 +4,10 @@
 import ViewModel.depositar_viewmodel as depositarviewmodel
 #endregion
 
-dispensador_vm = depositarviewmodel.DepositarViewModel()
+depositar_vm = depositarviewmodel.DepositarViewModel()
 
 # region Funciones
-def registro_deposito(datos_dispensador:dict[str,any]):
+def registro_deposito(datos_depositar:dict[str,any]):
     """Registro Depósito"""
-    return dispensador_vm.registro_deposito(datos_dispensador)
+    return depositar_vm.registro_deposito(datos_depositar)
 # endregion

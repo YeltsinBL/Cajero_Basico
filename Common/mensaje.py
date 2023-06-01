@@ -24,6 +24,9 @@ class Mensaje:
     def mensaje_frm_vista_previa(self, nombre:str):
         """Mensaje: ¡VISTA PREVIA DEL {nombre}!"""
         return f"¡VISTA PREVIA DEL {nombre.upper()}!"
+    def mensaje_despedida(self):
+        """Mensaje: ¡GRACIAS POR USAR ESTE SISTEMA!"""
+        return "¡GRACIAS POR USAR ESTE SISTEMA!"
 # endregion
 
 # region Exito
@@ -60,11 +63,25 @@ class Mensaje:
     def mensaje_error_registrar(self, nombre:str):
         """Mensaje: ¡HUBO UN ERROR AL REGISTRAR EL {nombre}!"""
         return f"¡HUBO UN ERROR AL REGISTRAR EL {nombre.upper()}!"
-    def mensaje_error_confirmar(self):
-        """Mensaje: ¡INGRESE SI O NO!"""
-        print("¡INGRESE SI O NO!")
+#endregion
+
+# region Validaciones
     def mensaje_cancelar_confirmacion(self, nombre:str):
         """Mensaje: ¡USTES HA CANCELADO EL REGISTRO DEL {nombre}!"""
         return f"¡USTES HA CANCELADO EL REGISTRO DEL {nombre.upper()}!"
-
-#endregion
+    def mensaje_verificar_monto(self):
+        """Mensaje: ¡Verificando monto en el Dispensador seleccionado!"""
+        return str("¡Verificando el monto en el dispensador seleccionado!").upper()
+    def mensaje_monto_excedido(self):
+        """Mensaje: ¡EL MONTO INGRESADO EXCEDE AL DISPENSADOR!"""
+        return str("¡El monto ingresado excede al dispensador!").upper()
+    def mensaje_error_confirmar(self):
+        """Mensaje: ¡INGRESE SI O NO!"""
+        print("¡INGRESE SI O NO!")
+    def mensaje_clave_incorrecta(self, nombre:str):
+        """Mensaje: ¡LA {nombre} INGRESADA ES INCORRECTA! """
+        return f"¡LA {nombre.upper()} INGRESADA ES INCORRECTA!"
+    def mensaje_realizando_accion(self, nombre:str):
+        """Mensaje: ¡REALIZANDO {nombre}! """
+        return f"¡REALIZANDO {nombre.upper()}!"
+# endregion

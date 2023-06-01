@@ -55,3 +55,18 @@ class DispensadorViewModel:
             if dato.estado.lower() == estado:
                 dispensa.append(dato)
         return dispensa
+
+    def verificar_monto_dispensador(self, codigo_dispensador:int, monto:float):
+        """Verificar el Monto del Dispensador"""
+        cantidad:float = 0
+        lista_dispensador = self.lista_dispensadores()
+        for dato in lista_dispensador:
+            if dato.codigo == codigo_dispensador:
+                for valor in dato.billete:
+                    for nro_billete, vbillete in valor.items():
+                        cantidad = cantidad +(nro_billete * vbillete)
+        if cantidad >= monto:
+            return True
+        else: return False
+    # actualizar la verificación del monto a retirar
+    # Listar Depósitos que queda después de retirar

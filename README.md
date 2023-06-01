@@ -12,6 +12,7 @@ Simular que hay un servicio que devuelve los datos.
 - Lista del Dispensador
 - Lista de Clientes
 - Lista de Depósitos
+- Lista de Retiros
 
 #### Common
 Funciones globales que se repetiran constantemente.
@@ -32,6 +33,8 @@ Funciones globales que se repetiran constantemente.
   - Clase Dispensador
 - Depositar
   - Clase Depositar
+- Retirar
+  - Clase Retirar
 
 #### ViewModel
 - Cliente_ViewModel: clase con funciones para el cliente
@@ -41,6 +44,7 @@ Funciones globales que se repetiran constantemente.
   - Modificar Cliente
   - Buscar Cliente por Código
   - Listar Cliente por Estado
+  - Verificar Cliente por Código y Clave
 - Dispensador_ViewModel: clase con funciones para el dispensador
   - Listar Dispensador
   - Registrar Dispensador
@@ -48,9 +52,13 @@ Funciones globales que se repetiran constantemente.
   - Modificar Dispensador
   - Buscar Dispensador por Código
   - Listar Dispensador por Estado
+  - Verificar Monto Dispensador
 - Depositar_ViewModel: clase con función para el depósito
   - Registro Depósito
   - Agregar Billetes al Dispensador
+- Retirar_ViewModel: clase con función para el retiro
+  - Registro Retiro
+  - Actualizar Billetes al Dispensador
 
 #### Controller
 Funciones que utilizaré en los archivos de View.
@@ -66,6 +74,7 @@ Funciones que utilizaré en los archivos de View.
   - Modificar Cliente
   - Buscar Cliente por código
   - Listado Cliente por estado
+  - Verificar Cliente por Código y Clave
 - dispensador_controller
   - Registrar Dispensador
   - Listado Dispensador
@@ -73,8 +82,11 @@ Funciones que utilizaré en los archivos de View.
   - Modificar Dispensador
   - Buscar Dispensador por Código
   - Listado Dispensador por estado
+  - Verificar Monto Dispensador
 - depositar_controller
   - Registro Depósito
+- retirar_controller
+  - Registro Retiro
 
 #### View
 - MenuView
@@ -82,19 +94,22 @@ Funciones que utilizaré en los archivos de View.
 
 - operaciones_view
   - Seleccionar Formulario para Administrador (Cliente 100% - Dispensador 100%)
-  - Seleccionar Formulario para Cliente 0%
+  - Seleccionar Formulario para Cliente 36%
 
 - administrador_view:
   - Seleccionar Acciones del Formulario de Clientes: 100%
   - Seleccionar Acciones del Formulario del Dispensador: 100%
 
-- operacion_cliente_view: 0%
+- operacion_cliente_view: 36%
   - Seleccionar formulario para operaciones del cliente
 
 - operacion_cliente:
   - cliente_depositar_view:
     - Registrar Depósito
     - Vista Previa Registro
+  - cliente_retirar_view:
+    - Registrar Retiro
+    - Detalle Retiro
 
 ### Formulario
 

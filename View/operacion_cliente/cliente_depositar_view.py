@@ -1,4 +1,4 @@
-"""Vista para las Operaciones por Cliente"""
+"""Vista para las Operaciones por Cliente Depositar"""
 # region importaciones
 import Common.Validacion as validacion
 import Common.mensaje as mensaje

@@ -44,5 +44,5 @@ class DepositarViewModel:
               "estado":estado_dispensador, "billete": nueva_lista}
         return dispensador_vm.modificar_dispensador(disp)
 
-    def eliminar_billete(self, cod_dispensador:int, billete:list):
-        """Eliminar billetes"""
+    # actualizar la verificación del monto a retirar
+    # Listar Depósitos que queda después de retirar

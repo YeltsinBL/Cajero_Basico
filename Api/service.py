@@ -3,3 +3,4 @@
 dispensadores = []
 clientes=[]
 depositos=[]
+retiros=[]
