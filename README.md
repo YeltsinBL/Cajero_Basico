@@ -56,9 +56,13 @@ Funciones globales que se repetiran constantemente.
 - Depositar_ViewModel: clase con función para el depósito
   - Registro Depósito
   - Agregar Billetes al Dispensador
+  - Lista Depósito
+  - Modificar Depósito
+  - Buscar Depósito
 - Retirar_ViewModel: clase con función para el retiro
   - Registro Retiro
-  - Actualizar Billetes al Dispensador
+  - Modificar Billetes del Dispensador
+  - Modificar Billetes del Depósito
 
 #### Controller
 Funciones que utilizaré en los archivos de View.
@@ -85,6 +89,7 @@ Funciones que utilizaré en los archivos de View.
   - Verificar Monto Dispensador
 - depositar_controller
   - Registro Depósito
+  - Buscar Depósito por Código
 - retirar_controller
   - Registro Retiro
 
@@ -110,6 +115,9 @@ Funciones que utilizaré en los archivos de View.
   - cliente_retirar_view:
     - Registrar Retiro
     - Detalle Retiro
+  - Cliente_consultar_saldo:
+    - Consultar Saldo
+    - Opciones Consulta
 
 ### Formulario
 

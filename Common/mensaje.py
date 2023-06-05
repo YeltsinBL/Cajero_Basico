@@ -27,6 +27,9 @@ class Mensaje:
     def mensaje_despedida(self):
         """Mensaje: ¡GRACIAS POR USAR ESTE SISTEMA!"""
         return "¡GRACIAS POR USAR ESTE SISTEMA!"
+    def mensaje_frm_consultar(self, nombre:str):
+        """Mensaje: ¡CONSULTAR {nombre} POR CÓDIGO"""
+        return f"¡CONSULTAR {nombre.upper()} POR CÓDIGO!"
 # endregion
 
 # region Exito
@@ -63,6 +66,9 @@ class Mensaje:
     def mensaje_error_registrar(self, nombre:str):
         """Mensaje: ¡HUBO UN ERROR AL REGISTRAR EL {nombre}!"""
         return f"¡HUBO UN ERROR AL REGISTRAR EL {nombre.upper()}!"
+    def mensaje_error_consultar(self, nombre:str):
+        """Mensaje: ¡HUBO UN ERROR AL CONSULTAR EL {nombre}!"""
+        return f"¡HUBO UN ERROR AL CONSULTAR EL {nombre.upper()}!"
 #endregion
 
 # region Validaciones

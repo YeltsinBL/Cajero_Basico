@@ -13,9 +13,10 @@ class DepositarViewModel:
         pass
     def registro_deposito(self, disp:dict[str,any]):
         """Registro Depósito"""
-        deposita = depositar.Depositar(codigo_cliente=disp.get("codigo_cliente"),
-                                     codigo_dispensador=disp.get("codigo_dispensador"),
-                                     billete=disp.get("billete"))
+        deposita = depositar.Depositar(codigo_deposito=len(self.lista_deposito())+1,
+                                       codigo_cliente=disp.get("codigo_cliente"),
+                                       codigo_dispensador=disp.get("codigo_dispensador"),
+                                       billete=disp.get("billete"))
         # AGREGAR BILLETES AL DISPENSADOR
         respt = self.agregar_billete_dispensador(disp.get("codigo_dispensador"),
                              disp.get("lugar_dispensador"),
@@ -44,5 +45,25 @@ class DepositarViewModel:
               "estado":estado_dispensador, "billete": nueva_lista}
         return dispensador_vm.modificar_dispensador(disp)
 
-    # actualizar la verificación del monto a retirar
-    # Listar Depósitos que queda después de retirar
+    def lista_deposito(self):
+        """Lista de Depósito"""
+        return service.depositos
+
+    def modificar_deposito(self, dicts:dict[str,any]):
+        """Modificar el depósito"""
+        for dato in service.depositos:
+            if dato.codigo_cliente == dicts.get("codigo_cliente") and\
+                dato.codigo_dispensador == dicts.get("codigo_dispensador"):
+                dato.billete=dicts["billete"]
+                return True
+        return False
+
+    def buscar_deposito(self, codigo_cliente:str, cod_dispensador:int):
+        """Buscar depósito por Código"""
+        dispensa = []
+        for dato in service.depositos:
+            if dato.codigo_cliente == codigo_cliente and\
+                (cod_dispensador == 0 or dato.codigo_dispensador == cod_dispensador):
+                dispensa.append(dato)
+                #return dispensa
+        return dispensa
