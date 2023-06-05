@@ -15,5 +15,5 @@ def seleccion_formulario_operacion_cliente(opc_operacion):
         case 3: pass
         case 4: pass
         case 5: clientesaldo.frm_consulta_saldo()
-        case 6: pass
+        case 6: clientemovimiento.frm_consulta_movimiento()
 # endregion

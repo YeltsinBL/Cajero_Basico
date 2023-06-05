@@ -71,7 +71,6 @@ class RetirarViewModel:
         for dato in deposito:
             if dato.codigo_cliente == codigo_cliente and\
                 dato.codigo_dispensador == codigo_dispensador:
-                print(dato)
                 for valor in dato.billete:
                     for nro_billete, vbillete in valor.items():
                         lista_billete_restante[nro_billete] = vbillete
@@ -92,3 +91,11 @@ class RetirarViewModel:
                 "billete":billete_actualizar_dispensador}
         print(disp)
         return depositar_vm.modificar_deposito(disp)
+
+    def buscar_retiro(self, codigo_cliente:str):
+        """Buscar Retiro por Código"""
+        retiro = []
+        for dato in service.retiros:
+            if dato.codigo_cliente == codigo_cliente:
+                retiro.append(dato)
+        return retiro

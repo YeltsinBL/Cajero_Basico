@@ -69,6 +69,9 @@ class Mensaje:
     def mensaje_error_consultar(self, nombre:str):
         """Mensaje: ¡HUBO UN ERROR AL CONSULTAR EL {nombre}!"""
         return f"¡HUBO UN ERROR AL CONSULTAR EL {nombre.upper()}!"
+    def mensaje_no_existe_lista(self, nombre:str):
+        """Mensaje: ¡NO EXISTE {nombre}! """
+        return f"¡NO EXISTE {nombre.upper()}!"
 #endregion
 
 # region Validaciones

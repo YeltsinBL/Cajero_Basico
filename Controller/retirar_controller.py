@@ -10,5 +10,7 @@ retirar_vm = retirarviewmodel.RetirarViewModel()
 def registro_retiro(datos_depositar:dict[str,any]):
     """Registro Retiro"""
     return retirar_vm.registro_retiro(datos_depositar)
-
+def buscar_retiro(codigo_cliente:str):
+    """Buscar Retiro"""
+    return retirar_vm.buscar_retiro(codigo_cliente)
 # endregion

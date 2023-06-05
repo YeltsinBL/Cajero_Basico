@@ -56,7 +56,6 @@ def frm_consulta_saldo():
             print(msj.mensaje_no_existe("código del cliente"))
             print("===============================")
             print("")
-            #frm_listado_dispensadores()
     print("")
 def opciones_consulta():
     """Consultar por código o Todos"""

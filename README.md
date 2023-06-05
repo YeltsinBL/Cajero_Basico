@@ -63,6 +63,7 @@ Funciones globales que se repetiran constantemente.
   - Registro Retiro
   - Modificar Billetes del Dispensador
   - Modificar Billetes del Depósito
+  - Buscar Retiro por código Cliente
 
 #### Controller
 Funciones que utilizaré en los archivos de View.
@@ -92,6 +93,7 @@ Funciones que utilizaré en los archivos de View.
   - Buscar Depósito por Código
 - retirar_controller
   - Registro Retiro
+  - Buscar Retiro
 
 #### View
 - MenuView
@@ -115,9 +117,11 @@ Funciones que utilizaré en los archivos de View.
   - cliente_retirar_view:
     - Registrar Retiro
     - Detalle Retiro
-  - Cliente_consultar_saldo:
+  - cliente_consultar_saldo:
     - Consultar Saldo
     - Opciones Consulta
+  - cliente_consulta_movimiento:
+    - Consulta movimiento
 
 ### Formulario
 
