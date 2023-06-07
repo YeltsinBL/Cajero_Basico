@@ -1,7 +1,7 @@
 # Cajero Automático Básico
 Proyecto final para la universidad
 
-[![Board Status](https://yeltsinbaltodano.visualstudio.com/599a5088-ab0a-43ee-ae27-de71707765cf/7a27677b-3c75-437a-aae7-234aaf5d16e2/_apis/work/boardbadge/cde23116-46d8-464a-bc43-37135218ab19)](https://yeltsinbaltodano.visualstudio.com/599a5088-ab0a-43ee-ae27-de71707765cf/_boards/board/t/7a27677b-3c75-437a-aae7-234aaf5d16e2/Stories/)
+[![Board Status](https://yeltsinbaltodano.visualstudio.com/599a5088-ab0a-43ee-ae27-de71707765cf/7a27677b-3c75-437a-aae7-234aaf5d16e2/_apis/work/boardbadge/cde23116-46d8-464a-bc43-37135218ab19?columnOptions=1)](https://yeltsinbaltodano.visualstudio.com/599a5088-ab0a-43ee-ae27-de71707765cf/_boards/board/t/7a27677b-3c75-437a-aae7-234aaf5d16e2/Stories/)
 
 ## Arquitectura
 - MVC: Lo primero que se realicé es la creación de las carpetas para tener ordenado, por el momento esta arquitectura se acopla mejor, con forme los avances quizás se cambie a otra arquitectura.
