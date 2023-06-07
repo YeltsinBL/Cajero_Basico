@@ -27,7 +27,7 @@ def frm_consulta_saldo():
             codigo_dispensador = input("CÓDIGO DISPENSADOR: ")
             vali_cod_dispensador = not validacion.valores_ingresados("código",codigo_dispensador,1)
     respt = depositarcontroller.buscar_deposito_codigo(codigo_cliente, int(codigo_dispensador))
-    total = 0
+    #total = 0
     # Realizar la verificacion por códigos separados
     if len(respt)>0:
         print("============================")
@@ -37,12 +37,12 @@ def frm_consulta_saldo():
                         buscar_dispensador_codigo(int(deposito.codigo_dispensador))
             print("CLIENTE:",deposito.codigo_cliente, "-", respt_cliente.nombre)
             print("DISPENSADOR:",deposito.codigo_dispensador, "-", respt_dispensador.lugar)
-            print("CANTIDAD DE BILLETES:")
-            for valor in deposito.billete:
-                for nro_billete, vbillete in valor.items():
-                    print(str(nro_billete)+ ": ",vbillete)
-                    total = total + (int(nro_billete)* vbillete)
-            print("TOTAL:", total)
+            # print("CANTIDAD DE BILLETES:")
+            # for valor in deposito.billete:
+            #     for nro_billete, vbillete in valor.items():
+            #         print(str(nro_billete)+ ": ",vbillete)
+            #         total = total + (int(nro_billete)* vbillete)
+            print("TOTAL:", deposito.monto)
             print("============================")
         print(msj.mensaje_existe("saldo"))
         print("============================")

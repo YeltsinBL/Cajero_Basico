@@ -81,6 +81,7 @@ def frm_registrar_deposito():
                         "billete":billetes}
     respt= vista_previa_registro(dato_dispensador)
     if respt:
+        dato_dispensador["monto"] = float(respt)
         respt2 = depositarcontroller.registro_deposito(dato_dispensador)
         if respt2:
             print("======================")
@@ -116,12 +117,12 @@ def vista_previa_registro(datos_depositar:dict[str,any]):
     print("TOTAL:", total)
     print("===========================")
     while True:
-        print("¿CONFIRMAR DEPÓSITO? SI O NO")
-        confirmar = input("INGRESE DECISIÓN: ")
-        if confirmar.lower()== "si":
-            return True
-        elif confirmar.lower() == "no":
-            return False
-        msj.mensaje_error_confirmar()
+        print("¿CONFIRMAR DEPÓSITO? 1 [SI]  o 0 [NO] ")
+        confirmar = input("INGRESE OPCIÓN: ")
+        if confirmar== "1":
+            return int(total)
+        elif confirmar == "0":
+            return 0
+        msj.mensaje_opcion_ingresada_incorrecta()
 
 # endregion

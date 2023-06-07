@@ -51,7 +51,7 @@ def frm_consulta_movimiento():
                         vali_clave_cliente = True
     resp_deposito = depositocontroller.buscar_deposito_codigo(codigo_cliente,0)
     if len(resp_deposito)>0:
-        total = 0
+        #total = 0
         print("============================")
         print(msj.mensaje_listado("depósitos"))
         print("============================")
@@ -61,12 +61,12 @@ def frm_consulta_movimiento():
                         buscar_dispensador_codigo(int(deposito.codigo_dispensador))
             print("CLIENTE:",deposito.codigo_cliente, "-", respt_cliente.nombre)
             print("DISPENSADOR:",deposito.codigo_dispensador, "-", respt_dispensador.lugar)
-            print("CANTIDAD DE BILLETES:")
-            for valor in deposito.billete:
-                for nro_billete, vbillete in valor.items():
-                    print(str(nro_billete)+ ": ",vbillete)
-                    total = total + (int(nro_billete)* vbillete)
-            print("TOTAL:", total)
+            # print("CANTIDAD DE BILLETES:")
+            # for valor in deposito.billete:
+            #     for nro_billete, vbillete in valor.items():
+            #         print(str(nro_billete)+ ": ",vbillete)
+            #         total = total + (int(nro_billete)* vbillete)
+            print("TOTAL:", deposito.monto)
             print("============================")
     else:
         print("===========================================")

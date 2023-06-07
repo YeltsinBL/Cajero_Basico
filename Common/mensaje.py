@@ -93,4 +93,7 @@ class Mensaje:
     def mensaje_realizando_accion(self, nombre:str):
         """Mensaje: ¡REALIZANDO {nombre}! """
         return f"¡REALIZANDO {nombre.upper()}!"
+    def mensaje_opcion_ingresada_incorrecta(self):
+        """Mensaje: ¡INGRESE UNA OPCIÓN VÁLIDA! """
+        return "¡INGRESE UNA OPCIÓN VÁLIDA!"
 # endregion
