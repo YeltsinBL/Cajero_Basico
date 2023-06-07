@@ -3,9 +3,11 @@
 import Api.service as service
 import Model.depositar as depositar
 import ViewModel.dispensador_viewmodel as dispensadorviewmodel
+import ViewModel.cuenta_cliente_viewmodel as cuentaclienteviewmodel
 #endregion
 
 dispensador_vm = dispensadorviewmodel.DispensadorViewModel()
+cuentacliente_vm = cuentaclienteviewmodel.CuentaClienteViewModel()
 
 class DepositarViewModel:
     """Clase Depositar ViewModel"""
@@ -16,9 +18,9 @@ class DepositarViewModel:
         deposita = depositar.Depositar(codigo_deposito=len(self.lista_deposito())+1,
                                        codigo_cliente=disp.get("codigo_cliente"),
                                        codigo_dispensador=disp.get("codigo_dispensador"),
-                                       billete=disp.get("billete"))
+                                       monto=disp.get("monto"))
         # AGREGAR BILLETES AL DISPENSADOR
-        respt = self.agregar_billete_dispensador(disp.get("codigo_dispensador"),
+        respt = dispensador_vm.agregar_billete_dispensador(disp.get("codigo_dispensador"),
                              disp.get("lugar_dispensador"),
                              disp.get("estado_dispensador"),
                              disp.get("billete"))
