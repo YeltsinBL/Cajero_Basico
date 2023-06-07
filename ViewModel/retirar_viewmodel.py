@@ -89,7 +89,6 @@ class RetirarViewModel:
 
         disp = {"codigo_cliente":codigo_cliente, "codigo_dispensador":codigo_dispensador,
                 "billete":billete_actualizar_dispensador}
-        print(disp)
         return depositar_vm.modificar_deposito(disp)
 
     def buscar_retiro(self, codigo_cliente:str):
