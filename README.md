@@ -15,6 +15,7 @@ Simular que hay un servicio que devuelve los datos.
 - Lista de Clientes
 - Lista de Depósitos
 - Lista de Retiros
+- Lista de Transferencia
 
 #### Common
 Funciones globales que se repetiran constantemente.
@@ -37,6 +38,8 @@ Funciones globales que se repetiran constantemente.
   - Clase Depositar
 - Retirar
   - Clase Retirar
+- Transferencia
+  - Clase Transferencia
 
 #### ViewModel
 - Cliente_ViewModel: clase con funciones para el cliente
@@ -66,6 +69,11 @@ Funciones globales que se repetiran constantemente.
   - Modificar Billetes del Dispensador
   - Modificar Billetes del Depósito
   - Buscar Retiro por código Cliente
+- Transferencia_ViewModel: clase con función para la transferencia
+  - Registro Transferencia
+  - Lista Transferencia
+  - Lista Transferencia por Código Cliente
+  - Obtener billetes a depositar
 
 #### Controller
 Funciones que utilizaré en los archivos de View.
@@ -96,6 +104,9 @@ Funciones que utilizaré en los archivos de View.
 - retirar_controller
   - Registro Retiro
   - Buscar Retiro
+- transferencia_controller
+  - Registro Transferencia
+  - Buscar Transferencia
 
 #### View
 - MenuView
@@ -119,6 +130,8 @@ Funciones que utilizaré en los archivos de View.
   - cliente_retirar_view:
     - Registrar Retiro
     - Detalle Retiro
+  - cliente_transferir:
+    - Registrar Transferencia
   - cliente_consultar_saldo:
     - Consultar Saldo
     - Opciones Consulta

@@ -9,7 +9,7 @@ import Controller.depositar_controller as depositarcontroller
 
 msj = mensaje.Mensaje()
 
-# region Formulario Consulta
+# region Formulario Saldo
 def frm_consulta_saldo():
     """Consulta de Saldo"""
     print("================================")

@@ -6,11 +6,12 @@ import Controller.ClienteController as clientecontroller
 import Controller.depositar_controller as depositocontroller
 import Controller.retirar_controller as retirocontroller
 import Controller.dispensador_controller as dispensadorcontroller
+import Controller.transferencia_controller as transfereciacontroller
 # endregion
 
 msj = mensaje.Mensaje()
 
-# region Formulario Consulta
+# region Formulario Movimiento
 def frm_consulta_movimiento():
     """Consulta de Movimiento"""
     print("================================")
@@ -86,6 +87,30 @@ def frm_consulta_movimiento():
     else:
         print("===========================================")
         print(msj.mensaje_no_existe_lista("retiro"))
+        print("===========================================")
+    resp_transferencia = transfereciacontroller.buscar_transferencia_codigo(codigo_cliente)
+    if len(resp_transferencia)>0:
+        print(msj.mensaje_listado("transferencia"))
+        print("============================")
+        for retiro in resp_transferencia:
+            respt_cliente = clientecontroller.buscar_cliente_codigo(retiro.codigo_cliente)
+            respt_dispensador = dispensadorcontroller.\
+                        buscar_dispensador_codigo(int(retiro.codigo_dispensador))
+            respt_cliente_trans = clientecontroller.\
+                        buscar_cliente_codigo(retiro.codigo_cliente_transferir)
+            respt_dispensador_trans = dispensadorcontroller.\
+                        buscar_dispensador_codigo(int(retiro.codigo_dispensador_transferir))
+            print("CLIENTE:",retiro.codigo_cliente, "-", respt_cliente.nombre)
+            print("DISPENSADOR:",retiro.codigo_dispensador, "-", respt_dispensador.lugar)
+            print("CLIENTE TRANSFERENCIA:",retiro.codigo_cliente_transferir, "-",
+                                        respt_cliente_trans.nombre)
+            print("DISPENSADOR TRANSFERENCIA:",retiro.codigo_dispensador_transferir, "-",
+                                        respt_dispensador_trans.lugar)
+            print("MONTO:", retiro.monto)
+            print("============================")
+    else:
+        print("===========================================")
+        print(msj.mensaje_no_existe_lista("transferencia"))
         print("===========================================")
     print("")
 
