@@ -155,3 +155,5 @@ Las acciones de los formularios de Operaciones por Administrador son los mismos 
 - Consultar
 - Estado
 - Listar
+
+[//]: # (Enlaces)
