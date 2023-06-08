@@ -30,6 +30,9 @@ class Mensaje:
     def mensaje_frm_consultar(self, nombre:str):
         """Mensaje: ¡CONSULTAR {nombre} POR CÓDIGO"""
         return f"¡CONSULTAR {nombre.upper()} POR CÓDIGO!"
+    def mensaje_todas_sus(self, nombre:str):
+        """Mensaje: ¡TODAS SUS {nombre}"""
+        return f"¡TODAS SUS {nombre.upper()}!"
 # endregion
 
 # region Exito
@@ -96,4 +99,7 @@ class Mensaje:
     def mensaje_opcion_ingresada_incorrecta(self):
         """Mensaje: ¡INGRESE UNA OPCIÓN VÁLIDA! """
         return "¡INGRESE UNA OPCIÓN VÁLIDA!"
+    def mensaje_no_tiene(self, nombre:str, detalle:str):
+        """Mensaje: ¡EL {nombre.upper()} NO TIENE {detalle.upper()}! """
+        return f"¡EL {nombre.upper()} NO TIENE {detalle.upper()}!"
 # endregion

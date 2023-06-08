@@ -4,7 +4,6 @@ import Common.Validacion as validacion
 import Common.mensaje as mensaje
 import Controller.ClienteController as clientecontroller
 import Controller.transferencia_controller as transferenciacontroller
-import Controller.retirar_controller as retirocontroller
 import Controller.dispensador_controller as dispensadorcontroller
 # endregion
 
