@@ -28,27 +28,16 @@ class TransferenciaViewModel:
                             codigo_cliente_transferir=disp.get("codigo_cliente_transferir"),
                             codigo_dispensador_transferir=disp.get("codigo_dispensador_transferir"),
                             monto=disp.get("monto"))
-        nuevo_cta_cliente:dict[str,any]
         # Aumentar Saldo
-        cta_cliente = cuentacliente_vm.buscar_cuenta_cliente_coddisp_codcli(
+        agregar_saldo_cta = cuentacliente_vm.modificar_saldo_cuenta_cliente(
                                 disp.get("codigo_cliente_transferir"),
-                                disp.get("codigo_dispensador_transferir"))
-        for valor in cta_cliente:
-            valor.monto += disp.get("monto")
-            nuevo_cta_cliente = {"codigo_cliente":valor.codigo_cliente,
-                        "codigo_dispensador":valor.codigo_dispensador,
-                        "monto":valor.monto}
-        agregar_saldo_cta = cuentacliente_vm.modificar_cuenta_cliente(nuevo_cta_cliente)
+                                disp.get("codigo_dispensador_transferir"),
+                                disp.get("monto"),1)
         # Reducir Saldo
-        cta_cliente = cuentacliente_vm.buscar_cuenta_cliente_coddisp_codcli(
+        reducir_saldo_cta = cuentacliente_vm.modificar_saldo_cuenta_cliente(
                                 disp.get("codigo_cliente"),
-                                disp.get("codigo_dispensador"))
-        for valor in cta_cliente:
-            valor.monto -= disp.get("monto")
-            nuevo_cta_cliente = {"codigo_cliente":valor.codigo_cliente,
-                        "codigo_dispensador":valor.codigo_dispensador,
-                        "monto":valor.monto}
-        reducir_saldo_cta = cuentacliente_vm.modificar_cuenta_cliente(nuevo_cta_cliente)
+                                disp.get("codigo_dispensador"),
+                                disp.get("monto"))
 
         if agregar_saldo_cta and reducir_saldo_cta:
             service.transferencia.append(transferencia)
@@ -65,26 +54,3 @@ class TransferenciaViewModel:
             if dato.codigo_cliente == codigo_cliente:
                 transferencia.append(dato)
         return transferencia
-
-    # def obtener_billetes_transferir(self, codigo_dispensador:str, monto):
-    #     """Obtener los billetes que se van a transferir al Dispensador"""
-    #     billete_entregar=[]
-    #     lista_billete_entregar={}
-    #     respt_dispensador = dispensador_vm.buscar_dispensador_codigo(codigo_dispensador)
-    #     for valor in respt_dispensador.billete:
-    #         for nro_billete, vbillete in valor.items():
-    #             lista_billete_entregar[nro_billete] = 0
-    #             # Contar cuantos billetes a entregar y queda
-    #             while monto > 0:
-    #                 cantidad_billete=0
-    #                 while monto >= nro_billete and vbillete >0:
-    #                     cantidad_billete+=1
-    #                     monto -= nro_billete
-    #                     vbillete -= 1
-    #                 if cantidad_billete>0:
-    #                     # Billetes a entregar
-    #                     lista_billete_entregar[nro_billete] = cantidad_billete
-    #                 break
-    #     billete_entregar.append(lista_billete_entregar)
-    #     return billete_entregar
- 

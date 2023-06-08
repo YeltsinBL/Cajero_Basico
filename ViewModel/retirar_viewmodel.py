@@ -24,11 +24,11 @@ class RetirarViewModel:
                              datos_retiro.get("lugar_dispensador"),
                              datos_retiro.get("estado_dispensador"),
                              datos_retiro.get("monto"))
-        respt_deposito = cuentacliente_vm.calcular_billetes_restantes_cuenta_cliente(
+        respt_ctacliente = cuentacliente_vm.modificar_saldo_cuenta_cliente(
                                 datos_retiro.get("codigo_cliente"),
                                 datos_retiro.get("codigo_dispensador"),
                                 datos_retiro.get("monto"))
-        if len(respt)>0 and respt_deposito:
+        if len(respt)>0 and respt_ctacliente:
             service.retiros.append(retiro)
         return respt
 
