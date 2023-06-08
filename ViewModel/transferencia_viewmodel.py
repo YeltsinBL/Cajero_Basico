@@ -53,4 +53,6 @@ class TransferenciaViewModel:
         for dato in service.transferencia:
             if dato.codigo_cliente == codigo_cliente:
                 transferencia.append(dato)
+            if dato.codigo_cliente_transferir == codigo_cliente:
+                transferencia.append(dato)
         return transferencia
