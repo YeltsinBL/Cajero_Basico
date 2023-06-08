@@ -13,21 +13,21 @@ class CuentaClienteViewModel:
         pass
     def registro_cuenta_cliente(self, disp:dict[str,any]):
         """Registro Cuenta Cliente"""
-        #respt_dispensador = self.buscar_cuenta_cliente_coddisp_codcli(
-            #disp.codigo_dispensador, disp.codigo_cliente)
-        #if len(respt_dispensador)>0:
-            # deposita = self.calcular_billete_agregar_cuenta_cliente(
-            #                     codigo_cliente=disp.codigo_cliente,
-            #                     codigo_dispensador=disp.codigo_dispensador,
-            #                     monto=disp.monto)
-
-        #else:
-        deposita = cuentacliente.CuentaCliente(
+        respt_dispensador = self.buscar_cuenta_cliente_coddisp_codcli(
+            codigo_cliente= disp.codigo_cliente,
+            cod_dispensador= disp.codigo_dispensador)
+        if len(respt_dispensador)>0:
+            deposita = self.modificar_saldo_cuenta_cliente(
+                                codigo_cliente=disp.codigo_cliente,
+                                codigo_dispensador=disp.codigo_dispensador,
+                                monto=disp.monto, operacion=1)
+        else:
+            deposita = cuentacliente.CuentaCliente(
                                 codigo_cuenta=len(self.lista_cuenta_cliente())+1,
                                 codigo_cliente=disp.codigo_cliente,
                                 codigo_dispensador=disp.codigo_dispensador,
                                 monto=disp.monto)
-        service.cuenta_cliente.append(deposita)
+            service.cuenta_cliente.append(deposita)
 
     def lista_cuenta_cliente(self):
         """Lista de Depósito"""
