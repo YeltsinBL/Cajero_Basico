@@ -70,3 +70,22 @@ class DispensadorViewModel:
         else: return False
     # actualizar la verificación del monto a retirar
     # Listar Depósitos que queda después de retirar
+
+    def agregar_billete_dispensador(self, cod_dispensador:int, lugar_dispensador:str,
+                        estado_dispensador:str, billete:list):
+        """Agregar billetes al dispensador"""
+        nueva_lista=[]
+        # Lista guardada del Dispensador
+        respt_dispensador = self.buscar_dispensador_codigo(cod_dispensador)
+        for valor in respt_dispensador.billete:
+            for nro_billete, vbillete in valor.items():
+                # Lista de los nuevos valores de billetes para el Dispensdaor
+                for val_billete in billete:
+                    for nro_billete2, vbillete2 in val_billete.items():
+                        # Comparación de las claves de las listas para sumar sus valores
+                        if nro_billete == nro_billete2:
+                            nueva_lista.append({nro_billete: vbillete+vbillete2})
+                            break
+        disp={"codigo":cod_dispensador,"lugar":lugar_dispensador,
+              "estado":estado_dispensador, "billete": nueva_lista}
+        return self.modificar_dispensador(disp)

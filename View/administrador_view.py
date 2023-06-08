@@ -338,8 +338,9 @@ def frm_modificar_dispensador():
             while vali_estado:
                 estado = input("NUEVO ESTADO: ")
                 vali_estado = not validacion.valores_ingresados("estado",estado,5)
-            billetes.append({200:billete_200, 100:billete_100, 50:billete_50, 20:billete_20,\
-                         10:billete_10})
+            billetes.append({200:int(billete_200), 100:int(billete_100),
+                             50:int(billete_50), 20:int(billete_20),
+                             10:int(billete_10)})
             datos_dispensador={"codigo":int(codigo_dispensador),"lugar":lugar,
                                "billete": billetes,"estado": estado.capitalize()}
             vali_cod = False
