@@ -4,10 +4,12 @@ import Api.service as service
 import Model.retirar as retirar
 import ViewModel.dispensador_viewmodel as dispensadorviewmodel
 import ViewModel.depositar_viewmodel as depositarviewmodel
+import ViewModel.cuenta_cliente_viewmodel as cuentaclienteviewmodel
 #endregion
 
 dispensador_vm = dispensadorviewmodel.DispensadorViewModel()
 depositar_vm = depositarviewmodel.DepositarViewModel()
+cuentacliente_vm = cuentaclienteviewmodel.CuentaClienteViewModel()
 
 class RetirarViewModel:
     """Clase Retirar ViewModel"""
@@ -22,9 +24,10 @@ class RetirarViewModel:
                              datos_retiro.get("lugar_dispensador"),
                              datos_retiro.get("estado_dispensador"),
                              datos_retiro.get("monto"))
-        respt_deposito = self.modificar_billetes_deposito(datos_retiro.get("codigo_cliente"),
-                                 datos_retiro.get("codigo_dispensador"),
-                                 datos_retiro.get("monto"))
+        respt_deposito = cuentacliente_vm.calcular_billetes_restantes_cuenta_cliente(
+                                datos_retiro.get("codigo_cliente"),
+                                datos_retiro.get("codigo_dispensador"),
+                                datos_retiro.get("monto"))
         if len(respt)>0 and respt_deposito:
             service.retiros.append(retiro)
         return respt
@@ -62,34 +65,6 @@ class RetirarViewModel:
             return billete_entregar
         return []
     # actualizar la verificación del monto a retirar
-    def modificar_billetes_deposito(self,codigo_cliente:int,
-                               codigo_dispensador:str, monto):
-        """Modificar los billetes del depósito"""
-        billete_actualizar_dispensador=[]
-        lista_billete_restante={}
-        deposito = depositar_vm.lista_deposito()
-        for dato in deposito:
-            if dato.codigo_cliente == codigo_cliente and\
-                dato.codigo_dispensador == codigo_dispensador:
-                for valor in dato.billete:
-                    for nro_billete, vbillete in valor.items():
-                        lista_billete_restante[nro_billete] = vbillete
-                        # Contar cuantos billetes quedan
-                        while monto > 0:
-                            cantidad_billete=0
-                            while monto >= nro_billete and vbillete >0:
-                                cantidad_billete+=1
-                                monto -= nro_billete
-                                vbillete -= 1
-                            if cantidad_billete>0:
-                                # Billetes queda
-                                lista_billete_restante[nro_billete] = vbillete
-                            break
-        billete_actualizar_dispensador.append(lista_billete_restante)
-
-        disp = {"codigo_cliente":codigo_cliente, "codigo_dispensador":codigo_dispensador,
-                "billete":billete_actualizar_dispensador}
-        return depositar_vm.modificar_deposito(disp)
 
     def buscar_retiro(self, codigo_cliente:str):
         """Buscar Retiro por Código"""
