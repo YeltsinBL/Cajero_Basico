@@ -102,4 +102,7 @@ class Mensaje:
     def mensaje_no_tiene(self, nombre:str, detalle:str):
         """Mensaje: ¡EL {nombre.upper()} NO TIENE {detalle.upper()}! """
         return f"¡EL {nombre.upper()} NO TIENE {detalle.upper()}!"
+    def mensaje_cuenta_no_activa(self,):
+        """Mensaje: ¡EL {nombre.upper()} NO TIENE {detalle.upper()}! """
+        return "¡LA CUENTA NO ESTA ACTIVA!"
 # endregion
