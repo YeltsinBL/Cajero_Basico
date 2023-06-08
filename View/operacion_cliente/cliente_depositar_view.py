@@ -29,8 +29,8 @@ def frm_registrar_deposito():
         vali_codigo_cliente = not validacion.\
                                 valores_ingresados("código del cliente",codigo_cliente,4)
         if vali_codigo_cliente is False:
-            existe_clientes = clientecontroller.verifica_cliente_codigo(codigo_cliente)
-            if existe_clientes is False:
+            vali_codigo_cliente = not clientecontroller.verifica_cliente_codigo(codigo_cliente)
+            if vali_codigo_cliente:
                 print("===============================")
                 print(msj.mensaje_no_existe("código del cliente"))
                 print("===============================")
@@ -70,39 +70,39 @@ def frm_registrar_deposito():
         billetes.append({200:int(billete_200), 100:int(billete_100), 50:int(billete_50),
                          20:int(billete_20), 10:int(billete_10)})
         vali_billetes = False
-    respt_cliente = clientecontroller.buscar_cliente_codigo(codigo_cliente)
-    respt_dispensador = dispensadorcontroller.\
-                        buscar_dispensador_codigo(int(codigo_dispensador))
-    dato_dispensador = {"codigo_cliente":codigo_cliente,
-                        "nombre_cliente":respt_cliente.nombre,
-                        "codigo_dispensador": int(codigo_dispensador),
-                        "lugar_dispensador":respt_dispensador.lugar,
-                        "estado_dispensador":respt_dispensador.estado,
-                        "billete":billetes}
-    respt= vista_previa_registro(dato_dispensador)
-    if respt:
-        dato_dispensador["monto"] = float(respt)
-        respt2 = depositarcontroller.registro_deposito(dato_dispensador)
-        if respt2:
-            print("======================")
-            print(msj.mensaje_registrado("depósito"))
-            print("======================")
-            print("")
+    if vali_codigo_cliente is False and vali_codigo_dispensador is False and vali_billetes is False:
+        respt_cliente = clientecontroller.buscar_cliente_codigo(codigo_cliente)
+        respt_dispensador = dispensadorcontroller.\
+                            buscar_dispensador_codigo(int(codigo_dispensador))
+        dato_dispensador = {"codigo_cliente":codigo_cliente,
+                            "nombre_cliente":respt_cliente.nombre,
+                            "codigo_dispensador": int(codigo_dispensador),
+                            "lugar_dispensador":respt_dispensador.lugar,
+                            "estado_dispensador":respt_dispensador.estado,
+                            "billete":billetes}
+        respt= vista_previa_registro(dato_dispensador)
+        if respt:
+            dato_dispensador["monto"] = float(respt)
+            respt2 = depositarcontroller.registro_deposito(dato_dispensador)
+            if respt2:
+                print("======================")
+                print(msj.mensaje_registrado("depósito"))
+                print("======================")
+                print("")
+            else:
+                print("======================")
+                print(msj.mensaje_error_registrar("depósito"))
+                print("======================")
+                print("")
         else:
             print("======================")
-            print(msj.mensaje_error_registrar("depósito"))
+            print(msj.mensaje_cancelar_confirmacion("depósito"))
             print("======================")
             print("")
-    else:
-        print("======================")
-        print(msj.mensaje_cancelar_confirmacion("depósito"))
-        print("======================")
-        print("")
 
 def vista_previa_registro(datos_depositar:dict[str,any]):
     """Vista previa al registrar"""
     total=0
-    print(datos_depositar)
     print("===========================")
     print(msj.mensaje_frm_vista_previa("depósito"))
     print("===========================")

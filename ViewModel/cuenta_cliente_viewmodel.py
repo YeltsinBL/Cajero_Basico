@@ -61,3 +61,11 @@ class CuentaClienteViewModel:
                 (cod_dispensador == 0 or dato.codigo_dispensador == cod_dispensador):
                 dispensa.append(dato)
         return dispensa
+    def verificar_cuenta_cliente(self, codigo_cliente, codigo_dispensador:int, monto:float):
+        """Verificar el Saldo de la Cuenta del Cliente"""
+        lista_cuenta_cliente = self.lista_cuenta_cliente()
+        for dato in lista_cuenta_cliente:
+            if dato.codigo_dispensador == codigo_dispensador and\
+                dato.codigo_cliente == codigo_cliente and dato.monto >= monto:
+                return True
+        return False

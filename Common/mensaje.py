@@ -81,12 +81,12 @@ class Mensaje:
     def mensaje_cancelar_confirmacion(self, nombre:str):
         """Mensaje: ¡USTES HA CANCELADO EL REGISTRO DEL {nombre}!"""
         return f"¡USTES HA CANCELADO EL REGISTRO DEL {nombre.upper()}!"
-    def mensaje_verificar_monto(self):
-        """Mensaje: ¡Verificando monto en el Dispensador seleccionado!"""
-        return str("¡Verificando el monto en el dispensador seleccionado!").upper()
-    def mensaje_monto_excedido(self):
-        """Mensaje: ¡EL MONTO INGRESADO EXCEDE AL DISPENSADOR!"""
-        return str("¡El monto ingresado excede al dispensador!").upper()
+    def mensaje_verificar_monto(self, nombre:str):
+        """Mensaje: ¡Verificando monto en {nombre}!"""
+        return str(f"¡Verificando el monto en {nombre}!").upper()
+    def mensaje_monto_excedido(self, nombre:str):
+        """Mensaje: ¡EL MONTO INGRESADO EXCEDE {nombre.upper()}!"""
+        return str(f"¡El monto ingresado excede {nombre}!").upper()
     def mensaje_error_confirmar(self):
         """Mensaje: ¡INGRESE SI O NO!"""
         print("¡INGRESE SI O NO!")
