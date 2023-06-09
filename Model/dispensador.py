@@ -1,6 +1,6 @@
 """Clase Dispensador"""
 class Dispensador:
-    """Clase Persona"""
+    """Clase Dispensador"""
     def __init__(self, codigo, lugar, estado, billete:list) -> None:
         self.codigo = codigo
         self.lugar = lugar

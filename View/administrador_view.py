@@ -119,7 +119,7 @@ def frm_modificar_cliente():
     if respt:
         print(msj.mensaje_modificar("CLIENTE"))
     else:
-        print(msj.mensaje_error_modificar("CLIENTE"))
+        print(msj.mensaje_error_al("modificar","CLIENTE"))
     print("=====================")
     print("")
 
@@ -143,7 +143,7 @@ def frm_buscar_cliente():
         print("====================")
     else:
         print("====================================")
-        print(msj.mensaje_error_buscar("CLIENTE"))
+        print(msj.mensaje_error_al("buscar","CLIENTE"))
         print("====================================")
         existe_clientes = clientecontroller.verifica_cliente_codigo(codigo_cliente)
         if not existe_clientes:
@@ -352,7 +352,7 @@ def frm_modificar_dispensador():
     if respt:
         print(msj.mensaje_modificar("DISPENSADOR"))
     else:
-        print(msj.mensaje_error_modificar("DISPENSADOR"))
+        print(msj.mensaje_error_al("modificar","DISPENSADOR"))
     print("============================")
     print("")
 
@@ -378,7 +378,7 @@ def frm_buscar_dispensador():
         print("============================")
     else:
         print("===========================================")
-        print(msj.mensaje_error_buscar("DISPENSADOR"))
+        print(msj.mensaje_error_al("buscar","DISPENSADOR"))
         print("===========================================")
         existe_dispensador = dispensadorcontroller.\
                                 verifica_dispensador_codigo(int(codigo_dispensador))
