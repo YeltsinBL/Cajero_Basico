@@ -372,8 +372,8 @@ def frm_buscar_dispensador():
     respt = dispensadorcontroller.buscar_dispensador_codigo(int(codigo_dispensador))
     if not isinstance(respt,list):
         print("LUGAR:",respt.lugar)
+        print("BILLETES:")
         for valor in respt.billete:
-            print("BILLETES:")
             for nro_billete, vbillete in valor.items():
                 print(str(nro_billete).upper()+ ": ",vbillete)
         print("ESTADO:",respt.estado)
@@ -410,8 +410,8 @@ def frm_estado_dispensador():
             print(f"DISPENSADOR NRO. {cantidad}")
             print("CÓDIGO:",dato.codigo)
             print("LUGAR:",dato.lugar)
+            print("BILLETES:")
             for valor in dato.billete:
-                print("BILLETES:")
                 for nro_billete, vbillete in valor.items():
                     print(str(nro_billete).upper()+ ": ",vbillete)
             print("ESTADO:",dato.estado)

@@ -5,6 +5,7 @@ import Common.mensaje as mensaje
 import Controller.ClienteController as clientecontroller
 import Controller.dispensador_controller as dispensadorcontroller
 import Controller.retirar_controller as retirocontroller
+import Controller.cuenta_cliente_controller as cuentaclientecontroller
 # endregion
 
 msj = mensaje.Mensaje()
@@ -20,6 +21,7 @@ def frm_registrar_retiro():
     vali_codigo_dispensador= True
     vali_monto = True
     while vali_codigo_cliente:
+        vali_codigo_dispensador= True
         codigo_cliente = input("CÓDIGO CLIENTE: ")
         vali_codigo_cliente = not validacion.\
                                 valores_ingresados("código del cliente",codigo_cliente,4)
@@ -34,53 +36,63 @@ def frm_registrar_retiro():
             else:
                 cont = 0
                 while vali_clave_cliente:
+                    vali_codigo_dispensador= True
                     clave = input("CLAVE CLIENTE: ")
-                    existe_clave_cliente = clientecontroller.\
+                    vali_clave_cliente = not clientecontroller.\
                         verifica_cliente_codigo_clave(codigo_cliente, clave)
-                    vali_clave_cliente = False
-                    if existe_clave_cliente is False:
+                    #vali_clave_cliente = False
+                    if vali_clave_cliente:
                         print("===============================")
                         print(msj.mensaje_clave_incorrecta("clave"))
                         print("===============================")
                         print("")
                         cont +=1
                         if cont == 3:
-                            vali_clave_cliente = False
+                            #vali_clave_cliente = False
                             vali_codigo_dispensador = False
                             return
                         intent = lambda cont : "intento" if(3-cont == 1) else "intentos"
                         print(f"LE QUEDA {3 - cont}", intent(cont).upper())
-                        vali_clave_cliente = True
+                        #vali_clave_cliente = True
                         vali_codigo_dispensador = False
     while vali_codigo_dispensador:
         codigo_dispensador = input("CÓDIGO DISPENSADOR: ")
         vali_codigo_dispensador = not validacion.\
                                     valores_ingresados("código dispensador",codigo_dispensador,1)
         if vali_codigo_dispensador is False:
-            existe_dispensador = dispensadorcontroller\
+            vali_codigo_dispensador = not dispensadorcontroller\
                                 .verifica_dispensador_codigo(int(codigo_dispensador))
-            if existe_dispensador is False:
+            if vali_codigo_dispensador:
                 print("===============================")
                 print(msj.mensaje_no_existe("código del dispensador"))
                 print("===============================")
                 print("")
-            else:
-                while vali_monto:
-                    monto = input("MONTO: ")
-                    vali_monto = not validacion.valores_ingresados("MONTO",monto,2)
-                    if vali_monto is False:
-                        print("====================================================")
-                        print(msj.mensaje_verificar_monto())
-                        print("====================================================")
-                        veri_monto = dispensadorcontroller.verificar_monto_dispensador(
+    while vali_monto:
+        monto = input("MONTO: ")
+        vali_monto = not validacion.valores_ingresados("MONTO",monto,2)
+        if vali_monto is False:
+            print("====================================================")
+            print(msj.mensaje_verificar_monto("el dispensador"))
+            print("====================================================")
+            vali_monto = not dispensadorcontroller.verificar_monto_dispensador(
                                         int(codigo_dispensador), float(monto))
-                        if veri_monto is False:
-                            print("===============================")
-                            print(msj.mensaje_monto_excedido())
-                            print("===============================")
-                            print("")
-                            vali_codigo_dispensador = True
-                            vali_monto = True
+            if vali_monto:
+                print("===============================")
+                print(msj.mensaje_monto_excedido("al dispensador"))
+                print("===============================")
+                print("")
+            else:
+                print("====================================================")
+                print(msj.mensaje_verificar_monto("la cuenta del cliente"))
+                print("====================================================")
+                vali_monto = not cuentaclientecontroller.verificar_cuenta_cliente(
+                                codigo_cliente, int(codigo_dispensador), float(monto))
+                if vali_monto:
+                    print("====================================================")
+                    print(msj.mensaje_monto_excedido("el saldo del cliente"))
+                    print("====================================================")
+                    print("")
+                    return
     respt_cliente = clientecontroller.buscar_cliente_codigo(codigo_cliente)
     respt_dispensador = dispensadorcontroller.\
                         buscar_dispensador_codigo(int(codigo_dispensador))
