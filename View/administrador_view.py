@@ -61,7 +61,6 @@ def frm_registrar_cliente():
     vali_cod = True
     vali_nom= True
     vali_nrocta= True
-    vali_saldo = True
     while vali_cod:
         codigo = input("CÓDIGO: ")
         vali_cod = not validacion.valores_ingresados("código",codigo,4)
@@ -71,13 +70,10 @@ def frm_registrar_cliente():
     while vali_nrocta:
         nrocuentasoles = input("NRO CUENTA SOLES: ")
         vali_nrocta = not validacion.valores_ingresados("nro cuenta soles",nrocuentasoles,1)
-    while vali_saldo:
-        saldo = input("SALDO: ")
-        vali_saldo = not validacion.valores_ingresados("saldo",saldo,2)
     clave = input("CLAVE: ")
     clientecontroller.registro_cliente({"codigo":codigo, "nombre": nombre,
                                         "nrocuentasoles": int(nrocuentasoles),
-                                        "saldo": float(saldo), "clave":clave, "estado": "Activo"})
+                                        "clave":clave, "estado": "Activo"})
     print("======================")
     print(msj.mensaje_registrado("CLIENTE"))
     print("======================")
