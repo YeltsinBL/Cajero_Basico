@@ -20,30 +20,33 @@ class RetirarViewModel:
         retiro = retirar.Retirar(datos_retiro.get("codigo_cliente"),
                                  datos_retiro.get("codigo_dispensador"),
                                  datos_retiro.get("monto"))
-        respt = self.modificar_billetes_dispensador(datos_retiro.get("codigo_dispensador"),
+        respt = self.calcular_billetes_dispensador(datos_retiro.get("codigo_dispensador"),
                              datos_retiro.get("lugar_dispensador"),
                              datos_retiro.get("estado_dispensador"),
                              datos_retiro.get("monto"))
-        respt_ctacliente = cuentacliente_vm.modificar_saldo_cuenta_cliente(
-                                datos_retiro.get("codigo_cliente"),
-                                datos_retiro.get("codigo_dispensador"),
-                                datos_retiro.get("monto"))
-        if len(respt)>0 and respt_ctacliente:
-            service.retiros.append(retiro)
+        if isinstance(respt, list) and len(respt)>0:
+            respt_ctacliente = cuentacliente_vm.modificar_saldo_cuenta_cliente(
+                                    datos_retiro.get("codigo_cliente"),
+                                    datos_retiro.get("codigo_dispensador"),
+                                    datos_retiro.get("monto"))
+            if respt_ctacliente:
+                service.retiros.append(retiro)
         return respt
 
-    def modificar_billetes_dispensador(self, cod_dispensador:int, lugar_dispensador:str,
+    def calcular_billetes_dispensador(self, cod_dispensador:int, lugar_dispensador:str,
                                estado_dispensador:str, monto):
-        """Modificar los Billetes del Dispensador"""
+        """Calcualr los Billetes que se moodificarán en el Dispensador"""
         billete_entregar=[]
         lista_billete_entregar={}
         billete_actualizar_dispensador=[]
-        lista_billete_restante={}
+        billete_falta =""
         respt_dispensador = dispensador_vm.buscar_dispensador_codigo(cod_dispensador)
         for valor in respt_dispensador.billete:
             for nro_billete, vbillete in valor.items():
-                lista_billete_restante[nro_billete] = vbillete
                 # Contar cuantos billetes a entregar y queda
+                if monto >= nro_billete and\
+                    (vbillete ==0 or monto > (nro_billete * vbillete)):
+                    billete_falta += str(nro_billete) + " - "
                 while monto > 0:
                     cantidad_billete=0
                     while monto >= nro_billete and vbillete >0:
@@ -53,17 +56,18 @@ class RetirarViewModel:
                     if cantidad_billete>0:
                         # Billetes a entregar
                         lista_billete_entregar[nro_billete] = cantidad_billete
-                        # Billetes queda
-                        lista_billete_restante[nro_billete] = vbillete
                     break
+                # Billetes queda
+                billete_actualizar_dispensador.append({nro_billete:vbillete})
         billete_entregar.append(lista_billete_entregar)
-        billete_actualizar_dispensador.append(lista_billete_restante)
-        disp={"codigo":cod_dispensador,"lugar":lugar_dispensador,
-              "estado":estado_dispensador, "billete": billete_actualizar_dispensador}
-        respt = dispensador_vm.modificar_dispensador(disp)
-        if respt:
-            return billete_entregar
-        return []
+        if monto ==0:
+            disp={"codigo":cod_dispensador,"lugar":lugar_dispensador,
+                "estado":estado_dispensador, "billete": billete_actualizar_dispensador}
+            respt = dispensador_vm.modificar_dispensador(disp)
+            if respt:
+                return billete_entregar
+            return []
+        return billete_falta
     # actualizar la verificación del monto a retirar
 
     def buscar_retiro(self, codigo_cliente:str):

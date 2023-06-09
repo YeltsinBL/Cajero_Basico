@@ -26,8 +26,8 @@ def frm_registrar_retiro():
         vali_codigo_cliente = not validacion.\
                                 valores_ingresados("código del cliente",codigo_cliente,4)
         if vali_codigo_cliente is False:
-            existe_clientes = clientecontroller.verifica_cliente_codigo(codigo_cliente)
-            if existe_clientes is False:
+            vali_codigo_cliente = not clientecontroller.verifica_cliente_codigo(codigo_cliente)
+            if vali_codigo_cliente:
                 print("===============================")
                 print(msj.mensaje_no_existe("código del cliente"))
                 print("===============================")
@@ -68,7 +68,7 @@ def frm_registrar_retiro():
         vali_monto = not validacion.valores_ingresados("MONTO",monto,2)
         if vali_monto is False:
             print("====================================================")
-            print(msj.mensaje_verificar_monto("el dispensador"))
+            print(msj.mensaje_verificar_tipo("saldo","el dispensador"))
             print("====================================================")
             vali_monto = not dispensadorcontroller.verificar_monto_dispensador(
                                         int(codigo_dispensador), float(monto))
@@ -79,7 +79,7 @@ def frm_registrar_retiro():
                 print("")
             else:
                 print("====================================================")
-                print(msj.mensaje_verificar_monto("la cuenta del cliente"))
+                print(msj.mensaje_verificar_tipo("saldo","la cuenta del cliente"))
                 print("====================================================")
                 vali_monto = not cuentaclientecontroller.verificar_cuenta_cliente(
                                 codigo_cliente, int(codigo_dispensador), float(monto))
@@ -97,11 +97,11 @@ def frm_registrar_retiro():
             "lugar_dispensador":respt_dispensador.lugar, 
             "estado_dispensador":respt_dispensador.estado, 
             "monto":float(monto)}
-    print("===============================")
-    print(msj.mensaje_realizando_accion("retiro"))
-    print("===============================")
+    print("============================================")
+    print(msj.mensaje_verificar_tipo("billetes","el dispensador"))
+    print("============================================")
     resp = retirocontroller.registro_retiro(datos)
-    if len(resp)>0:
+    if isinstance(resp, list) and len(resp)>0:
         detalle_retiro(datos.get("codigo_cliente"), datos.get("nombre_cliente"),
                        datos.get("codigo_dispensador"), datos.get("lugar_dispensador"),
                        datos.get("monto"), resp)
@@ -109,9 +109,15 @@ def frm_registrar_retiro():
         print(msj.mensaje_registrado("retiro"))
         print("======================")
         print("")
+    elif isinstance(resp, str):
+        print("============================================")
+        print(msj.mensaje_error_al("registrar","el dispensador"))
+        print(msj.mensaje_no_tiene("dispensador",f"suficientes billetes de {resp[:-3]}"))
+        print("============================================")
+        print("")
     else:
         print("======================")
-        print(msj.mensaje_error_registrar("retiro"))
+        print(msj.mensaje_error_al("registrar","retiro"))
         print("======================")
         print("")
 

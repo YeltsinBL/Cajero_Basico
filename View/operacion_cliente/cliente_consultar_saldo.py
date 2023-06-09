@@ -52,7 +52,7 @@ def frm_consulta_saldo():
             print("============================")
         else:
             print("===========================================")
-            print(msj.mensaje_error_consultar("saldo"))
+            print(msj.mensaje_error_al("consultar","saldo"))
             print("===========================================")
             existe_cliente = cuentaclientecontroller\
                     .buscar_saldo_cuenta_cliente(codigo_cliente)

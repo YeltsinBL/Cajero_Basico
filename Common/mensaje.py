@@ -57,21 +57,12 @@ class Mensaje:
     def mensaje_no_existe(self, nombre:str):
         """Mensaje: ¡EL {nombre} INGRESADO NO EXISTE! """
         return f"¡EL {nombre.upper()} INGRESADO NO EXISTE!"
-    def mensaje_error_modificar(self, nombre:str):
-        """Mensaje: ¡HUBO UN ERROR AL MODIFICAR EL {nombre}!"""
-        return f"¡HUBO UN ERROR AL MODIFICAR EL {nombre.upper()}!"
-    def mensaje_error_buscar(self, nombre:str):
-        """Mensaje: ¡HUBO UN ERROR AL BUSCAR EL {nombre}!"""
-        return f"¡HUBO UN ERROR AL BUSCAR EL {nombre.upper()}!"
+    def mensaje_error_al(self, tipo:str, nombre:str):
+        """Mensaje: ¡HUBO UN ERROR AL {tipo} EL {nombre}!"""
+        return f"¡HUBO UN ERROR AL {tipo.upper()} EL {nombre.upper()}!"
     def mensaje_no_encontro_por_estado(self, nombre:str, estado:str):
         """Mensaje: ¡NO HAY {nombre} {estado}!"""
         return f"¡NO HAY {nombre.upper()} {estado.upper()}!"
-    def mensaje_error_registrar(self, nombre:str):
-        """Mensaje: ¡HUBO UN ERROR AL REGISTRAR EL {nombre}!"""
-        return f"¡HUBO UN ERROR AL REGISTRAR EL {nombre.upper()}!"
-    def mensaje_error_consultar(self, nombre:str):
-        """Mensaje: ¡HUBO UN ERROR AL CONSULTAR EL {nombre}!"""
-        return f"¡HUBO UN ERROR AL CONSULTAR EL {nombre.upper()}!"
     def mensaje_no_existe_lista(self, nombre:str):
         """Mensaje: ¡NO EXISTE {nombre}! """
         return f"¡NO EXISTE {nombre.upper()}!"
@@ -81,9 +72,9 @@ class Mensaje:
     def mensaje_cancelar_confirmacion(self, nombre:str):
         """Mensaje: ¡USTES HA CANCELADO EL REGISTRO DEL {nombre}!"""
         return f"¡USTES HA CANCELADO EL REGISTRO DEL {nombre.upper()}!"
-    def mensaje_verificar_monto(self, nombre:str):
-        """Mensaje: ¡Verificando monto en {nombre}!"""
-        return str(f"¡Verificando el monto en {nombre}!").upper()
+    def mensaje_verificar_tipo(self, tipo:str, nombre:str):
+        """Mensaje: ¡Verificando {tipo} en {nombre}!"""
+        return str(f"¡Verificando {tipo} en {nombre}!").upper()
     def mensaje_monto_excedido(self, nombre:str):
         """Mensaje: ¡EL MONTO INGRESADO EXCEDE {nombre.upper()}!"""
         return str(f"¡El monto ingresado excede {nombre}!").upper()

@@ -93,7 +93,7 @@ def frm_cliente_transferencia():
         vali_monto = not validacion.valores_ingresados("MONTO",monto,2)
         if vali_monto is False:
             print("====================================================")
-            print(msj.mensaje_verificar_monto("el dispensador"))
+            print(msj.mensaje_verificar_tipo("saldo","el dispensador"))
             print("====================================================")
             veri_monto = dispensadorcontroller.verificar_monto_dispensador(
                                         int(codigo_dispensador), float(monto))
@@ -119,7 +119,7 @@ def frm_cliente_transferencia():
         print("")
     else:
         print("======================")
-        print(msj.mensaje_error_registrar("transferencia"))
+        print(msj.mensaje_error_al("registrar","transferencia"))
         print("======================")
         print("")
 # endregion

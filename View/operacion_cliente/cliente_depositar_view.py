@@ -91,7 +91,7 @@ def frm_registrar_deposito():
                 print("")
             else:
                 print("======================")
-                print(msj.mensaje_error_registrar("depósito"))
+                print(msj.mensaje_error_al("registrar","depósito"))
                 print("======================")
                 print("")
         else:
