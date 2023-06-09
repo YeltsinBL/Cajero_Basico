@@ -11,12 +11,15 @@ msj = mensaje.Mensaje()
 
 # region Función para SELECCIONAR FORMULARIO
 
-def seleccionar_acciones_formulario_operacion():
+def seleccionar_acciones_formulario_operacion(opc_operacion):
     """Opción para Mostrar las acciones de los formularios"""
     inicio = True
     cont = 0
     while inicio:
         try:
+            print()
+            print(msj.mensaje_menu("Gestión Cliente"\
+                                   if opc_operacion ==1 else "Gestión Dispensador"))
             print("Ingresa el número de la acción a realizar:")
             operacioncontroller.listado_opciones_formulario()
             cant_opc_form = operacioncontroller.cantidad_opciones_formulario()
@@ -30,15 +33,18 @@ def seleccionar_acciones_formulario_operacion():
             cont +=1
             inicio = validacion.mensaje_validacion(cont)
 
-def seleccionar_acciones_formulario_operacion_inicial():
+def seleccionar_acciones_formulario_operacion_inicial(opc_operacion):
     """Opción para Mostrar las acciones de los formularios"""
     inicio = True
     cont = 0
     while inicio:
         try:
+            print()
+            print(msj.mensaje_menu("Gestión Cliente"\
+                                   if opc_operacion ==1 else "Gestión Dispensador"))
             print("Ingresa el número de la acción a realizar:")
             print(1, "Agregar")
-            print(6, "Salir")
+            print(6, "Regresar al Menú Administrador")
             nro_accion = int(input(""))
             if nro_accion == 6 or nro_accion == 1:
                 return nro_accion
@@ -451,9 +457,9 @@ def seleccion_formulario(opc_operacion):
         opc_accion: int | None
         if (opc_operacion == 1 and len(clientecontroller.listado_cliente()) == 0) or \
             (opc_operacion == 2 and len(dispensadorcontroller.listado_dispensador()) == 0):
-            opc_accion = seleccionar_acciones_formulario_operacion_inicial()
+            opc_accion = seleccionar_acciones_formulario_operacion_inicial(opc_operacion)
         else:
-            opc_accion = seleccionar_acciones_formulario_operacion()
+            opc_accion = seleccionar_acciones_formulario_operacion(opc_operacion)
         if opc_accion == 6:
             iniciar_accion = False
             break

@@ -14,6 +14,7 @@ def selecciona_menu():
     while inicio:
         try:
             print()
+            print(msj.mensaje_menu("Principal"))
             print("Ingresa el número de tu tipo de usuario:")
             menucontroller.listado_menu()
             nro_menu = int(input(""))

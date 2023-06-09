@@ -1,10 +1,13 @@
 """Vista del menú de operaciones"""
 # region Importaciones
+import Common.mensaje as mensaje
 import Controller.OperacionController as operacioncontroller
 import Common.Validacion as validacion
 import View.administrador_view as administradorview
 import View.operacion_cliente_view as operacionclienteview
 # endregion
+
+msj = mensaje.Mensaje()
 
 # region Funciones de Opciones
 def selecciona_operacion(nromenu):
@@ -13,6 +16,8 @@ def selecciona_operacion(nromenu):
     cont = 0
     while inicio:
         try:
+            print()
+            print(msj.mensaje_menu("Cliente" if nromenu ==1 else "Administrador"))
             print("Ingresa el número de operación a realizar:")
             operacioncontroller.listado_opciones_por_menu(nromenu)
             nro_operacion = int(input(""))
