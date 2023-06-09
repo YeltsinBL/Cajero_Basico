@@ -10,7 +10,7 @@ def listado_opciones_por_menu(idmenu):
             print(idx,dato)
 
 accion_formulario = {1:"Agregar", 2:"Modificar", 3:"Consultar",
-                4: "Estado", 5:"Listar", 6:"Salir"}
+                4: "Estado", 5:"Listar", 6:"Regresar al Menú Administrador"}
 def listado_opciones_formulario():
     """Muestra las opciones del formulario"""
     for idx, dato in accion_formulario.items():

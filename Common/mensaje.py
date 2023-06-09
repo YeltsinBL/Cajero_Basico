@@ -33,6 +33,9 @@ class Mensaje:
     def mensaje_todas_sus(self, nombre:str):
         """Mensaje: ¡TODAS SUS {nombre}"""
         return f"¡TODAS SUS {nombre.upper()}!"
+    def mensaje_menu(self, nombre:str):
+        """Mensaje: ¡MENÚ {nombre}"""
+        return f"¡MENÚ {nombre.upper()}!"
 # endregion
 
 # region Exito
