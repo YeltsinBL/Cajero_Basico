@@ -15,7 +15,6 @@ class  ClienteViewModel:
         clien = clientemodel.Cliente(codigo=dicts.get("codigo"),
                                      nombre=dicts.get("nombre"),
                                      nrocuentasoles=dicts.get("nrocuentasoles"),
-                                     saldo=dicts.get("saldo"),
                                      clave=dicts.get("clave"),
                                      estado=dicts.get("estado"))
         service.clientes.append(clien)
@@ -57,5 +56,12 @@ class  ClienteViewModel:
         """Buscar Cliente por Código"""
         for dato in service.clientes:
             if dato.codigo == codigo and dato.clave ==clave:
+                return True
+        return False
+    def modificar_cliente_saldo(self, codigocliente,monto):
+        """Modificar el Saldo del Cliente"""
+        for dato in service.clientes:
+            if dato.codigo == codigocliente:
+                dato.saldo=monto
                 return True
         return False

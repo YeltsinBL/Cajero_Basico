@@ -40,7 +40,6 @@ def frm_registrar_retiro():
                     clave = input("CLAVE CLIENTE: ")
                     vali_clave_cliente = not clientecontroller.\
                         verifica_cliente_codigo_clave(codigo_cliente, clave)
-                    #vali_clave_cliente = False
                     if vali_clave_cliente:
                         print("===============================")
                         print(msj.mensaje_clave_incorrecta("clave"))
@@ -48,12 +47,9 @@ def frm_registrar_retiro():
                         print("")
                         cont +=1
                         if cont == 3:
-                            #vali_clave_cliente = False
-                            vali_codigo_dispensador = False
                             return
                         intent = lambda cont : "intento" if(3-cont == 1) else "intentos"
                         print(f"LE QUEDA {3 - cont}", intent(cont).upper())
-                        #vali_clave_cliente = True
                         vali_codigo_dispensador = False
     while vali_codigo_dispensador:
         codigo_dispensador = input("CÓDIGO DISPENSADOR: ")
