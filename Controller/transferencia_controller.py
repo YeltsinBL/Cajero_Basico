@@ -12,5 +12,5 @@ def registro_transferencia(datos_depositar:dict[str,any]):
     return transferencia_vm.registro_transferencia(datos_depositar)
 def buscar_transferencia_codigo(codigo_cliente:str):
     """Buscar Transferencia por código"""
-    return transferencia_vm.lista_transferencia_codigo(codigo_cliente)
+    return transferencia_vm.buscar_transferencia_codigo(codigo_cliente)
 # endregion

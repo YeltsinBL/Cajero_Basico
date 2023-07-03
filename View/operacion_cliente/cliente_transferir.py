@@ -1,10 +1,13 @@
 """Vista para las Operaciones por Cliente Transferir"""
 # region importaciones
+from time import sleep
+from colorama import Fore, Style
 import Common.Validacion as validacion
 import Common.mensaje as mensaje
 import Controller.ClienteController as clientecontroller
 import Controller.transferencia_controller as transferenciacontroller
 import Controller.dispensador_controller as dispensadorcontroller
+import Controller.cuenta_cliente_controller as cuentaclientecontroller
 # endregion
 
 msj = mensaje.Mensaje()
@@ -12,9 +15,11 @@ msj = mensaje.Mensaje()
 # region Formulario Transferir
 def frm_cliente_transferencia():
     """Consulta de Transferencia"""
+    print(Style.BRIGHT + Fore.CYAN)
     print("================================")
     print(msj.mensaje_frm_registro("transferencia"))
     print("================================")
+    print(Style.NORMAL + Fore.WHITE)
     vali_codigo_cliente = True
     vali_clave_cliente = True
     vali_codigo_dispensador= True
@@ -23,43 +28,45 @@ def frm_cliente_transferencia():
         vali_codigo_cliente = not validacion.\
                                 valores_ingresados("código del cliente",codigo_cliente,4)
         if vali_codigo_cliente is False:
-            existe_clientes = clientecontroller.verifica_cliente_codigo(codigo_cliente)
-            if existe_clientes is False:
+            vali_codigo_cliente = not clientecontroller.verifica_cliente_codigo(codigo_cliente)
+            if vali_codigo_cliente:
+                print(Style.BRIGHT + Fore.RED)
                 print("===============================")
                 print(msj.mensaje_no_existe("código del cliente"))
                 print("===============================")
-                print("")
+                print(Style.NORMAL + Fore.WHITE)
             else:
                 cont = 0
                 while vali_clave_cliente:
                     clave = input("CLAVE CLIENTE: ")
-                    existe_clave_cliente = clientecontroller.\
+                    vali_clave_cliente = not clientecontroller.\
                         verifica_cliente_codigo_clave(codigo_cliente, clave)
-                    vali_clave_cliente = False
-                    if existe_clave_cliente is False:
-                        print("===============================")
+                    if vali_clave_cliente:
+                        print(Style.BRIGHT + Fore.RED)
+                        print("===================================")
                         print(msj.mensaje_clave_incorrecta("clave"))
-                        print("===============================")
-                        print("")
+                        print("===================================")
                         cont +=1
                         if cont == 3:
                             vali_clave_cliente = False
                             return
                         intent = lambda cont : "intento" if(3-cont == 1) else "intentos"
                         print(f"LE QUEDA {3 - cont}", intent(cont).upper())
-                        vali_clave_cliente = True
+                        print("===================================")
+                        print(Style.NORMAL + Fore.WHITE)
     while vali_codigo_dispensador:
         codigo_dispensador = input("CÓDIGO DISPENSADOR: ")
         vali_codigo_dispensador = not validacion.\
                                     valores_ingresados("código dispensador",codigo_dispensador,1)
         if vali_codigo_dispensador is False:
-            existe_dispensador = dispensadorcontroller\
+            vali_codigo_dispensador = not dispensadorcontroller\
                                 .verifica_dispensador_codigo(int(codigo_dispensador))
-            if existe_dispensador is False:
+            if vali_codigo_dispensador:
+                print(Style.BRIGHT + Fore.RED)
                 print("===============================")
                 print(msj.mensaje_no_existe("código del dispensador"))
                 print("===============================")
-                print("")
+                print(Style.NORMAL + Fore.WHITE)
     vali_codigo_cliente_transferencia = True
     vali_codigo_dispensador_transferir = True
     while vali_codigo_cliente_transferencia:
@@ -68,42 +75,58 @@ def frm_cliente_transferencia():
                                 valores_ingresados("código del cliente a transferir",
                                                    codigo_cliente_trans,4)
         if vali_codigo_cliente_transferencia is False:
-            existe_clientes = clientecontroller.verifica_cliente_codigo(codigo_cliente_trans)
-            if existe_clientes is False:
+            vali_codigo_cliente_transferencia = not clientecontroller\
+                                        .verifica_cliente_codigo(codigo_cliente_trans)
+            if vali_codigo_cliente_transferencia:
+                print(Style.BRIGHT + Fore.RED)
                 print("===============================")
                 print(msj.mensaje_no_existe("código del cliente a transferir"))
                 print("===============================")
-                print("")
+                print(Style.NORMAL + Fore.WHITE)
     while vali_codigo_dispensador_transferir:
         codigo_dispensador_transferir = input("CÓDIGO DISPENSADOR A TRANSFERIR: ")
         vali_codigo_dispensador_transferir = not validacion.\
                                     valores_ingresados("código dispensador a transferir",
                                                        codigo_dispensador_transferir,1)
         if vali_codigo_dispensador_transferir is False:
-            existe_dispensador = dispensadorcontroller\
+            vali_codigo_dispensador_transferir = not dispensadorcontroller\
                                 .verifica_dispensador_codigo(int(codigo_dispensador_transferir))
-            if existe_dispensador is False:
+            if vali_codigo_dispensador_transferir:
+                print(Style.BRIGHT + Fore.RED)
                 print("===============================")
                 print(msj.mensaje_no_existe("código del dispensador a transferir"))
                 print("===============================")
-                print("")
+                print(Style.NORMAL + Fore.WHITE)
     vali_monto = True
     while vali_monto:
         monto = input("MONTO: ")
         vali_monto = not validacion.valores_ingresados("MONTO",monto,2)
         if vali_monto is False:
+            print(Style.BRIGHT + Fore.YELLOW)
             print("====================================================")
             print(msj.mensaje_verificar_tipo("saldo","el dispensador"))
             print("====================================================")
-            veri_monto = dispensadorcontroller.verificar_monto_dispensador(
+            sleep(1)
+            vali_monto = not dispensadorcontroller.verificar_monto_dispensador(
                                         int(codigo_dispensador), float(monto))
-            if veri_monto is False:
+            if vali_monto:
+                print(Style.BRIGHT + Fore.RED)
                 print("===============================")
                 print(msj.mensaje_monto_excedido("al dispensador"))
                 print("===============================")
-                print("")
-                vali_codigo_dispensador = True
-                vali_monto = True
+            else:
+                print("====================================================")
+                print(msj.mensaje_verificar_tipo("saldo","la cuenta del cliente"))
+                print("====================================================")
+                sleep(1)
+                vali_monto = not cuentaclientecontroller.verificar_cuenta_cliente(
+                                        codigo_cliente, int(codigo_dispensador), float(monto))
+                if vali_monto:
+                    print(Style.BRIGHT + Fore.RED)
+                    print("====================================================")
+                    print(msj.mensaje_monto_excedido("el saldo del cliente"))
+                    print("====================================================")
+            print(Style.NORMAL + Fore.WHITE)
     datos = {"codigo_cliente":codigo_cliente, "codigo_dispensador":int(codigo_dispensador),
             "codigo_cliente_transferir":codigo_cliente_trans, 
             "codigo_dispensador_transferir":int(codigo_dispensador_transferir),
@@ -113,13 +136,13 @@ def frm_cliente_transferencia():
     print("===============================")
     resp = transferenciacontroller.registro_transferencia(datos)
     if resp:
+        print(Style.BRIGHT + Fore.GREEN)
         print("======================")
         print(msj.mensaje_registrado("transferencia"))
         print("======================")
-        print("")
     else:
+        print(Style.BRIGHT + Fore.RED)
         print("======================")
         print(msj.mensaje_error_al("registrar","transferencia"))
         print("======================")
-        print("")
 # endregion

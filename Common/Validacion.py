@@ -1,5 +1,6 @@
 """Validaciones Globales"""
 import sys
+from colorama import Fore, Style
 
 def mensaje_validacion(cont):
     """Mensaje para las validaciones"""
@@ -18,19 +19,29 @@ def valores_ingresados(nombre_campo:str, valor, tipo_dato):
     """Función para validar la nformación ingresada"""
     retorno =  True
     if tipo_dato == 1 and (not valor.isdigit()):
-        print("El campo", nombre_campo.upper(),"sólo acepta números enteros")
+        print(Style.BRIGHT + Fore.RED+
+              "El campo", nombre_campo.upper(),"sólo acepta números enteros"
+              +Style.NORMAL + Fore.WHITE)
         retorno= False
     elif tipo_dato == 2 and (not tiene_exactamente_un_punto(valor)):
-        print("El campo", nombre_campo.upper(),"sólo acepta números")
+        print(Style.BRIGHT + Fore.RED+
+              "El campo", nombre_campo.upper(),"sólo acepta números"
+              +Style.NORMAL + Fore.WHITE)
         retorno= False
     elif tipo_dato == 3 and (not valor.isalpha()):
-        print("El campo", nombre_campo.upper(),"sólo acepta letras")
+        print(Style.BRIGHT + Fore.RED+
+              "El campo", nombre_campo.upper(),"sólo acepta letras"
+              +Style.NORMAL + Fore.WHITE)
         retorno= False
     elif tipo_dato == 4 and (not valor.isalnum()):
-        print("El campo", nombre_campo.upper(),"sólo aceptan letras y números")
+        print(Style.BRIGHT + Fore.RED+
+              "El campo", nombre_campo.upper(),"sólo aceptan letras y números"
+              +Style.NORMAL + Fore.WHITE)
         retorno= False
     elif tipo_dato == 5 and not (valor.lower() == "activo" or valor.lower() == "desactivo"):
-        print("El campo", nombre_campo.upper(),"sólo las palabras \"Activo\" y \"Desactivo\"")
+        print(Style.BRIGHT + Fore.RED+
+              "El campo", nombre_campo.upper(),"sólo las palabras \"Activo\" y \"Desactivo\""
+              +Style.NORMAL + Fore.WHITE)
         retorno= False
     return retorno
 def tiene_exactamente_un_punto(numero):
@@ -42,7 +53,9 @@ def tiene_exactamente_un_punto(numero):
             num = float(numero)
         else:
             if primer_indice is not numero.rfind("."):
-                print("Existe más de un punto decimal")
+                print(Style.BRIGHT + Fore.RED+
+                      "Existe más de un punto decimal"
+                      +Style.NORMAL + Fore.WHITE)
                 return False
             else: num = float(numero)
         return isinstance(num,float)

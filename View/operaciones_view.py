@@ -1,5 +1,6 @@
 """Vista del menú de operaciones"""
 # region Importaciones
+from colorama import Fore, Style
 import Common.mensaje as mensaje
 import Controller.OperacionController as operacioncontroller
 import Common.Validacion as validacion
@@ -16,8 +17,9 @@ def selecciona_operacion(nromenu):
     cont = 0
     while inicio:
         try:
-            print()
+            print(Style.BRIGHT + Fore.BLUE)
             print(msj.mensaje_menu("Cliente" if nromenu ==1 else "Administrador"))
+            print(Fore.WHITE + Style.NORMAL)
             print("Ingresa el número de operación a realizar:")
             operacioncontroller.listado_opciones_por_menu(nromenu)
             nro_operacion = int(input(""))

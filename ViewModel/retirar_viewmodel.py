@@ -1,6 +1,6 @@
 """Retirar ViewModel"""
 # region Importación
-import Api.service as service
+import Data.service as service
 import Model.retirar as retirar
 import ViewModel.dispensador_viewmodel as dispensadorviewmodel
 import ViewModel.depositar_viewmodel as depositarviewmodel

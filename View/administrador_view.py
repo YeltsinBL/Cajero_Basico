@@ -1,5 +1,7 @@
 """Vista para las Operaciones por Administrador"""
 # region importaciones
+from time import sleep
+from colorama import Fore, Style
 import Common.Validacion as validacion
 import Common.mensaje as mensaje
 import Controller.ClienteController as clientecontroller
@@ -17,9 +19,10 @@ def seleccionar_acciones_formulario_operacion(opc_operacion):
     cont = 0
     while inicio:
         try:
-            print()
+            print(Style.BRIGHT + Fore.BLUE)
             print(msj.mensaje_menu("Gestión Cliente"\
                                    if opc_operacion ==1 else "Gestión Dispensador"))
+            print(Fore.WHITE + Style.NORMAL)
             print("Ingresa el número de la acción a realizar:")
             operacioncontroller.listado_opciones_formulario()
             cant_opc_form = operacioncontroller.cantidad_opciones_formulario()
@@ -39,9 +42,10 @@ def seleccionar_acciones_formulario_operacion_inicial(opc_operacion):
     cont = 0
     while inicio:
         try:
-            print()
+            print(Style.BRIGHT + Fore.BLUE)
             print(msj.mensaje_menu("Gestión Cliente"\
                                    if opc_operacion ==1 else "Gestión Dispensador"))
+            print(Fore.WHITE + Style.NORMAL)
             print("Ingresa el número de la acción a realizar:")
             print(1, "Agregar")
             print(6, "Regresar al Menú Administrador")
@@ -61,9 +65,11 @@ def seleccionar_acciones_formulario_operacion_inicial(opc_operacion):
 # region Formulario Cliente
 def frm_registrar_cliente():
     """Registro de Clientes"""
+    print(Style.BRIGHT + Fore.CYAN)
     print("======================")
     print(msj.mensaje_frm_registro("CLIENTE"))
     print("======================")
+    print(Style.NORMAL + Fore.WHITE)
     vali_cod = True
     vali_nom= True
     vali_nrocta= True
@@ -80,19 +86,21 @@ def frm_registrar_cliente():
     clientecontroller.registro_cliente({"codigo":codigo, "nombre": nombre,
                                         "nrocuentasoles": int(nrocuentasoles),
                                         "clave":clave, "estado": "Activo"})
+    print(Style.BRIGHT + Fore.GREEN)
     print("======================")
     print(msj.mensaje_registrado("CLIENTE"))
     print("======================")
-    print("")
 
 def frm_modificar_cliente():
     """Modificar Cliente"""
     vali_cod = True
     datos_cliente:dict[str,any]
     while vali_cod:
+        print(Style.BRIGHT + Fore.CYAN)
         print("====================")
         print(msj.mensaje_frm_modifica("CLIENTE"))
         print("====================")
+        print(Style.NORMAL + Fore.WHITE)
         codigo_cliente = input("CÓDIGO: ")
         vali_cod = not validacion.valores_ingresados("código",codigo_cliente,4)
         existe_clientes = clientecontroller.verifica_cliente_codigo(codigo_cliente)
@@ -115,25 +123,32 @@ def frm_modificar_cliente():
             vali_cod = False
         else:
             vali_cod = True
+            print(Style.BRIGHT + Fore.RED)
             print("===============================")
             print(msj.mensaje_no_existe("CÓDIGO"))
             print("===============================")
-            print("")
+            print(Style.NORMAL + Fore.WHITE)
+            sleep(1)
             frm_listado_cliente()
     respt= clientecontroller.modificar_cliente(datos_cliente)
-    print("=====================")
     if respt:
+        print(Style.BRIGHT + Fore.GREEN)
+        print("=====================")
         print(msj.mensaje_modificar("CLIENTE"))
+        print("=====================")
     else:
+        print(Style.BRIGHT + Fore.RED)
+        print("=====================")
         print(msj.mensaje_error_al("modificar","CLIENTE"))
-    print("=====================")
-    print("")
+        print("=====================")
 
 def frm_buscar_cliente():
     """Función para Buscar un cliente por su código"""
+    print(Style.BRIGHT + Fore.CYAN)
     print("===========================")
     print(msj.mensaje_frm_buscar("CLIENTE"))
     print("===========================")
+    print(Style.NORMAL + Fore.WHITE)
     vali_cod = True
     while vali_cod:
         codigo_cliente = input("CÓDIGO: ")
@@ -144,28 +159,32 @@ def frm_buscar_cliente():
         print("NRO. CUENTA SOLES:",respt.nrocuentasoles)
         print("SALDO:",respt.saldo)
         print("ESTADO:",respt.estado)
+        print(Style.BRIGHT + Fore.GREEN)
         print("====================")
         print(msj.mensaje_existe("CLIENTE"))
         print("====================")
     else:
+        print(Style.BRIGHT + Fore.RED)
         print("====================================")
         print(msj.mensaje_error_al("buscar","CLIENTE"))
         print("====================================")
+        sleep(1)
         existe_clientes = clientecontroller.verifica_cliente_codigo(codigo_cliente)
         if not existe_clientes:
             print(msj.mensaje_no_existe("CÓDIGO"))
             print("================================")
-            print("")
+            sleep(1)
             frm_listado_cliente()
-    print("")
 
 def frm_listado_cliente():
     """Listado de los Clientes"""
     clientes = clientecontroller.listado_cliente()
     cantidad = 0
+    print(Style.BRIGHT + Fore.CYAN)
     print("=======================")
     print(msj.mensaje_frm_lista("CLIENTES"))
     print("=======================")
+    print(Style.BRIGHT + Fore.WHITE)
     for dato in clientes:
         cantidad += 1
         print(f"CLIENTE NRO. {cantidad}")
@@ -175,9 +194,10 @@ def frm_listado_cliente():
         print("SALDO:",dato.saldo)
         print("ESTADO:",dato.estado)
         print("=======================")
+    print(Style.BRIGHT + Fore.GREEN)
+    print("=======================")
     print(msj.mensaje_listado("CLIENTES"))
     print("=======================")
-    print("")
 
 def selecciona_estado_cliente():
     """Selecciona el tipo a listar de los Clientes por estado"""
@@ -207,9 +227,11 @@ def frm_estado_cliente():
     respt = clientecontroller.listado_cliente_estado(estado)
     if len(respt)>0:
         cantidad = 0
+        print(Style.BRIGHT + Fore.CYAN)
         print("=================================")
         print(msj.mensaje_frm_listar_estado("CLIENTE", estado.upper()+"S"))
         print("=================================")
+        print(Style.BRIGHT + Fore.WHITE)
         for dato in respt:
             cantidad += 1
             print(f"CLIENTE NRO. {cantidad}")
@@ -219,10 +241,12 @@ def frm_estado_cliente():
             print("SALDO:",dato.saldo)
             print("ESTADO:",dato.estado)
             print("===============================")
+        print(Style.BRIGHT + Fore.GREEN)
+        print("===============================")
         print(msj.mensaje_encontro_por_estado("CLIENTES", estado.upper()+"S"))
         print("===============================")
-        print("")
     else:
+        print(Style.BRIGHT + Fore.YELLOW)
         print("============================")
         print(msj.mensaje_no_encontro_por_estado("CLIENTES", estado.upper()+"S"))
         print("============================")
@@ -233,9 +257,11 @@ def frm_estado_cliente():
 # region Formulario DISPENSADOR
 def frm_agregar_dispensador():
     """Registrar Dispensador"""
+    print(Style.BRIGHT + Fore.CYAN)
     print("============================")
     print(msj.mensaje_frm_registro("DISPENSADOR"))
     print("============================")
+    print(Style.NORMAL + Fore.WHITE)
     vali_lugar = True
     vali_billetes= True
     vali_bill_200=True
@@ -270,18 +296,20 @@ def frm_agregar_dispensador():
         vali_billetes = False
     dispensadorcontroller.registro_dispensador({"codigo":cant_disp+1,"lugar":lugar,
                                                        "billete": billetes,"estado": "Activo"})
+    print(Style.BRIGHT + Fore.GREEN)
     print("============================")
     print(msj.mensaje_registrado("DISPENSADOR"))
     print("============================")
-    print("")
 
 def frm_listado_dispensadores():
     """Listar los Dispensadores"""
     dispensa = dispensadorcontroller.listado_dispensador()
     cantidad = 0
+    print(Style.BRIGHT + Fore.CYAN)
     print("============================")
     print(msj.mensaje_frm_lista("DISPENSADORES"))
     print("============================")
+    print(Style.NORMAL + Fore.WHITE)
     for dato in dispensa:
         cantidad += 1
         print(f"DISPENSADOR NRO. {cantidad}")
@@ -293,9 +321,10 @@ def frm_listado_dispensadores():
                 print(str(nro_billete).upper()+ ": ",vbillete)
         print("ESTADO:", dato.estado)
         print("============================")
+    print(Style.BRIGHT + Fore.GREEN)
+    print("============================")
     print(msj.mensaje_listado("DISPENSADORES"))
     print("============================")
-    print("")
 
 def frm_modificar_dispensador():
     """Modififcar Dispensdaor"""
@@ -303,9 +332,11 @@ def frm_modificar_dispensador():
     datos_dispensador:dict[str,any]
     billetes=[]
     while vali_cod:
+        print(Style.BRIGHT + Fore.CYAN)
         print("============================")
         print(msj.mensaje_frm_modifica("DISPENSADOR"))
         print("============================")
+        print(Style.NORMAL + Fore.WHITE)
         codigo_dispensador = input("CÓDIGO: ")
         vali_cod = not validacion.valores_ingresados("código",codigo_dispensador,1)
         existe_dispensador = dispensadorcontroller\
@@ -348,25 +379,31 @@ def frm_modificar_dispensador():
             vali_cod = False
         else:
             vali_cod = True
+            print(Style.BRIGHT + Fore.RED)
+            print("================================")
             print(msj.mensaje_no_existe("CÓDIGO"))
-            print("=======================================")
-            print("")
+            print("================================")
+            sleep(1)
             frm_listado_dispensadores()
-            print("=======================================")
     respt = dispensadorcontroller.modificar_dispensador(datos_dispensador)
-    print("============================")
     if respt:
+        print(Style.BRIGHT + Fore.GREEN)
+        print("============================")
         print(msj.mensaje_modificar("DISPENSADOR"))
+        print("============================")
     else:
+        print(Style.BRIGHT + Fore.RED)
+        print("============================")
         print(msj.mensaje_error_al("modificar","DISPENSADOR"))
-    print("============================")
-    print("")
+        print("============================")
 
 def frm_buscar_dispensador():
     """Buscar Dispensador por Código"""
+    print(Style.BRIGHT + Fore.CYAN)
     print("================================")
     print(msj.mensaje_frm_buscar("DISPENSADOR"))
     print("================================")
+    print(Style.NORMAL + Fore.WHITE)
     vali_cod = True
     while vali_cod:
         codigo_dispensador = input("CÓDIGO: ")
@@ -379,21 +416,23 @@ def frm_buscar_dispensador():
             for nro_billete, vbillete in valor.items():
                 print(str(nro_billete).upper()+ ": ",vbillete)
         print("ESTADO:",respt.estado)
+        print(Style.BRIGHT + Fore.GREEN)
         print("============================")
         print(msj.mensaje_existe("DISPENSADOR"))
         print("============================")
     else:
+        print(Style.BRIGHT + Fore.RED)
         print("===========================================")
         print(msj.mensaje_error_al("buscar","DISPENSADOR"))
         print("===========================================")
+        sleep(1)
         existe_dispensador = dispensadorcontroller.\
                                 verifica_dispensador_codigo(int(codigo_dispensador))
         if not existe_dispensador:
             print(msj.mensaje_no_existe("CÓDIGO"))
             print("===============================")
-            print("")
+            sleep(1)
             frm_listado_dispensadores()
-    print("")
 
 def frm_estado_dispensador():
     """Lista de los Dispensadores por estado"""
@@ -404,9 +443,11 @@ def frm_estado_dispensador():
     respt = dispensadorcontroller.listado_dispensador_estado(estado)
     if len(respt)>0:
         cantidad = 0
+        print(Style.BRIGHT + Fore.CYAN)
         print("=====================================")
         print(msj.mensaje_frm_listar_estado("DISPENSADOR", estado.upper()+"S"))
         print("=====================================")
+        print(Style.BRIGHT + Fore.WHITE)
         for dato in respt:
             cantidad += 1
             print(f"DISPENSADOR NRO. {cantidad}")
@@ -418,14 +459,15 @@ def frm_estado_dispensador():
                     print(str(nro_billete).upper()+ ": ",vbillete)
             print("ESTADO:",dato.estado)
             print("====================================")
+        print(Style.BRIGHT + Fore.GREEN)
+        print("====================================")
         print(msj.mensaje_encontro_por_estado("DISPENSADORES", estado.upper()+"S"))
         print("====================================")
-        print("")
     else:
+        print(Style.BRIGHT + Fore.YELLOW)
         print("==================================")
         print(msj.mensaje_no_encontro_por_estado("DISPENSADORES", estado.upper()+"S"))
         print("==================================")
-        print("")
 #endregion
 
 # region Función de Administrador

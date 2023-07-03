@@ -69,6 +69,12 @@ class Mensaje:
     def mensaje_no_existe_lista(self, nombre:str):
         """Mensaje: ¡NO EXISTE {nombre}! """
         return f"¡NO EXISTE {nombre.upper()}!"
+    def mensaje_monto_mayor_cero(self):
+        """Mensaje: ¡NO EXISTE {nombre}! """
+        return "¡EL MONTO INGRESADO DEBE SER MAYOR A CERO!"
+    def mensaje_mantenimiento(self, nombre:str):
+        """Mensaje: ¡{nombre} EN MANTENIMIENTO!"""
+        return f"¡{nombre.upper()} EN MANTENIMIENTO!"
 #endregion
 
 # region Validaciones

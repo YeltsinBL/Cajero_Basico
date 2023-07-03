@@ -1,5 +1,6 @@
 """Vista para las Operaciones por Cliente Depositar"""
 # region importaciones
+from colorama import Fore, Style
 import Common.Validacion as validacion
 import Common.mensaje as mensaje
 import Controller.ClienteController as clientecontroller
@@ -12,9 +13,11 @@ msj = mensaje.Mensaje()
 # region Formulario Depositar
 def frm_registrar_deposito():
     """Registrar Depósito"""
+    print(Style.BRIGHT + Fore.CYAN)
     print("======================")
     print(msj.mensaje_frm_registro("depósito"))
     print("======================")
+    print(Style.NORMAL + Fore.WHITE)
     vali_codigo_cliente = True
     vali_codigo_dispensador= True
     vali_billetes = True
@@ -25,30 +28,35 @@ def frm_registrar_deposito():
     vali_bill_10=True
     billetes=[]
     while vali_codigo_cliente:
+        vali_codigo_dispensador = True
+        vali_billetes = True
         codigo_cliente = input("CÓDIGO CLIENTE: ")
         vali_codigo_cliente = not validacion.\
                                 valores_ingresados("código del cliente",codigo_cliente,4)
         if vali_codigo_cliente is False:
             vali_codigo_cliente = not clientecontroller.verifica_cliente_codigo(codigo_cliente)
             if vali_codigo_cliente:
+                print(Style.BRIGHT + Fore.RED)
                 print("===============================")
                 print(msj.mensaje_no_existe("código del cliente"))
                 print("===============================")
-                print("")
+                print(Style.NORMAL + Fore.WHITE)
                 vali_codigo_dispensador = False
                 vali_billetes = False
     while vali_codigo_dispensador:
+        vali_billetes = True
         codigo_dispensador = input("CÓDIGO DISPENSADOR: ")
         vali_codigo_dispensador = not validacion.\
-                                    valores_ingresados("código dispensador",codigo_dispensador,1)
-        if vali_codigo_dispensador is False:
-            existe_dispensador = dispensadorcontroller\
+                                valores_ingresados("código dispensador",codigo_dispensador,1)
+        if vali_codigo_dispensador:
+            vali_codigo_dispensador = dispensadorcontroller\
                                 .verifica_dispensador_codigo(int(codigo_dispensador))
-            if existe_dispensador is False:
+            if vali_codigo_dispensador:
+                print(Style.BRIGHT + Fore.RED)
                 print("===============================")
                 print(msj.mensaje_no_existe("código del dispensador"))
                 print("===============================")
-                print("")
+                print(Style.NORMAL + Fore.WHITE)
                 vali_billetes = False
     while vali_billetes:
         print("Cantidad de Billetes")
@@ -68,44 +76,46 @@ def frm_registrar_deposito():
             billete_10 = input("Billetes de 10: ")
             vali_bill_10 = not validacion.valores_ingresados("billetes de 10",billete_10,1)
         billetes.append({200:int(billete_200), 100:int(billete_100), 50:int(billete_50),
-                         20:int(billete_20), 10:int(billete_10)})
+                            20:int(billete_20), 10:int(billete_10)})
         vali_billetes = False
     if vali_codigo_cliente is False and vali_codigo_dispensador is False and vali_billetes is False:
         respt_cliente = clientecontroller.buscar_cliente_codigo(codigo_cliente)
         respt_dispensador = dispensadorcontroller.\
-                            buscar_dispensador_codigo(int(codigo_dispensador))
+                                buscar_dispensador_codigo(int(codigo_dispensador))
         dato_dispensador = {"codigo_cliente":codigo_cliente,
-                            "nombre_cliente":respt_cliente.nombre,
-                            "codigo_dispensador": int(codigo_dispensador),
-                            "lugar_dispensador":respt_dispensador.lugar,
-                            "estado_dispensador":respt_dispensador.estado,
-                            "billete":billetes}
+                                "nombre_cliente":respt_cliente.nombre,
+                                "codigo_dispensador": int(codigo_dispensador),
+                                "lugar_dispensador":respt_dispensador.lugar,
+                                "estado_dispensador":respt_dispensador.estado,
+                                "billete":billetes}
         respt= vista_previa_registro(dato_dispensador)
         if respt:
             dato_dispensador["monto"] = float(respt)
             respt2 = depositarcontroller.registro_deposito(dato_dispensador)
             if respt2:
+                print(Style.BRIGHT + Fore.GREEN)
                 print("======================")
                 print(msj.mensaje_registrado("depósito"))
                 print("======================")
-                print("")
             else:
+                print(Style.BRIGHT + Fore.RED)
                 print("======================")
                 print(msj.mensaje_error_al("registrar","depósito"))
                 print("======================")
-                print("")
         else:
+            print(Style.BRIGHT + Fore.YELLOW)
             print("======================")
             print(msj.mensaje_cancelar_confirmacion("depósito"))
             print("======================")
-            print("")
 
 def vista_previa_registro(datos_depositar:dict[str,any]):
     """Vista previa al registrar"""
     total=0
+    print(Style.BRIGHT + Fore.YELLOW)
     print("===========================")
     print(msj.mensaje_frm_vista_previa("depósito"))
     print("===========================")
+    print(Style.BRIGHT + Fore.WHITE)
     print("CLIENTE:",datos_depositar.get("nombre_cliente"))
     print("DISPENSADOR:",datos_depositar.get("codigo_dispensador"),"-",
           datos_depositar.get("lugar_dispensador"))

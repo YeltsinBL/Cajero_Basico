@@ -1,5 +1,5 @@
 """Cliente ViewModel"""
-import Api.service as service
+import Data.service as service
 import Model.Cliente as clientemodel
 class  ClienteViewModel:
     """Clase Ciente ViewModel"""
@@ -8,6 +8,15 @@ class  ClienteViewModel:
 
     def lista_cliente(self):
         """LISTADO DE CLIENTES"""
+        cantidad = len(service.clientes)
+        if cantidad > 0:
+            for i in range(0, cantidad-1):
+                for k in range(0, cantidad-(i+1)):
+                    if service.clientes[k].codigo>service.clientes[k+1].codigo:
+                        aux=service.clientes[k]
+                        service.clientes[k]=service.clientes[k+1]
+                        service.clientes[k+1]= aux
+            return service.clientes
         return service.clientes
 
     def registrar_cliente(self, dicts:dict[str,any]):

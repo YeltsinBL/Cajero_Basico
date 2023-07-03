@@ -1,9 +1,12 @@
 """Módulo de la Vista del Menú"""
 # region Importaciones
+from colorama import Fore, Style
 import Common.mensaje as mensaje
 import Common.Validacion as validacion
 import Controller.MenuController as menucontroller
 import View.operaciones_view as operacionview
+import Controller.ClienteController as clientecontroller
+import Controller.dispensador_controller as dispensadorcontroller
 # endregion
 msj = mensaje.Mensaje()
 # region Funciones para seleccionar
@@ -13,8 +16,9 @@ def selecciona_menu():
     cont = 0
     while inicio:
         try:
-            print()
+            print(Fore.BLUE)
             print(msj.mensaje_menu("Principal"))
+            print(Fore.WHITE + Style.NORMAL)
             print("Ingresa el número de tu tipo de usuario:")
             menucontroller.listado_menu()
             nro_menu = int(input(""))
@@ -28,8 +32,9 @@ def selecciona_menu():
             validacion.mensaje_validacion(cont)
 # endregion
 def iniciar_sistema():
-    """Incia el Sistema"""
-    print("")
+    """Inicia el Sistema"""
+    # print("")
+    print(Style.BRIGHT)
     print("==============")
     print("¡BIENVENIDO!")
     print("==============")
@@ -41,4 +46,17 @@ def iniciar_sistema():
             msj.mensaje_despedida()
             iniciar_principal = False
             break
+        elif opc_menu == 1:
+            if len(clientecontroller.listado_cliente())==0:
+                print(Style.BRIGHT + Fore.RED)
+                print("===============================")
+                print(msj.mensaje_mantenimiento("sistema"))
+                print("===============================")
+                continue
+            elif len(dispensadorcontroller.listado_dispensador())==0:
+                print(Style.BRIGHT + Fore.RED)
+                print("===============================")
+                print(msj.mensaje_mantenimiento("dispensadores"))
+                print("===============================")
+                continue
         operacionview.seleccionar_operaciones(opc_menu=opc_menu)

@@ -1,6 +1,6 @@
 """Dispensador ViewModel"""
 # region Importación
-import Api.service as service
+import Data.service as service
 import Model.dispensador as dispensador
 #endregion
 

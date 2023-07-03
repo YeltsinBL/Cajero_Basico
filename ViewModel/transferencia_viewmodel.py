@@ -1,6 +1,6 @@
 """Transferencia ViewModel"""
 # region Importación
-import Api.service as service
+import Data.service as service
 import Model.transferencia as transferenciamodel
 import ViewModel.dispensador_viewmodel as dispensadorviewmodel
 import ViewModel.depositar_viewmodel as depositar_viewmodel
@@ -28,26 +28,27 @@ class TransferenciaViewModel:
                             codigo_cliente_transferir=disp.get("codigo_cliente_transferir"),
                             codigo_dispensador_transferir=disp.get("codigo_dispensador_transferir"),
                             monto=disp.get("monto"))
-        # Aumentar Saldo
-        agregar_saldo_cta = cuentacliente_vm.modificar_saldo_cuenta_cliente(
-                                disp.get("codigo_cliente_transferir"),
-                                disp.get("codigo_dispensador_transferir"),
-                                disp.get("monto"),1)
         # Reducir Saldo
         reducir_saldo_cta = cuentacliente_vm.modificar_saldo_cuenta_cliente(
                                 disp.get("codigo_cliente"),
                                 disp.get("codigo_dispensador"),
                                 disp.get("monto"))
+        if reducir_saldo_cta:
+            # Aumentar Saldo
+            agregar_saldo_cta = cuentacliente_vm.modificar_saldo_cuenta_cliente(
+                                disp.get("codigo_cliente_transferir"),
+                                disp.get("codigo_dispensador_transferir"),
+                                disp.get("monto"),1)
 
-        if agregar_saldo_cta and reducir_saldo_cta:
-            service.transferencia.append(transferencia)
+            if agregar_saldo_cta and reducir_saldo_cta:
+                service.transferencia.append(transferencia)
         return agregar_saldo_cta and reducir_saldo_cta
 
     def lista_transferencia(self):
         """Lista de Transferencia"""
         return service.transferencia
 
-    def lista_transferencia_codigo(self, codigo_cliente):
+    def buscar_transferencia_codigo(self, codigo_cliente):
         """Lista de Transferencia por Código Cliente"""
         transferencia = []
         for dato in service.transferencia:

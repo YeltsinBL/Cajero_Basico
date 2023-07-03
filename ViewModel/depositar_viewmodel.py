@@ -1,6 +1,6 @@
 """Depositar ViewModel"""
 # region Importación
-import Api.service as service
+import Data.service as service
 import Model.depositar as depositar
 import ViewModel.dispensador_viewmodel as dispensadorviewmodel
 import ViewModel.cuenta_cliente_viewmodel as cuentaclienteviewmodel
