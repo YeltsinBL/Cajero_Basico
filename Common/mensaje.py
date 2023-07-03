@@ -75,6 +75,9 @@ class Mensaje:
     def mensaje_mantenimiento(self, nombre:str):
         """Mensaje: ¡{nombre} EN MANTENIMIENTO!"""
         return f"¡{nombre.upper()} EN MANTENIMIENTO!"
+    def mensaje_transferencia_codigo_iguales(self):
+        """Mensaje: ¡NO SE PUEDE TRANSFERIR A SU MISMA CUENTA!"""
+        return "¡NO SE PUEDE TRANSFERIR A SU MISMA CUENTA!"
 #endregion
 
 # region Validaciones

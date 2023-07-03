@@ -83,20 +83,31 @@ def frm_cliente_transferencia():
                 print(msj.mensaje_no_existe("código del cliente a transferir"))
                 print("===============================")
                 print(Style.NORMAL + Fore.WHITE)
-    while vali_codigo_dispensador_transferir:
-        codigo_dispensador_transferir = input("CÓDIGO DISPENSADOR A TRANSFERIR: ")
-        vali_codigo_dispensador_transferir = not validacion.\
-                                    valores_ingresados("código dispensador a transferir",
-                                                       codigo_dispensador_transferir,1)
-        if vali_codigo_dispensador_transferir is False:
-            vali_codigo_dispensador_transferir = not dispensadorcontroller\
-                                .verifica_dispensador_codigo(int(codigo_dispensador_transferir))
-            if vali_codigo_dispensador_transferir:
-                print(Style.BRIGHT + Fore.RED)
-                print("===============================")
-                print(msj.mensaje_no_existe("código del dispensador a transferir"))
-                print("===============================")
-                print(Style.NORMAL + Fore.WHITE)
+            else:
+                while vali_codigo_dispensador_transferir:
+                    codigo_dispensador_transferir = input("CÓDIGO DISPENSADOR A TRANSFERIR: ")
+                    vali_codigo_dispensador_transferir = not validacion.\
+                                            valores_ingresados("código dispensador a transferir",
+                                                                codigo_dispensador_transferir,1)
+                    if vali_codigo_dispensador_transferir is False:
+                        vali_codigo_dispensador_transferir = not dispensadorcontroller\
+                                    .verifica_dispensador_codigo(int(codigo_dispensador_transferir))
+                        if vali_codigo_dispensador_transferir:
+                            print(Style.BRIGHT + Fore.RED)
+                            print("===============================")
+                            print(msj.mensaje_no_existe("código del dispensador a transferir"))
+                            print("===============================")
+                            print(Style.NORMAL + Fore.WHITE)
+        if codigo_cliente==codigo_cliente_trans and\
+            codigo_dispensador==codigo_dispensador_transferir:
+            vali_codigo_cliente_transferencia= True
+            vali_codigo_dispensador_transferir = True
+            print(Style.BRIGHT + Fore.RED)
+            print("===============================")
+            print(msj.mensaje_transferencia_codigo_iguales())
+            print("===============================")
+            print(Style.NORMAL + Fore.WHITE)
+
     vali_monto = True
     while vali_monto:
         monto = input("MONTO: ")
@@ -131,7 +142,8 @@ def frm_cliente_transferencia():
             "codigo_cliente_transferir":codigo_cliente_trans, 
             "codigo_dispensador_transferir":int(codigo_dispensador_transferir),
             "monto":float(monto)}
-    print("===============================")
+    sleep(1)
+    print(Style.BRIGHT + Fore.YELLOW+"===============================")
     print(msj.mensaje_realizando_accion("transferencia"))
     print("===============================")
     resp = transferenciacontroller.registro_transferencia(datos)
