@@ -4,6 +4,7 @@ from colorama import Fore, Style
 import Common.mensaje as mensaje
 import Common.Validacion as validacion
 import Controller.OperacionController as operacioncontroller
+import Controller.ClienteController as clientecontroller
 import View.administrador_view as administradorview
 import View.operacion_cliente_view as operacionclienteview
 # endregion
@@ -43,9 +44,19 @@ def seleccionar_operaciones(opc_menu):
         opc_operacion= selecciona_operacion(opc_menu)
         if opc_operacion == operacioncontroller.cantidad_opciones_por_menu(opc_menu):
             iniciar_operacion = False
-            break
         elif opc_menu == 2 :
             administradorview.seleccion_formulario(opc_operacion)
         else:
-            operacionclienteview.seleccion_formulario_operacion_cliente(opc_operacion)
+            contar =0
+            if opc_operacion == 3:
+                clientes = clientecontroller.listado_cliente()
+                for cliente in clientes:
+                    if cliente.estado.lower() =="activo":
+                        contar+=1
+                if contar <=1:
+                    print(msj.mensaje_mantenimiento("Operación de Transferencia"))
+                else:
+                    operacionclienteview.seleccion_formulario_operacion_cliente(opc_operacion)
+            else:
+                operacionclienteview.seleccion_formulario_operacion_cliente(opc_operacion)
 #endregion
