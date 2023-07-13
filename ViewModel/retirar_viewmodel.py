@@ -35,7 +35,7 @@ class RetirarViewModel:
 
     def calcular_billetes_dispensador(self, cod_dispensador:int, lugar_dispensador:str,
                                estado_dispensador:str, monto):
-        """Calcualr los Billetes que se moodificarán en el Dispensador"""
+        """Calcular los Billetes que se moodificarán en el Dispensador"""
         billete_entregar=[]
         lista_billete_entregar={}
         billete_actualizar_dispensador=[]
@@ -68,7 +68,6 @@ class RetirarViewModel:
                 return billete_entregar
             return []
         return billete_falta
-    # actualizar la verificación del monto a retirar
 
     def buscar_retiro(self, codigo_cliente:str):
         """Buscar Retiro por Código"""

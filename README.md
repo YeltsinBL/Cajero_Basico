@@ -1,34 +1,43 @@
 # Cajero Automático Básico
-Proyecto final para la universidad
+
+Versión final para presentar como proyecto final a la universidad.
 
 [![Board Status](https://yeltsinbaltodano.visualstudio.com/599a5088-ab0a-43ee-ae27-de71707765cf/7a27677b-3c75-437a-aae7-234aaf5d16e2/_apis/work/boardbadge/cde23116-46d8-464a-bc43-37135218ab19?columnOptions=1)](https://yeltsinbaltodano.visualstudio.com/599a5088-ab0a-43ee-ae27-de71707765cf/_boards/board/t/7a27677b-3c75-437a-aae7-234aaf5d16e2/Stories/)
 
 ## Arquitectura
+
 - MVC: Lo primero que se realicé es la creación de las carpetas para tener ordenado, por el momento esta arquitectura se acopla mejor, con forme los avances quizás se cambie a otra arquitectura.
 - MVVM: Cambié la arquitectura de MVC a MVVM haciendo la pruebas y cambios para Clientes.
 
-### Carpetas
+## Carpetas
 
-### Api
+### Data
+
 Simular que hay un servicio que devuelve los datos.
+
 - Lista del Dispensador
 - Lista de Clientes
 - Lista de Depósitos
 - Lista de Retiros
 - Lista de Transferencia
+- Lista de Cuenta Cliente
 
-#### Common
+### Common
+
 Funciones globales que se repetiran constantemente.
+
 - Validacion
   - Mensaje validación por selección de menú.
-  - Mensaje validación por dato ingresado.
+  - Mensaje validación por dato ingresado (string, decimal, int).
   - Verificar si el valor ingresado solo tiene un punto decimal.
 - Mensaje
   - Mensaje de inicio de formulario.
   - Mensaje de éxito.
   - Mensaje de Errores.
+  - Mensaje de Validaciones.
 
-#### Model
+### Model
+
 - Cliente
   - Clase Persona
   - Clase Cliente
@@ -40,16 +49,20 @@ Funciones globales que se repetiran constantemente.
   - Clase Retirar
 - Transferencia
   - Clase Transferencia
+- Cuenta Cliente
+  - Clase Cuenta Cliente
 
-#### ViewModel
+### ViewModel
+
 - Cliente_ViewModel: clase con funciones para el cliente
-  - Listar Cliente
+  - Listar Cliente: utilización del ordenamiento de burbuja
   - Registrar Cliente
   - Verificar Cliente por Código
   - Modificar Cliente
   - Buscar Cliente por Código
   - Listar Cliente por Estado
   - Verificar Cliente por Código y Clave
+  - Modificar el saldo del cliente
 - Dispensador_ViewModel: clase con funciones para el dispensador
   - Listar Dispensador
   - Registrar Dispensador
@@ -58,31 +71,40 @@ Funciones globales que se repetiran constantemente.
   - Buscar Dispensador por Código
   - Listar Dispensador por Estado
   - Verificar Monto Dispensador
+  - Agregar Billetes al dispensdor
 - Depositar_ViewModel: clase con función para el depósito
   - Registro Depósito
-  - Agregar Billetes al Dispensador
   - Lista Depósito
-  - Modificar Depósito
   - Buscar Depósito
 - Retirar_ViewModel: clase con función para el retiro
   - Registro Retiro
-  - Modificar Billetes del Dispensador
-  - Modificar Billetes del Depósito
+  - Calcular los Billetes que se moodificarán en el Dispensador
   - Buscar Retiro por código Cliente
 - Transferencia_ViewModel: clase con función para la transferencia
   - Registro Transferencia
   - Lista Transferencia
-  - Lista Transferencia por Código Cliente
-  - Obtener billetes a depositar
+  - Buscar Transferencia por Código Cliente
+- cuenta_cliente_viewmodel: clase con función para la transferencia
+  - Registro de la cuenta del cliente
+  - Lista de la cuenta del cliente
+  - Modificar la cuenta del cliente
+  - Modificar el saldo de cuenta del cliente
+  - Buscar la cuenta del ciente por código de dispensador y código del cliente
+  - Verificar la cuenta del cliente
 
-#### Controller
+### Controller
+
 Funciones que utilizaré en los archivos de View.
+
 - MenuController
   - Listado del Menú Principal.
 - OperacionController
   - Listado de las Operaciones de acuerdo a la selección del Menú Principal.
   - Listado de las opciones de los formularios por Operación.
-- ClienteController: conexión del Cliente_ViewModel para pasarlo a la vista
+  - Listado de las opciones de estado de cliente.
+  - Cantidad de operaciones del menú principal y formulario.
+  - Muestra las opciones que selecionó del menú principal y formulario.
+- ClienteController
   - Registro Cliente
   - Listado Cliente
   - Verificar Cliente por Código
@@ -107,20 +129,26 @@ Funciones que utilizaré en los archivos de View.
 - transferencia_controller
   - Registro Transferencia
   - Buscar Transferencia
+- cuenta_cliente_controller
+  - Buscar el saldo de la cuenta del cliente
+  - Verificar el monto de la cuenta del cliente
 
-#### View
+### View
+
 - MenuView
+
+  - Inicio del Sistema
   - Seleccionar Menú Principal
 
 - operaciones_view
-  - Seleccionar Formulario para Administrador (Cliente 100% - Dispensador 100%)
-  - Seleccionar Formulario para Cliente 36%
+  - Mostrar y seleccionar opciones para Administrador o Cliente
 
 - administrador_view:
-  - Seleccionar Acciones del Formulario de Clientes: 100%
-  - Seleccionar Acciones del Formulario del Dispensador: 100%
+  - Mostrar opciones de acciones de acuerdo a los datos
+  - Seleccionar Acciones de los Formularios de Clientes y Dispensador
+  - Muestra los campos que tienen cada formulario para guardar los datos
 
-- operacion_cliente_view: 36%
+- operacion_cliente_view
   - Seleccionar formulario para operaciones del cliente
 
 - operacion_cliente:
@@ -138,16 +166,20 @@ Funciones que utilizaré en los archivos de View.
   - cliente_consulta_movimiento:
     - Consulta movimiento
 
-### Formulario
+## Funcionalidad
 
-#### Menú Principal
+### Menú Principal
+
 Las opciones del Menú principal son:
+
 - Cliente
 - Administrador
 - Salir
 
-#### Operaciones
+### Operaciones
+
 Las operaciones si dividen en 2 por el tipo de Menú Principal:
+
 - Operaciones por Cliente
   - Depositar
   - Retirar
@@ -161,12 +193,16 @@ Las operaciones si dividen en 2 por el tipo de Menú Principal:
   - Gestionar Dispensador
   - Salir
 
-#### Acciones de los Formularios de Operaciones por Administrador
+### Acciones de los Formularios de Operaciones por Administrador
+
 Las acciones de los formularios de Operaciones por Administrador son los mismos para ambos:
+
 - Agregar
 - Modificar
 - Consultar
 - Estado
 - Listar
+
+> Nota: Existen casos para realizar mejoras, pero esas mejoras se agregarán en las siguientes ramas de este repositorio.
 
 [//]: # (Enlaces)

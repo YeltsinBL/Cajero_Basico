@@ -34,7 +34,7 @@ def cantidad_opciones_formulario():
     return len(accion_formulario)
 # OPCIONES SELECCIONADAS
 def opcion_seleccionada_por_menu(idmenu, idoperacion):
-    """Mustra la opción que se seleccionó por el menú"""
+    """Muestra la opción que se seleccionó por el menú"""
     listado = operacion.opcion_fuera.get(idmenu)
     for valor in listado:
         return valor.get(idoperacion)

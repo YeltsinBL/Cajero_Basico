@@ -49,7 +49,7 @@ class TransferenciaViewModel:
         return service.transferencia
 
     def buscar_transferencia_codigo(self, codigo_cliente):
-        """Lista de Transferencia por Código Cliente"""
+        """Buscar la Transferencia por Código Cliente"""
         transferencia = []
         for dato in service.transferencia:
             if dato.codigo_cliente == codigo_cliente:

@@ -11,7 +11,7 @@ def frm_registrar_pago_servicio():
     """Rgistro del Pago de Servicio"""
     print(Style.BRIGHT + Fore.YELLOW)
     print("==============================")
-    print(msj.mensaje_mantenimiento("Operación"))
+    print(msj.mensaje_mantenimiento("Operación Pago de Servicio"))
     print("==============================")
     print(Style.NORMAL + Fore.WHITE)
 # endregion

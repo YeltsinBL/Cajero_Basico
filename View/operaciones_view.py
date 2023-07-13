@@ -2,8 +2,8 @@
 # region Importaciones
 from colorama import Fore, Style
 import Common.mensaje as mensaje
-import Controller.OperacionController as operacioncontroller
 import Common.Validacion as validacion
+import Controller.OperacionController as operacioncontroller
 import View.administrador_view as administradorview
 import View.operacion_cliente_view as operacionclienteview
 # endregion
@@ -32,13 +32,6 @@ def selecciona_operacion(nromenu):
         except (ValueError, TypeError):
             cont +=1
             inicio = validacion.mensaje_validacion(cont)
-
-def mostrar_seleccionados(nromenu, nrooperacion, nroaccion):
-    """Muestra los menu seleccionado"""
-    nombre_seleccionado = operacioncontroller.opcion_seleccionada_por_menu(nromenu,nrooperacion)
-    nombre_seleccionado += "-> " + operacioncontroller.opcion_seleccionado_formulario(nroaccion)
-    print("Usted ha seleccionado estas opciones:" , nombre_seleccionado)
-    print()
 
 # endregion
 

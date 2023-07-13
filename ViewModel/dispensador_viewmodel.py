@@ -68,8 +68,6 @@ class DispensadorViewModel:
         if cantidad >= monto:
             return True
         else: return False
-    # actualizar la verificación del monto a retirar
-    # Listar Depósitos que queda después de retirar
 
     def agregar_billete_dispensador(self, cod_dispensador:int, lugar_dispensador:str,
                         estado_dispensador:str, billete:list):
