@@ -49,7 +49,7 @@ class CuentaClienteViewModel:
 
     def modificar_saldo_cuenta_cliente(self, codigo_cliente, codigo_dispensador, monto,
                                      operacion =0):
-        """Reducir el saldo del cliente"""
+        """Aumentar o Reducir el saldo del cliente"""
         cta_cliente = self.buscar_cuenta_cliente_coddisp_codcli(codigo_cliente,codigo_dispensador)
         for valor in cta_cliente:
             valor.monto = valor.monto + monto if operacion ==1 else valor.monto - monto
@@ -66,11 +66,12 @@ class CuentaClienteViewModel:
                 (cod_dispensador == 0 or dato.codigo_dispensador == cod_dispensador):
                 dispensa.append(dato)
         return dispensa
-    def verificar_cuenta_cliente(self, codigo_cliente, codigo_dispensador:int, monto:float):
+    def verificar_cuenta_cliente(self, codigo_cliente, codigo_dispensador:int):
         """Verificar el Saldo de la Cuenta del Cliente"""
         lista_cuenta_cliente = self.lista_cuenta_cliente()
+        monto_v=0.0
         for dato in lista_cuenta_cliente:
             if dato.codigo_dispensador == codigo_dispensador and\
-                dato.codigo_cliente == codigo_cliente and dato.monto >= monto:
-                return True
-        return False
+                dato.codigo_cliente == codigo_cliente:
+                monto_v= float(dato.monto)
+        return monto_v

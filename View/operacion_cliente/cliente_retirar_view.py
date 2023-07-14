@@ -70,6 +70,17 @@ def frm_registrar_retiro():
                 print(msj.mensaje_no_existe("código del dispensador"))
                 print("===============================")
                 print(Style.BRIGHT + Fore.WHITE)
+            else:
+                existe_cliente = cuentaclientecontroller\
+                        .buscar_saldo_cuenta_cliente(codigo_cliente)
+                if len(existe_cliente)>0:
+                    vali_codigo_dispensador = mensaje_relacion_cliente_dispensador(
+                                            codigo_dispensador, existe_cliente)
+                    if vali_codigo_dispensador:
+                        return
+                else:
+                    mensaje_cuenta_activa("cliente", "depósito")
+                    return
     while vali_monto:
         monto = input("MONTO: ")
         vali_monto = not validacion.valores_ingresados("MONTO",monto,2)
@@ -100,9 +111,15 @@ def frm_registrar_retiro():
                     print(msj.mensaje_verificar_tipo("saldo","la cuenta del cliente"))
                     print("====================================================")
                     sleep(1)
-                    vali_monto = not cuentaclientecontroller.verificar_cuenta_cliente(
-                                    codigo_cliente, int(codigo_dispensador), float(monto))
-                    if vali_monto:
+                    monto_vali = cuentaclientecontroller.verificar_cuenta_cliente(
+                                        codigo_cliente, int(codigo_dispensador))
+                    if monto_vali ==0:
+                        print(Style.BRIGHT + Fore.RED)
+                        print("====================================================")
+                        print(msj.mensaje_no_tiene("cliente", "saldo en su cuenta"))
+                        print("====================================================")
+                        return
+                    if monto_vali < float(monto):
                         print(Style.BRIGHT + Fore.RED)
                         print("====================================================")
                         print(msj.mensaje_monto_excedido("el saldo del cliente"))
@@ -153,4 +170,28 @@ def detalle_retiro(codigo_cliente,nombre_cliente, codigo_dispensador,
     for dato in datos_retiro:
         for nro_billete, vbillete in dato.items():
             print(str(nro_billete)+ ": ",vbillete)
+# endregion
+
+# region Mensaje Validación
+def mensaje_relacion_cliente_dispensador(codigo_dispensador,existe_cliente):
+    """mensaje si el cliente tiene depósito en el dispensador"""
+    existe_dis = False
+    for valor in existe_cliente:
+        if valor.codigo_dispensador != int(codigo_dispensador):
+            existe_dis = True
+    if existe_dis:
+        print(Style.BRIGHT + Fore.RED)
+        print("===========================================")
+        print(msj.mensaje_no_tiene("cliente", "cuenta en este dispensador"))
+        print("===========================================")
+    return existe_dis
+def mensaje_cuenta_activa(nombre, detalle):
+    """mensaje si la cuenta esta activa"""
+    print(Style.BRIGHT + Fore.RED)
+    print("===============================")
+    print(msj.mensaje_cuenta_no_activa())
+    print("===============================")
+    sleep(1)
+    print(msj.mensaje_no_tiene(nombre, detalle))
+    print("===============================")
 # endregion

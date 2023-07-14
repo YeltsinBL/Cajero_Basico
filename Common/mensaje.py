@@ -106,6 +106,6 @@ class Mensaje:
         """Mensaje: ¡EL {nombre.upper()} NO TIENE {detalle.upper()}! """
         return f"¡EL {nombre.upper()} NO TIENE {detalle.upper()}!"
     def mensaje_cuenta_no_activa(self,):
-        """Mensaje: ¡EL {nombre.upper()} NO TIENE {detalle.upper()}! """
+        """Mensaje: ¡LA CUENTA NO ESTA ACTIVA! """
         return "¡LA CUENTA NO ESTA ACTIVA!"
 # endregion
