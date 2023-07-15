@@ -26,7 +26,8 @@ def frm_registrar_retiro():
     if clave is False:
         return
     codigo_dispensador = elemento.ingresar_codigo_dispensador(
-            nombre="código del dispensador", codigo_cliente=codigo_cliente, verificar_cuenta=True)
+            nombre="código del dispensador", codigo_cliente=codigo_cliente, verificar_cuenta=True,
+            verificar_estado=True)
     if codigo_dispensador == 0:
         return
     monto = elemento.ingresar_monto(codigo_dispensador,codigo_cliente)

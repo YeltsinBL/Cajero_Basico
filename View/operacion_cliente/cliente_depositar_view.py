@@ -20,7 +20,9 @@ def frm_registrar_deposito():
     print(Style.NORMAL + Fore.WHITE)
     codigo_cliente = elemento.ingresar_codigo_cliente("código del cliente")
     codigo_dispensador = elemento.ingresar_codigo_dispensador(
-        nombre="código del dispensador", codigo_cliente=codigo_cliente)
+        nombre="código del dispensador", codigo_cliente=codigo_cliente, verificar_estado=True)
+    if codigo_dispensador == 0:
+        return
     billetes = elemento.ingresar_cantidad_billetes()
     respt_cliente = clientecontroller.buscar_cliente_codigo(codigo_cliente)
     respt_dispensador = dispensadorcontroller.\

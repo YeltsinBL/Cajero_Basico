@@ -45,7 +45,7 @@ def ingresar_clave_cliente(nombre, codigo_cliente):
                 return False
     return True
 def ingresar_codigo_dispensador(nombre,codigo_cliente=0, mensaje_cliente ="cliente",
-                                verificar_cuenta=False):
+                                verificar_cuenta=False, verificar_estado = False):
     """Ingresar el código del dispensador"""
     vali_codigo_dispensador= True
     while vali_codigo_dispensador:
@@ -58,6 +58,12 @@ def ingresar_codigo_dispensador(nombre,codigo_cliente=0, mensaje_cliente ="clien
             if vali_codigo_dispensador:
                 mensaje_codigo_dispensador(nombre)
             else:
+                if verificar_estado:
+                    dispensador = dispensadorcontroller\
+                        .buscar_dispensador_codigo(int(codigo_dispensador))
+                    if dispensador.estado.lower() != "activo":
+                        mensaje_dispensador_desactivo()
+                        return 0
                 if verificar_cuenta:
                     existe_cliente = cuentaclientecontroller\
                         .buscar_saldo_cuenta_cliente(codigo_cliente)
@@ -207,4 +213,10 @@ def mensaje_cuenta_activa(nombre, detalle):
     sleep(1)
     print(msj.mensaje_no_tiene(nombre[11:], detalle))
     print("===============================")
+def mensaje_dispensador_desactivo():
+    """Mensaje: El dispensdor no esta activo"""
+    print(Style.BRIGHT + Fore.RED)
+    print("===========================================")
+    print(msj.mensaje_dispensador_no_activo())
+    print("===========================================")
 # endregion

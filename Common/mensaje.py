@@ -108,4 +108,7 @@ class Mensaje:
     def mensaje_cuenta_no_activa(self,):
         """Mensaje: ¡LA CUENTA NO ESTA ACTIVA! """
         return "¡LA CUENTA NO ESTA ACTIVA!"
+    def mensaje_dispensador_no_activo(self,):
+        """Mensaje: ¡EL DISPENSDOR NO ESTA ACTIVO! """
+        return "¡EL DISPENSADOR NO ESTA ACTIVO!"
 # endregion

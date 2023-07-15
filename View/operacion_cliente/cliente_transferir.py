@@ -24,7 +24,8 @@ def frm_cliente_transferencia():
     if clave is False:
         return
     codigo_dispensador = elemento.ingresar_codigo_dispensador(
-        nombre="código del dispensador", codigo_cliente=codigo_cliente, verificar_cuenta=True)
+        nombre="código del dispensador", codigo_cliente=codigo_cliente, verificar_cuenta=True,
+        verificar_estado=True)
     if codigo_dispensador == 0:
         return
     codigo_cliente_trans = elemento.ingresar_codigo_cliente("código del cliente a transferir", True)
@@ -32,7 +33,7 @@ def frm_cliente_transferencia():
         return
     codigo_dispensador_transferir = elemento.ingresar_codigo_dispensador(
         nombre="código dispensador a transferir", codigo_cliente=codigo_cliente_trans,
-        mensaje_cliente="cliente a transferir", verificar_cuenta=True)
+        mensaje_cliente="cliente a transferir", verificar_cuenta=True, verificar_estado=True)
     if codigo_dispensador_transferir == 0:
         return
     if codigo_cliente==codigo_cliente_trans and\
