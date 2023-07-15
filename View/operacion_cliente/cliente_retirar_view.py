@@ -19,7 +19,8 @@ def frm_registrar_retiro():
     print(msj.mensaje_frm_registro("retiro"))
     print("======================")
     print(Style.NORMAL + Fore.WHITE)
-    codigo_cliente = elemento.ingresar_codigo_cliente("código del cliente", True)
+    codigo_cliente = elemento.ingresar_codigo_cliente(
+        nombre="código del cliente", verificar_cuenta=True, verificar_estado=True)
     if codigo_cliente =="":
         return
     clave = elemento.ingresar_clave_cliente("clave del cliente", codigo_cliente)

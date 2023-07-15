@@ -11,7 +11,7 @@ import Controller.cuenta_cliente_controller as cuentaclientecontroller
 msj = mensaje.Mensaje()
 
 # region Elementos
-def ingresar_codigo_cliente(nombre:str, verificar_cuenta=False):
+def ingresar_codigo_cliente(nombre:str, verificar_cuenta=False, verificar_estado = False):
     """Ingresar el codigo del cliente"""
     vali_codigo_cliente = True
     while vali_codigo_cliente:
@@ -23,6 +23,12 @@ def ingresar_codigo_cliente(nombre:str, verificar_cuenta=False):
             if vali_codigo_cliente:
                 mensaje_codigo_cliente(nombre)
             else:
+                if verificar_estado:
+                    dispensador = clientecontroller\
+                        .buscar_cliente_codigo(codigo_cliente)
+                    if dispensador.estado.lower() != "activo":
+                        mensaje_no_activo("el cliente", "activo")
+                        return ""
                 if verificar_cuenta:
                     existe_cliente = cuentaclientecontroller\
                             .buscar_saldo_cuenta_cliente(codigo_cliente)
@@ -62,7 +68,7 @@ def ingresar_codigo_dispensador(nombre,codigo_cliente=0, mensaje_cliente ="clien
                     dispensador = dispensadorcontroller\
                         .buscar_dispensador_codigo(int(codigo_dispensador))
                     if dispensador.estado.lower() != "activo":
-                        mensaje_dispensador_desactivo()
+                        mensaje_no_activo("el dispensador", "activo")
                         return 0
                 if verificar_cuenta:
                     existe_cliente = cuentaclientecontroller\
@@ -208,15 +214,15 @@ def mensaje_cuenta_activa(nombre, detalle):
     """mensaje si la cuenta esta activa"""
     print(Style.BRIGHT + Fore.RED)
     print("===============================")
-    print(msj.mensaje_cuenta_no_activa())
+    print(msj.mensaje_no_esta("la cuenta","activa"))
     print("===============================")
     sleep(1)
     print(msj.mensaje_no_tiene(nombre[11:], detalle))
     print("===============================")
-def mensaje_dispensador_desactivo():
+def mensaje_no_activo(nombre, detalle):
     """Mensaje: El dispensdor no esta activo"""
     print(Style.BRIGHT + Fore.RED)
     print("===========================================")
-    print(msj.mensaje_dispensador_no_activo())
+    print(msj.mensaje_no_esta(nombre,detalle))
     print("===========================================")
 # endregion

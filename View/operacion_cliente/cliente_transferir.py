@@ -17,7 +17,8 @@ def frm_cliente_transferencia():
     print(msj.mensaje_frm_registro("transferencia"))
     print("================================")
     print(Style.NORMAL + Fore.WHITE)
-    codigo_cliente = elemento.ingresar_codigo_cliente("código del cliente", True)
+    codigo_cliente = elemento.ingresar_codigo_cliente(
+        nombre="código del cliente", verificar_cuenta=True, verificar_estado=True)
     if codigo_cliente =="":
         return
     clave = elemento.ingresar_clave_cliente("clave del cliente", codigo_cliente)
@@ -28,7 +29,8 @@ def frm_cliente_transferencia():
         verificar_estado=True)
     if codigo_dispensador == 0:
         return
-    codigo_cliente_trans = elemento.ingresar_codigo_cliente("código del cliente a transferir", True)
+    codigo_cliente_trans = elemento.ingresar_codigo_cliente(
+        nombre="código del cliente a transferir", verificar_cuenta=True, verificar_estado=True)
     if codigo_cliente_trans =="":
         return
     codigo_dispensador_transferir = elemento.ingresar_codigo_dispensador(

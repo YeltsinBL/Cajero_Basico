@@ -18,7 +18,10 @@ def frm_registrar_deposito():
     print(msj.mensaje_frm_registro("depósito"))
     print("======================")
     print(Style.NORMAL + Fore.WHITE)
-    codigo_cliente = elemento.ingresar_codigo_cliente("código del cliente")
+    codigo_cliente = elemento.ingresar_codigo_cliente(
+        nombre="código del cliente", verificar_estado=True)
+    if codigo_cliente == "":
+        return
     codigo_dispensador = elemento.ingresar_codigo_dispensador(
         nombre="código del dispensador", codigo_cliente=codigo_cliente, verificar_estado=True)
     if codigo_dispensador == 0:

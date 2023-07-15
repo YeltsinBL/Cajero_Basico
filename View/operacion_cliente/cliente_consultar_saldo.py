@@ -21,7 +21,8 @@ def frm_consulta_saldo():
     print(Style.NORMAL + Fore.WHITE)
     opc_accion = opciones_consulta()
     codigo_dispensador =0
-    codigo_cliente = elemento.ingresar_codigo_cliente("código del cliente", True)
+    codigo_cliente = elemento.ingresar_codigo_cliente(
+        nombre="código del cliente", verificar_cuenta=True, verificar_estado=True)
     if codigo_cliente =="":
         return
     if opc_accion == 1:
@@ -66,7 +67,7 @@ def frm_consulta_saldo():
                 print("===========================================")
             else: pass
         else:
-            print(msj.mensaje_cuenta_no_activa())
+            print(msj.mensaje_no_esta("la cuenta","activa"))
             print("===============================")
             sleep(1)
             print(msj.mensaje_no_tiene("cliente", "depósito"))
