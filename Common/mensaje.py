@@ -82,8 +82,8 @@ class Mensaje:
 
 # region Validaciones
     def mensaje_cancelar_confirmacion(self, nombre:str):
-        """Mensaje: ¡USTES HA CANCELADO EL REGISTRO DEL {nombre}!"""
-        return f"¡USTES HA CANCELADO EL REGISTRO DEL {nombre.upper()}!"
+        """Mensaje: ¡USTED HA CANCELADO EL REGISTRO DEL {nombre}!"""
+        return f"¡USTED HA CANCELADO EL REGISTRO DEL {nombre.upper()}!"
     def mensaje_verificar_tipo(self, tipo:str, nombre:str):
         """Mensaje: ¡Verificando {tipo} en {nombre}!"""
         return str(f"¡Verificando {tipo} en {nombre}!").upper()
@@ -108,4 +108,10 @@ class Mensaje:
     def mensaje_no_esta(self, nombre:str, detalle:str):
         """Mensaje: ¡{nombre} NO ESTA {detalle}!"""
         return f"¡{nombre.upper()} NO ESTA {detalle.upper()}!"
+    def mensaje_no_se_puede(self, detalle:str):
+        """Mensaje: NO SE PUEDE {detalle}"""
+        return f"¡NO SE PUEDE {detalle.upper()}!"
+    def mensaje_usted_cuenta(self, nombre:str, detalle):
+        """Mensaje: USTED CUENTA CON {nombre} {detalle}"""
+        return f"¡USTED CUENTA CON {nombre.upper()} {detalle}!"
 # endregion

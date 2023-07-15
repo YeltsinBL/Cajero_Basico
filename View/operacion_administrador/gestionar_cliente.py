@@ -39,6 +39,17 @@ def frm_modificar_cliente():
     nombre = ingresar_nombre()
     nrocuentasoles = ingresar_numero_cuenta()
     estado = elemento.ingresar_estado("estado")
+    if estado=="desactivo":
+        cliente = clientecontroller.buscar_cliente_codigo(codigo_cliente)
+        if cliente.saldo>0:
+            print(Style.BRIGHT + Fore.RED)
+            print("=====================")
+            print(msj.mensaje_no_se_puede("desactivar el cliente"))
+            print("=====================")
+            sleep(1)
+            print(msj.mensaje_usted_cuenta("un saldo de",cliente.saldo))
+            print("=====================")
+            return
     datos_cliente = {"codigo":codigo_cliente, "nombre": nombre,
              "nrocuentasoles": int(nrocuentasoles), "estado": estado.capitalize()}
     respt= clientecontroller.modificar_cliente(datos_cliente)

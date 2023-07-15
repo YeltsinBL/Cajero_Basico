@@ -161,7 +161,7 @@ def ingresar_lugar(nombre):
         vali_lugar = not validacion.valores_ingresados(nombre,lugar,3)
     return lugar
 def ingresar_estado(nombre):
-    """Ingresar el para el estado"""
+    """Ingresar el valor del estado"""
     while True:
         print(nombre.upper()+" 1 [Activo]  o 0 [Inactivo] ")
         confirmar = input("INGRESE OPCIÓN: ")

@@ -71,7 +71,7 @@ def mensaje_transferir_misma_cuenta():
     """Mensaje: No se puede transferir a la misma cuenta"""
     print(Style.BRIGHT + Fore.RED)
     print("===============================")
-    print(msj.mensaje_transferencia_codigo_iguales())
+    print(msj.mensaje_no_se_puede("TRANSFERIR A SU MISMA CUENTA"))
     print("===============================")
     print(Style.NORMAL + Fore.WHITE)
 # endregion
