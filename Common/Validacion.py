@@ -16,7 +16,7 @@ def mensaje_validacion(cont):
         retorno = True
     return retorno
 def valores_ingresados(nombre_campo:str, valor, tipo_dato):
-    """Función para validar la nformación ingresada"""
+    """Función para validar la información ingresada"""
     retorno =  True
     if tipo_dato == 1 and (not valor.isdigit()):
         print(Style.BRIGHT + Fore.RED+
