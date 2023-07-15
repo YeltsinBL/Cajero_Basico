@@ -35,6 +35,14 @@ Funciones globales que se repetiran constantemente.
   - Mensaje de éxito.
   - Mensaje de Errores.
   - Mensaje de Validaciones.
+- Elemento
+  - Ingresar código cliente
+  - Ingresar clave cliente
+  - Ingresar código dispensador
+  - Ingresar monto
+  - Ingresar cantidad billetes
+  - Ingresar lugar
+  - Ingresar estado
 
 ### Model
 
@@ -146,7 +154,12 @@ Funciones que utilizaré en los archivos de View.
 - administrador_view:
   - Mostrar opciones de acciones de acuerdo a los datos
   - Seleccionar Acciones de los Formularios de Clientes y Dispensador
-  - Muestra los campos que tienen cada formulario para guardar los datos
+
+- operacion_administrador
+  - Gestionar Cliente
+    - Muestra los campos que tienen cada formulario para guardar los datos
+  - Gestionar Dispensador
+    - Muestra los campos que tienen cada formulario para guardar los datos
 
 - operacion_cliente_view
   - Seleccionar formulario para operaciones del cliente
