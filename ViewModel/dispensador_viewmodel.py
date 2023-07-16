@@ -52,7 +52,7 @@ class DispensadorViewModel:
         """Listar los Dispensadores por su estado"""
         dispensa = []
         for dato in service.dispensadores:
-            if dato.estado.lower() == estado:
+            if dato.estado == estado:
                 dispensa.append(dato)
         return dispensa
 
@@ -67,7 +67,7 @@ class DispensadorViewModel:
                         cantidad = cantidad +(nro_billete * vbillete)
         if cantidad >= monto:
             return True
-        else: return False
+        return False
 
     def agregar_billete_dispensador(self, cod_dispensador:int, lugar_dispensador:str,
                         estado_dispensador:str, billete:list):

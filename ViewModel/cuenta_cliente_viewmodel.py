@@ -63,7 +63,7 @@ class CuentaClienteViewModel:
         dispensa = []
         for dato in service.cuenta_cliente:
             if dato.codigo_cliente == codigo_cliente and\
-                (cod_dispensador == 0 or dato.codigo_dispensador == cod_dispensador):
+                cod_dispensador in [0, dato.codigo_dispensador]:
                 dispensa.append(dato)
         return dispensa
     def verificar_cuenta_cliente(self, codigo_cliente, codigo_dispensador:int):

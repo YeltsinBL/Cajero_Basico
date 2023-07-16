@@ -26,7 +26,7 @@ def ingresar_codigo_cliente(nombre:str, verificar_cuenta=False, verificar_estado
                 if verificar_estado:
                     dispensador = clientecontroller\
                         .buscar_cliente_codigo(codigo_cliente)
-                    if dispensador.estado.lower() != "activo":
+                    if dispensador.estado == 0:
                         mensaje_no_activo("el cliente", "activo")
                         return ""
                 if verificar_cuenta:
@@ -67,7 +67,7 @@ def ingresar_codigo_dispensador(nombre,codigo_cliente=0, mensaje_cliente ="clien
                 if verificar_estado:
                     dispensador = dispensadorcontroller\
                         .buscar_dispensador_codigo(int(codigo_dispensador))
-                    if dispensador.estado.lower() != "activo":
+                    if dispensador.estado == 0:
                         mensaje_no_activo("el dispensador", "activo")
                         return 0
                 if verificar_cuenta:
@@ -163,13 +163,14 @@ def ingresar_lugar(nombre):
 def ingresar_estado(nombre):
     """Ingresar el valor del estado"""
     while True:
-        print(nombre.upper()+" 1 [Activo]  o 0 [Inactivo] ")
-        confirmar = input("INGRESE OPCIÓN: ")
-        if confirmar== "1":
-            return "activo"
-        if confirmar == "0":
-            return "desactivo"
-        msj.mensaje_opcion_ingresada_incorrecta()
+        confirmar = input(nombre.upper()+" (1 [Activo] | 0 [Inactivo]): ")
+        if confirmar.isdigit() and (int(confirmar) in {1, 0}):
+            return int(confirmar)
+        print(Style.BRIGHT + Fore.RED)
+        print("===============================")
+        print(msj.mensaje_opcion_ingresada_incorrecta())
+        print("===============================")
+        print(Style.NORMAL + Fore.WHITE)
 # endregion
 
 # region Mensajes de Validación

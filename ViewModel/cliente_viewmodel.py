@@ -58,7 +58,7 @@ class  ClienteViewModel:
         """Listar los Clientes por su estado"""
         cliente = []
         for dato in service.clientes:
-            if dato.estado.lower() == estado:
+            if dato.estado == estado:
                 cliente.append(dato)
         return cliente
     def verifica_cliente_codigo_clave(self, codigo, clave):

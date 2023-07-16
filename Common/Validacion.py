@@ -57,7 +57,7 @@ def tiene_exactamente_un_punto(numero):
                       "Existe más de un punto decimal"
                       +Style.NORMAL + Fore.WHITE)
                 return False
-            else: num = float(numero)
+            num = float(numero)
         return isinstance(num,float)
     except ValueError:
         return False

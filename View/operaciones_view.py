@@ -51,7 +51,7 @@ def seleccionar_operaciones(opc_menu):
             if opc_operacion == 3:
                 clientes = clientecontroller.listado_cliente()
                 for cliente in clientes:
-                    if cliente.estado.lower() =="activo":
+                    if cliente.estado == 1:
                         contar+=1
                 if contar <=1:
                     print(msj.mensaje_mantenimiento("Operación de Transferencia"))

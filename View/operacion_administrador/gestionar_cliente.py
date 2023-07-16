@@ -25,7 +25,7 @@ def frm_registrar_cliente():
     clave = input("CLAVE: ")
     clientecontroller.registro_cliente({"codigo":codigo, "nombre": nombre,
                                         "nrocuentasoles": int(nrocuentasoles),
-                                        "clave":clave, "estado": "Activo"})
+                                        "clave":clave, "estado": 1})
     print(Style.BRIGHT + Fore.GREEN)
     print("======================")
     print(msj.mensaje_registrado("CLIENTE"))
@@ -33,13 +33,18 @@ def frm_registrar_cliente():
 
 def frm_modificar_cliente():
     """Modificar Cliente"""
+    print(Style.BRIGHT + Fore.CYAN)
+    print("======================")
+    print(msj.mensaje_frm_modifica("CLIENTE"))
+    print("======================")
+    print(Style.NORMAL + Fore.WHITE)
     datos_cliente:dict[str,any]
     codigo_cliente = elemento.\
                     ingresar_codigo_cliente("código")
     nombre = ingresar_nombre()
     nrocuentasoles = ingresar_numero_cuenta()
     estado = elemento.ingresar_estado("estado")
-    if estado=="desactivo":
+    if estado==0:
         cliente = clientecontroller.buscar_cliente_codigo(codigo_cliente)
         if cliente.saldo>0:
             print(Style.BRIGHT + Fore.RED)
@@ -51,7 +56,7 @@ def frm_modificar_cliente():
             print("=====================")
             return
     datos_cliente = {"codigo":codigo_cliente, "nombre": nombre,
-             "nrocuentasoles": int(nrocuentasoles), "estado": estado.capitalize()}
+             "nrocuentasoles": int(nrocuentasoles), "estado": estado}
     respt= clientecontroller.modificar_cliente(datos_cliente)
     if respt:
         print(Style.BRIGHT + Fore.GREEN)
@@ -78,7 +83,7 @@ def frm_buscar_cliente():
         print("NOMBRE:",respt.nombre)
         print("NRO. CUENTA SOLES:",respt.nrocuentasoles)
         print("SALDO:",respt.saldo)
-        print("ESTADO:",respt.estado)
+        print("ESTADO:","Activo" if respt.estado == 1 else "Inactivo")
         print(Style.BRIGHT + Fore.GREEN)
         print("====================")
         print(msj.mensaje_existe("CLIENTE"))
@@ -99,20 +104,17 @@ def frm_buscar_cliente():
 def frm_listado_cliente():
     """Listado de los Clientes"""
     clientes = clientecontroller.listado_cliente()
-    cantidad = 0
     print(Style.BRIGHT + Fore.CYAN)
     print("=======================")
     print(msj.mensaje_frm_lista("CLIENTES"))
     print("=======================")
     print(Style.BRIGHT + Fore.WHITE)
     for dato in clientes:
-        cantidad += 1
-        print(f"CLIENTE NRO. {cantidad}")
         print("CÓDIGO:",dato.codigo)
         print("NOMBRE:",dato.nombre)
         print("NRO. CUENTA SOLES:",dato.nrocuentasoles)
         print("SALDO:",dato.saldo)
-        print("ESTADO:",dato.estado)
+        print("ESTADO:","Activo" if dato.estado == 1 else "Inactivo")
         print("=======================")
     print(Style.BRIGHT + Fore.GREEN)
     print("=======================")
@@ -121,45 +123,41 @@ def frm_listado_cliente():
 
 def selecciona_estado_cliente():
     """Selecciona el tipo a listar de los Clientes por estado"""
-    inicio = True
-    cont = 0
-    while inicio:
-        try:
-            print()
-            print("Ingresa el número del estado")
-            operacioncontroller.listado_estados_clientes()
-            nro_menu = int(input(""))
-            if 3 < nro_menu or nro_menu < 1:
-                cont += 1
-                inicio = validacion.mensaje_validacion(cont)
-                continue
+    while True:
+        print(Fore.BLUE + Style.BRIGHT)
+        print("¡SELECCIONE UN ESTADO!")
+        print(Fore.WHITE + Style.NORMAL)
+        print("Ingresa el número del estado")
+        operacioncontroller.listado_estados_clientes()
+        nro_menu = int(input(""))
+        if nro_menu in [3,2,1]:
             return nro_menu
-        except (ValueError, TypeError):
-            cont += 1
-            validacion.mensaje_validacion(cont)
+        print(Style.BRIGHT + Fore.RED)
+        print("=================================")
+        print(msj.mensaje_opcion_ingresada_incorrecta())
+        print("=================================")
+        print(Style.BRIGHT + Fore.WHITE)
 
 def frm_estado_cliente():
     """Lista de los Clientes por estado"""
     nro_estado = selecciona_estado_cliente()
     if nro_estado == 3:
         return
-    estado = "activo" if nro_estado == 1 else "desactivo"
-    respt = clientecontroller.listado_cliente_estado(estado)
+    estado = "Activo" if nro_estado == 1 else "Inactivo"
+    respt = clientecontroller.listado_cliente_estado(
+        nro_estado if nro_estado == 1 else 0)
     if len(respt)>0:
-        cantidad = 0
         print(Style.BRIGHT + Fore.CYAN)
         print("=================================")
         print(msj.mensaje_frm_listar_estado("CLIENTE", estado.upper()+"S"))
         print("=================================")
         print(Style.BRIGHT + Fore.WHITE)
         for dato in respt:
-            cantidad += 1
-            print(f"CLIENTE NRO. {cantidad}")
             print("CÓDIGO:",dato.codigo)
             print("NOMBRE:",dato.nombre)
             print("NRO. CUENTA SOLES:",dato.nrocuentasoles)
             print("SALDO:",dato.saldo)
-            print("ESTADO:",dato.estado)
+            print("ESTADO:",estado)
             print("===============================")
         print(Style.BRIGHT + Fore.GREEN)
         print("===============================")

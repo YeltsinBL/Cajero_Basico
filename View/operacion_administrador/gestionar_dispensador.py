@@ -3,7 +3,6 @@
 # region importaciones
 from time import sleep
 from colorama import Fore, Style
-import Common.Validacion as validacion
 from Common import mensaje
 from Common import elemento
 import Controller.dispensador_controller as dispensadorcontroller
@@ -24,7 +23,7 @@ def frm_agregar_dispensador():
     lugar = elemento.ingresar_lugar("lugar")
     billetes = elemento.ingresar_cantidad_billetes()
     dispensadorcontroller.registro_dispensador(
-        {"codigo":cant_disp+1,"lugar":lugar, "billete": billetes,"estado": "Activo"})
+        {"codigo":cant_disp+1,"lugar":lugar, "billete": billetes,"estado": 1})
     print(Style.BRIGHT + Fore.GREEN)
     print("============================")
     print(msj.mensaje_registrado("DISPENSADOR"))
@@ -33,22 +32,19 @@ def frm_agregar_dispensador():
 def frm_listado_dispensadores():
     """Listar los Dispensadores"""
     dispensa = dispensadorcontroller.listado_dispensador()
-    cantidad = 0
     print(Style.BRIGHT + Fore.CYAN)
     print("============================")
     print(msj.mensaje_frm_lista("DISPENSADORES"))
     print("============================")
     print(Style.NORMAL + Fore.WHITE)
     for dato in dispensa:
-        cantidad += 1
-        print(f"DISPENSADOR NRO. {cantidad}")
         print("CODIGO:", dato.codigo)
         print("LUGAR:", dato.lugar)
         print("BILLETES:")
         for valor in dato.billete:
             for nro_billete, vbillete in valor.items():
                 print(str(nro_billete).upper()+ ": ",vbillete)
-        print("ESTADO:", dato.estado)
+        print("ESTADO:", "Activo" if dato.estado == 1 else "Inactivo")
         print("============================")
     print(Style.BRIGHT + Fore.GREEN)
     print("============================")
@@ -69,7 +65,7 @@ def frm_modificar_dispensador():
     billetes = elemento.ingresar_cantidad_billetes()
     estado = elemento.ingresar_estado("nuevo estado")
     datos_dispensador={"codigo":int(codigo_dispensador),"lugar":lugar,
-                    "billete": billetes,"estado": estado.capitalize()}
+                    "billete": billetes,"estado": estado}
     respt = dispensadorcontroller.modificar_dispensador(datos_dispensador)
     if respt:
         print(Style.BRIGHT + Fore.GREEN)
@@ -98,7 +94,7 @@ def frm_buscar_dispensador():
         for valor in respt.billete:
             for nro_billete, vbillete in valor.items():
                 print(str(nro_billete).upper()+ ": ",vbillete)
-        print("ESTADO:",respt.estado)
+        print("ESTADO:","Activo" if respt.estado == 1 else "Inactivo")
         print(Style.BRIGHT + Fore.GREEN)
         print("============================")
         print(msj.mensaje_existe("DISPENSADOR"))
@@ -122,25 +118,23 @@ def frm_estado_dispensador():
     nro_estado = selecciona_estado_cliente()
     if nro_estado == 3:
         return
-    estado = "activo" if nro_estado == 1 else "desactivo"
-    respt = dispensadorcontroller.listado_dispensador_estado(estado)
+    estado = "Activo" if nro_estado == 1 else "Inactivo"
+    respt = dispensadorcontroller.listado_dispensador_estado(
+        nro_estado if nro_estado == 1 else 0)
     if len(respt)>0:
-        cantidad = 0
         print(Style.BRIGHT + Fore.CYAN)
         print("=====================================")
         print(msj.mensaje_frm_listar_estado("DISPENSADOR", estado.upper()+"S"))
         print("=====================================")
         print(Style.BRIGHT + Fore.WHITE)
         for dato in respt:
-            cantidad += 1
-            print(f"DISPENSADOR NRO. {cantidad}")
             print("CÓDIGO:",dato.codigo)
             print("LUGAR:",dato.lugar)
             print("BILLETES:")
             for valor in dato.billete:
                 for nro_billete, vbillete in valor.items():
                     print(str(nro_billete).upper()+ ": ",vbillete)
-            print("ESTADO:",dato.estado)
+            print("ESTADO:",estado)
             print("====================================")
         print(Style.BRIGHT + Fore.GREEN)
         print("====================================")
@@ -155,19 +149,17 @@ def frm_estado_dispensador():
 
 def selecciona_estado_cliente():
     """Selecciona el tipo a listar de los Clientes por estado"""
-    inicio = True
-    cont = 0
-    while inicio:
-        try:
-            print()
-            print("Ingresa el número del estado")
-            operacioncontroller.listado_estados_clientes()
-            nro_menu = int(input(""))
-            if 3 < nro_menu or nro_menu < 1:
-                cont += 1
-                inicio = validacion.mensaje_validacion(cont)
-                continue
+    while True:
+        print(Fore.BLUE + Style.BRIGHT)
+        print("¡SELECCIONE UN ESTADO!")
+        print(Fore.WHITE + Style.NORMAL)
+        print("Ingresa el número del estado")
+        operacioncontroller.listado_estados_clientes()
+        nro_menu = int(input(""))
+        if nro_menu in [3,2,1]:
             return nro_menu
-        except (ValueError, TypeError):
-            cont += 1
-            validacion.mensaje_validacion(cont)
+        print(Style.BRIGHT + Fore.RED)
+        print("=================================")
+        print(msj.mensaje_opcion_ingresada_incorrecta())
+        print("=================================")
+        print(Style.BRIGHT + Fore.WHITE)
