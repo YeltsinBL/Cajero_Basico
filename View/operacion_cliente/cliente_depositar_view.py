@@ -22,8 +22,11 @@ def frm_registrar_deposito():
         nombre="código del cliente", verificar_estado=True)
     if codigo_cliente == "":
         return
+    nro_cuenta = elemento.ingresar_numero_cuenta("nro. cuenta soles",codigo_cliente)
+    if nro_cuenta==0:
+        return
     codigo_dispensador = elemento.ingresar_codigo_dispensador(
-        nombre="código del dispensador", codigo_cliente=codigo_cliente, verificar_estado=True)
+        nombre="código del dispensador", verificar_estado=True)
     if codigo_dispensador == 0:
         return
     billetes = elemento.ingresar_cantidad_billetes()
@@ -32,6 +35,7 @@ def frm_registrar_deposito():
                             buscar_dispensador_codigo(int(codigo_dispensador))
     dato_dispensador = {"codigo_cliente":codigo_cliente,
                             "nombre_cliente":respt_cliente.nombre,
+                            "codigo_cuenta":nro_cuenta,
                             "codigo_dispensador": int(codigo_dispensador),
                             "lugar_dispensador":respt_dispensador.lugar,
                             "estado_dispensador":respt_dispensador.estado,

@@ -7,6 +7,7 @@ from Common import mensaje
 from Common import elemento
 import Controller.ClienteController as clientecontroller
 import Controller.OperacionController as operacioncontroller
+import Controller.cuenta_cliente_controller as cuentaclientecontroller
 # endregion
 
 msj = mensaje.Mensaje()
@@ -21,14 +22,14 @@ def frm_registrar_cliente():
     print(Style.NORMAL + Fore.WHITE)
     codigo = ingresar_codigo()
     nombre = ingresar_nombre()
-    nrocuentasoles = ingresar_numero_cuenta()
     clave = input("CLAVE: ")
-    clientecontroller.registro_cliente({"codigo":codigo, "nombre": nombre,
-                                        "nrocuentasoles": int(nrocuentasoles),
+    nrocuentasoles = clientecontroller.registro_cliente({"codigo":codigo, "nombre": nombre,
                                         "clave":clave, "estado": 1})
     print(Style.BRIGHT + Fore.GREEN)
     print("======================")
     print(msj.mensaje_registrado("CLIENTE"))
+    print("======================")
+    print(msj.mensaje_su_numero_cuenta(nrocuentasoles))
     print("======================")
 
 def frm_modificar_cliente():
@@ -42,7 +43,6 @@ def frm_modificar_cliente():
     codigo_cliente = elemento.\
                     ingresar_codigo_cliente("código")
     nombre = ingresar_nombre()
-    nrocuentasoles = ingresar_numero_cuenta()
     estado = elemento.ingresar_estado("estado")
     if estado==0:
         cliente = clientecontroller.buscar_cliente_codigo(codigo_cliente)
@@ -56,7 +56,7 @@ def frm_modificar_cliente():
             print("=====================")
             return
     datos_cliente = {"codigo":codigo_cliente, "nombre": nombre,
-             "nrocuentasoles": int(nrocuentasoles), "estado": estado}
+             "estado": estado}
     respt= clientecontroller.modificar_cliente(datos_cliente)
     if respt:
         print(Style.BRIGHT + Fore.GREEN)
@@ -80,14 +80,17 @@ def frm_buscar_cliente():
                     ingresar_codigo_cliente("código")
     respt = clientecontroller.buscar_cliente_codigo(codigo_cliente)
     if not isinstance(respt,list):
-        print("NOMBRE:",respt.nombre)
-        print("NRO. CUENTA SOLES:",respt.nrocuentasoles)
-        print("SALDO:",respt.saldo)
-        print("ESTADO:","Activo" if respt.estado == 1 else "Inactivo")
-        print(Style.BRIGHT + Fore.GREEN)
-        print("====================")
-        print(msj.mensaje_existe("CLIENTE"))
-        print("====================")
+        cuenta_cliente = cuentaclientecontroller.buscar_saldo_cuenta_cliente(
+                            codigo_cliente)
+        for cuenta in cuenta_cliente:
+            print("NOMBRE:",respt.nombre)
+            print("NRO. CUENTA SOLES:",cuenta.codigo_cuenta)
+            print("SALDO:",cuenta.monto)
+            print("ESTADO:","Activo" if respt.estado == 1 else "Inactivo")
+            print(Style.BRIGHT + Fore.GREEN)
+            print("====================")
+            print(msj.mensaje_existe("CLIENTE"))
+            print("====================")
     else:
         print(Style.BRIGHT + Fore.RED)
         print("====================================")
@@ -110,12 +113,15 @@ def frm_listado_cliente():
     print("=======================")
     print(Style.BRIGHT + Fore.WHITE)
     for dato in clientes:
-        print("CÓDIGO:",dato.codigo)
-        print("NOMBRE:",dato.nombre)
-        print("NRO. CUENTA SOLES:",dato.nrocuentasoles)
-        print("SALDO:",dato.saldo)
-        print("ESTADO:","Activo" if dato.estado == 1 else "Inactivo")
-        print("=======================")
+        cuenta_cliente = cuentaclientecontroller.buscar_saldo_cuenta_cliente(
+                            dato.codigo)
+        for cuenta in cuenta_cliente:
+            print("CÓDIGO:",dato.codigo)
+            print("NOMBRE:",dato.nombre)
+            print("NRO. CUENTA SOLES:",cuenta.codigo_cuenta)
+            print("SALDO:",cuenta.monto)
+            print("ESTADO:","Activo" if dato.estado == 1 else "Inactivo")
+            print("=======================")
     print(Style.BRIGHT + Fore.GREEN)
     print("=======================")
     print(msj.mensaje_listado("CLIENTES"))
@@ -153,12 +159,15 @@ def frm_estado_cliente():
         print("=================================")
         print(Style.BRIGHT + Fore.WHITE)
         for dato in respt:
-            print("CÓDIGO:",dato.codigo)
-            print("NOMBRE:",dato.nombre)
-            print("NRO. CUENTA SOLES:",dato.nrocuentasoles)
-            print("SALDO:",dato.saldo)
-            print("ESTADO:",estado)
-            print("===============================")
+            cuenta_cliente = cuentaclientecontroller.buscar_saldo_cuenta_cliente(
+                                dato.codigo)
+            for cuenta in cuenta_cliente:
+                print("CÓDIGO:",dato.codigo)
+                print("NOMBRE:",dato.nombre)
+                print("NRO. CUENTA SOLES:",cuenta.codigo_cuenta)
+                print("SALDO:",cuenta.monto)
+                print("ESTADO:",estado)
+                print("===============================")
         print(Style.BRIGHT + Fore.GREEN)
         print("===============================")
         print(msj.mensaje_encontro_por_estado("CLIENTES", estado.upper()+"S"))

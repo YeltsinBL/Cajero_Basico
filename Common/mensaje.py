@@ -54,6 +54,9 @@ class Mensaje:
     def mensaje_listado(self, nombre:str):
         """Mensaje: ¡TODOS LOS {nombre}!"""
         return f"¡TODOS LOS {nombre.upper()}!"
+    def mensaje_su_numero_cuenta(self, cantidad):
+        """Mensaje: ¡SU NÚMERO DE CUENTA ES: {cantidad}!"""
+        return f"¡SU NÚMERO DE CUENTA ES: {cantidad}!"
 # endregion
 
 # region ERRORES

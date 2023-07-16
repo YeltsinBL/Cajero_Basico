@@ -26,18 +26,22 @@ def frm_registrar_retiro():
     clave = elemento.ingresar_clave_cliente("clave del cliente", codigo_cliente)
     if clave is False:
         return
+    nro_cuenta = elemento.ingresar_numero_cuenta(
+        nombre="nro. cuenta soles",codigo_cliente=codigo_cliente, verificar_estado=True)
+    if nro_cuenta==0:
+        return
     codigo_dispensador = elemento.ingresar_codigo_dispensador(
-            nombre="código del dispensador", codigo_cliente=codigo_cliente, verificar_cuenta=True,
-            verificar_estado=True)
+            nombre="código del dispensador", verificar_estado=True)
     if codigo_dispensador == 0:
         return
-    monto = elemento.ingresar_monto(codigo_dispensador,codigo_cliente)
+    monto = elemento.ingresar_monto(codigo_dispensador,codigo_cliente, nro_cuenta)
     if monto==0:
         return
     respt_cliente = clientecontroller.buscar_cliente_codigo(codigo_cliente)
     respt_dispensador = dispensadorcontroller.\
                         buscar_dispensador_codigo(int(codigo_dispensador))
     datos = {"codigo_cliente":codigo_cliente, "nombre_cliente":respt_cliente.nombre,
+            "codigo_cuenta":nro_cuenta,
             "codigo_dispensador":int(codigo_dispensador),
             "lugar_dispensador":respt_dispensador.lugar, 
             "estado_dispensador":respt_dispensador.estado, 

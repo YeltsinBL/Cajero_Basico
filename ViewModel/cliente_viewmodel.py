@@ -1,6 +1,10 @@
 """Cliente ViewModel"""
 import Data.service as service
 import Model.Cliente as clientemodel
+import ViewModel.cuenta_cliente_viewmodel as cuentaclienteviewmodel
+
+cuentacliente_vm = cuentaclienteviewmodel.CuentaClienteViewModel()
+
 class  ClienteViewModel:
     """Clase Ciente ViewModel"""
     def __init__(self) -> None:
@@ -21,12 +25,14 @@ class  ClienteViewModel:
 
     def registrar_cliente(self, dicts:dict[str,any]):
         """Registro Cliente"""
-        clien = clientemodel.Cliente(codigo=dicts.get("codigo"),
+        cliente = clientemodel.Cliente(codigo=dicts.get("codigo"),
                                      nombre=dicts.get("nombre"),
-                                     nrocuentasoles=dicts.get("nrocuentasoles"),
                                      clave=dicts.get("clave"),
                                      estado=dicts.get("estado"))
-        service.clientes.append(clien)
+        service.clientes.append(cliente)
+        cuenta_cliente={"codigo_cliente":dicts.get("codigo"),
+                        "monto":0}
+        return cuentacliente_vm.registro_cuenta_cliente(cuenta_cliente)
 
     def verifica_cliente_codigo(self, codigo):
         """Buscar Cliente por Código"""
@@ -40,7 +46,6 @@ class  ClienteViewModel:
         for dato in service.clientes:
             if dato.codigo == dicts.get("codigo"):
                 dato.nombre=dicts["nombre"]
-                dato.nrocuentasoles=dicts["nrocuentasoles"]
                 dato.estado=dicts["estado"]
                 return True
         return False
@@ -65,12 +70,5 @@ class  ClienteViewModel:
         """Buscar Cliente por Código"""
         for dato in service.clientes:
             if dato.codigo == codigo and dato.clave ==clave:
-                return True
-        return False
-    def modificar_cliente_saldo(self, codigocliente,monto):
-        """Modificar el Saldo del Cliente"""
-        for dato in service.clientes:
-            if dato.codigo == codigocliente:
-                dato.saldo=monto
                 return True
         return False

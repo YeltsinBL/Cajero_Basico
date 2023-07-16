@@ -6,10 +6,9 @@ class Persona:
 
 class Cliente(Persona):
     """Clase Cliente"""
-    def __init__(self, codigo=None, nombre=None, nrocuentasoles=None, saldo=0,\
-                clave=None, estado=None) -> None:
+    def __init__(self, codigo=None, nombre=None,
+                 saldo=0,clave=None, estado=None) -> None:
         Persona.__init__(self,codigo, nombre)
-        self.nrocuentasoles = nrocuentasoles
         self.saldo = saldo
         self.clave = clave
         self.estado = estado

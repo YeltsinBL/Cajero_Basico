@@ -26,7 +26,11 @@ class DepositarViewModel:
                              disp.get("billete"))
         if respt:
             service.depositos.append(deposita)
-            cuentacliente_vm.registro_cuenta_cliente(deposita)
+            cuentacliente_vm.modificar_saldo_cuenta_cliente(
+                codigo_cliente=disp.get("codigo_cliente"),
+                codigo_cuenta=disp.get("codigo_cuenta"),
+                monto=disp.get("monto"), operacion=1, activar=1
+            )
         return respt
 
     def lista_deposito(self):

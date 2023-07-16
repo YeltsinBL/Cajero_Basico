@@ -9,6 +9,7 @@ import Controller.depositar_controller as depositocontroller
 import Controller.retirar_controller as retirocontroller
 import Controller.dispensador_controller as dispensadorcontroller
 import Controller.transferencia_controller as transfereciacontroller
+import Controller.cuenta_cliente_controller as cuentaclientecontroller
 # endregion
 
 msj = mensaje.Mensaje()
@@ -89,18 +90,19 @@ def listado_transferencia(resp_transferencia):
         print(Style.NORMAL + Fore.WHITE)
         for retiro in resp_transferencia:
             respt_cliente = clientecontroller.buscar_cliente_codigo(retiro.codigo_cliente)
-            respt_dispensador = dispensadorcontroller.\
-                        buscar_dispensador_codigo(int(retiro.codigo_dispensador))
+            cuenta_cliente = cuentaclientecontroller.buscar_saldo_cuenta_cliente(
+                retiro.codigo_cliente)
             respt_cliente_trans = clientecontroller.\
                         buscar_cliente_codigo(retiro.codigo_cliente_transferir)
-            respt_dispensador_trans = dispensadorcontroller.\
-                        buscar_dispensador_codigo(int(retiro.codigo_dispensador_transferir))
+            cuenta_cliente_trans = cuentaclientecontroller.buscar_saldo_cuenta_cliente(
+                retiro.codigo_cliente_transferir)
             print("CLIENTE:",retiro.codigo_cliente, "-", respt_cliente.nombre)
-            print("DISPENSADOR:",retiro.codigo_dispensador, "-", respt_dispensador.lugar)
+            for cuenta in cuenta_cliente:
+                print("NRO. CUENTA SOLES:",cuenta.codigo_cuenta)
             print("CLIENTE TRANSFERENCIA:",retiro.codigo_cliente_transferir, "-",
                                         respt_cliente_trans.nombre)
-            print("DISPENSADOR TRANSFERENCIA:",retiro.codigo_dispensador_transferir, "-",
-                                        respt_dispensador_trans.lugar)
+            for cuenta in cuenta_cliente_trans:
+                print("NRO. CUENTA SOLES TRANSFERENCIA:",cuenta.codigo_cuenta)
             print("MONTO:", retiro.monto)
             print("============================")
     else:

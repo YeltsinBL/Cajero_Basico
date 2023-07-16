@@ -6,7 +6,7 @@ clientevm = clienteviewmodel.ClienteViewModel()
 # region Funciones
 def registro_cliente(datos_cliente:dict[str,any]):
     """Registro Cliente"""
-    clientevm.registrar_cliente(datos_cliente)
+    return clientevm.registrar_cliente(datos_cliente)
 def listado_cliente():
     """Verificar si hay Clientes"""
     return clientevm.lista_cliente()

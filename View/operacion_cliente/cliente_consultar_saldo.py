@@ -19,29 +19,29 @@ def frm_consulta_saldo():
     print("================================")
     print(Style.NORMAL + Fore.WHITE)
     opc_accion = opciones_consulta()
-    codigo_dispensador =0
+    codigo_cuenta =0
     codigo_cliente = elemento.ingresar_codigo_cliente(
         nombre="código del cliente", verificar_cuenta=True, verificar_estado=True)
     if codigo_cliente =="":
         return
     if opc_accion == 1:
-        codigo_dispensador = elemento.ingresar_codigo_dispensador(
-            nombre="código del dispensador", codigo_cliente=codigo_cliente, verificar_cuenta=True)
-        if codigo_dispensador == 0:
+        codigo_cuenta = elemento.ingresar_numero_cuenta(
+            nombre="nro. cuenta soles", codigo_cliente=codigo_cliente)
+        if codigo_cuenta == 0:
             return
     respt = cuentaclientecontroller.buscar_saldo_cuenta_cliente(
                                 codigo_cliente,
-                                int(codigo_dispensador))
+                                codigo_cuenta)
     if len(respt)>0:
         lista_saldo(respt)
     else:
-        error_lista_saldo(codigo_cliente,codigo_dispensador)
+        error_lista_saldo(codigo_cliente,codigo_cuenta)
 def opciones_consulta():
     """Consultar por código o Todos"""
     while True:
         print("Ingresa el número de la acción a realizar:")
-        print(1, "Código Dispensador")
-        print(2, "Todos los Dispensadores")
+        print(1, "Nro. Cuenta Soles")
+        print(2, "Todas las Cuentas Soles")
         nro_accion = input("")
         if nro_accion.isdigit() and int(nro_accion) in {1, 2}:
             return int(nro_accion)
@@ -58,10 +58,13 @@ def lista_saldo(respt):
     print(Style.NORMAL + Fore.WHITE)
     for deposito in respt:
         respt_cliente = clientecontroller.buscar_cliente_codigo(deposito.codigo_cliente)
-        print("CLIENTE:",deposito.codigo_cliente, "-", respt_cliente.nombre)
-        print("NUMERO CUENTA:",respt_cliente.nrocuentasoles)
-        print("TOTAL:", deposito.monto)
-        print("============================")
+        cuenta_cliente = cuentaclientecontroller.buscar_saldo_cuenta_cliente(
+                            deposito.codigo_cliente)
+        for cuenta in cuenta_cliente:
+            print("CLIENTE:",deposito.codigo_cliente, "-", respt_cliente.nombre)
+            print("NRO. CUENTA SOLES:", cuenta.codigo_cuenta)
+            print("TOTAL:", cuenta.monto)
+            print("============================")
     print(Style.BRIGHT + Fore.GREEN)
     print("============================")
     print(msj.mensaje_existe("saldo"))

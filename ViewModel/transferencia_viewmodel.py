@@ -24,20 +24,20 @@ class TransferenciaViewModel:
         transferencia = transferenciamodel.Transferencia(
                             codigo_transferencia=len(self.lista_transferencia())+1,
                             codigo_cliente=disp.get("codigo_cliente"),
-                            codigo_dispensador=disp.get("codigo_dispensador"),
+                            codigo_cuenta=disp.get("codigo_cuenta"),
                             codigo_cliente_transferir=disp.get("codigo_cliente_transferir"),
-                            codigo_dispensador_transferir=disp.get("codigo_dispensador_transferir"),
+                            codigo_cuenta_transferir=disp.get("codigo_cuenta_transferir"),
                             monto=disp.get("monto"))
         # Reducir Saldo
         reducir_saldo_cta = cuentacliente_vm.modificar_saldo_cuenta_cliente(
                                 disp.get("codigo_cliente"),
-                                disp.get("codigo_dispensador"),
+                                disp.get("codigo_cuenta"),
                                 disp.get("monto"))
         if reducir_saldo_cta:
             # Aumentar Saldo
             agregar_saldo_cta = cuentacliente_vm.modificar_saldo_cuenta_cliente(
                                 disp.get("codigo_cliente_transferir"),
-                                disp.get("codigo_dispensador_transferir"),
+                                disp.get("codigo_cuenta_transferir"),
                                 disp.get("monto"),1)
 
             if agregar_saldo_cta and reducir_saldo_cta:
