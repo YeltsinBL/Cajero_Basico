@@ -2,7 +2,6 @@
 # region importaciones
 from time import sleep
 from colorama import Fore, Style
-import Common.Validacion as validacion
 from Common import mensaje
 from Common import elemento
 import Controller.ClienteController as clientecontroller
@@ -34,62 +33,62 @@ def frm_consulta_saldo():
                                 codigo_cliente,
                                 int(codigo_dispensador))
     if len(respt)>0:
-        print(Style.BRIGHT + Fore.CYAN)
-        print("============================")
-        print(msj.mensaje_frm_lista("saldos"))
-        print("============================")
-        print(Style.NORMAL + Fore.WHITE)
-        for deposito in respt:
-            respt_cliente = clientecontroller.buscar_cliente_codigo(deposito.codigo_cliente)
-            print("CLIENTE:",deposito.codigo_cliente, "-", respt_cliente.nombre)
-            print("NUMERO CUENTA:",respt_cliente.nrocuentasoles)
-            print("TOTAL:", deposito.monto)
-            print("============================")
-        print(Style.BRIGHT + Fore.GREEN)
-        print("============================")
-        print(msj.mensaje_existe("saldo"))
-        print("============================")
+        lista_saldo(respt)
     else:
-        print(Style.BRIGHT + Fore.RED)
-        print("===========================================")
-        print(msj.mensaje_error_al("consultar","saldo"))
-        print("===========================================")
-        sleep(1)
-        existe_cliente = cuentaclientecontroller\
-                .buscar_saldo_cuenta_cliente(codigo_cliente)
-        if len(existe_cliente)>0:
-            existe_dis = False
-            for valor in existe_cliente:
-                if valor.codigo_dispensador != int(codigo_dispensador):
-                    existe_dis = True
-            if existe_dis:
-                print(msj.mensaje_no_tiene("cliente", "cuenta en este dispensador"))
-                print("===========================================")
-            else: pass
-        else:
-            print(msj.mensaje_no_esta("la cuenta","activa"))
-            print("===============================")
-            sleep(1)
-            print(msj.mensaje_no_tiene("cliente", "depósito"))
-            print("===============================")
+        error_lista_saldo(codigo_cliente,codigo_dispensador)
 def opciones_consulta():
     """Consultar por código o Todos"""
-    inicio = True
-    cont = 0
-    while inicio:
-        try:
-            print("Ingresa el número de la acción a realizar:")
-            print(1, "Código Dispensador")
-            print(2, "Todos los Dispensadores")
-            nro_accion = int(input(""))
-            if nro_accion == 2 or nro_accion == 1:
-                return nro_accion
-            else:
-                cont += 1
-                inicio = validacion.mensaje_validacion(cont)
-                continue
-        except (ValueError, TypeError):
-            cont +=1
-            inicio = validacion.mensaje_validacion(cont)
+    while True:
+        print("Ingresa el número de la acción a realizar:")
+        print(1, "Código Dispensador")
+        print(2, "Todos los Dispensadores")
+        nro_accion = input("")
+        if nro_accion.isdigit() and int(nro_accion) in {1, 2}:
+            return int(nro_accion)
+        print(Style.BRIGHT + Fore.RED)
+        print("===============================")
+        print(msj.mensaje_opcion_ingresada_incorrecta())
+        print("===============================")
+def lista_saldo(respt):
+    """Lista de los saldos"""
+    print(Style.BRIGHT + Fore.CYAN)
+    print("============================")
+    print(msj.mensaje_frm_lista("saldos"))
+    print("============================")
+    print(Style.NORMAL + Fore.WHITE)
+    for deposito in respt:
+        respt_cliente = clientecontroller.buscar_cliente_codigo(deposito.codigo_cliente)
+        print("CLIENTE:",deposito.codigo_cliente, "-", respt_cliente.nombre)
+        print("NUMERO CUENTA:",respt_cliente.nrocuentasoles)
+        print("TOTAL:", deposito.monto)
+        print("============================")
+    print(Style.BRIGHT + Fore.GREEN)
+    print("============================")
+    print(msj.mensaje_existe("saldo"))
+    print("============================")
+def error_lista_saldo(codigo_cliente,codigo_dispensador):
+    """Error al listar los saldos"""
+    print(Style.BRIGHT + Fore.RED)
+    print("===========================================")
+    print(msj.mensaje_error_al("consultar","saldo"))
+    print("===========================================")
+    sleep(1)
+    existe_cliente = cuentaclientecontroller\
+            .buscar_saldo_cuenta_cliente(codigo_cliente)
+    if len(existe_cliente)>0:
+        existe_dis = False
+        for valor in existe_cliente:
+            if valor.codigo_dispensador != int(codigo_dispensador):
+                existe_dis = True
+        if existe_dis:
+            print(msj.mensaje_no_tiene("cliente", "cuenta en este dispensador"))
+            print("===========================================")
+        else: pass
+    else:
+        print(msj.mensaje_no_esta("la cuenta","activa"))
+        print("===============================")
+        sleep(1)
+        print(msj.mensaje_no_tiene("cliente", "depósito"))
+        print("===============================")
 
 # endregion

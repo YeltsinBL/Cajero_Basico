@@ -2,8 +2,8 @@
 
 from time import sleep
 from colorama import Fore, Style
-import Common.mensaje as mensaje
-import Common.Validacion as validacion
+from Common import mensaje
+from Common import Validacion as validacion
 import Controller.ClienteController as clientecontroller
 import Controller.dispensador_controller as dispensadorcontroller
 import Controller.cuenta_cliente_controller as cuentaclientecontroller

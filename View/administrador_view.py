@@ -1,7 +1,6 @@
 """Vista para las Operaciones por Administrador"""
 # region importaciones
 from colorama import Fore, Style
-import Common.Validacion as validacion
 from Common import mensaje
 import Controller.ClienteController as clientecontroller
 import Controller.dispensador_controller as dispensadorcontroller
@@ -16,50 +15,39 @@ msj = mensaje.Mensaje()
 
 def seleccionar_acciones_formulario_operacion(opc_operacion):
     """Opción para Mostrar las acciones de los formularios"""
-    inicio = True
-    cont = 0
-    while inicio:
-        try:
-            print(Style.BRIGHT + Fore.BLUE)
-            print(msj.mensaje_menu("Gestión Cliente"\
-                                   if opc_operacion ==1 else "Gestión Dispensador"))
-            print(Fore.WHITE + Style.NORMAL)
-            print("Ingresa el número de la acción a realizar:")
-            operacioncontroller.listado_opciones_formulario()
-            cant_opc_form = operacioncontroller.cantidad_opciones_formulario()
-            nro_accion = int(input(""))
-            if cant_opc_form < nro_accion or nro_accion < 1:
-                cont += 1
-                inicio = validacion.mensaje_validacion(cont)
-                continue
-            return nro_accion
-        except (ValueError, TypeError):
-            cont +=1
-            inicio = validacion.mensaje_validacion(cont)
+    while True:
+        print(Style.BRIGHT + Fore.BLUE)
+        print(msj.mensaje_menu("Gestión Cliente"\
+                               if opc_operacion ==1 else "Gestión Dispensador"))
+        print(Fore.WHITE + Style.NORMAL)
+        print("Ingresa el número de la acción a realizar:")
+        operacioncontroller.listado_opciones_formulario()
+        cant_opc_form = operacioncontroller.cantidad_opciones_formulario()
+        nro_accion = input("")
+        if nro_accion.isdigit() and int(nro_accion) in range(1,cant_opc_form+1):
+            return int(nro_accion)
+        print(Style.BRIGHT + Fore.RED)
+        print("===============================")
+        print(msj.mensaje_opcion_ingresada_incorrecta())
+        print("===============================")
 
 def seleccionar_acciones_formulario_operacion_inicial(opc_operacion):
     """Opción para Mostrar las acciones de los formularios"""
-    inicio = True
-    cont = 0
-    while inicio:
-        try:
-            print(Style.BRIGHT + Fore.BLUE)
-            print(msj.mensaje_menu("Gestión Cliente"\
-                                   if opc_operacion ==1 else "Gestión Dispensador"))
-            print(Fore.WHITE + Style.NORMAL)
-            print("Ingresa el número de la acción a realizar:")
-            print(1, "Agregar")
-            print(6, "Regresar al Menú Administrador")
-            nro_accion = int(input(""))
-            if nro_accion == 6 or nro_accion == 1:
-                return nro_accion
-            else:
-                cont += 1
-                inicio = validacion.mensaje_validacion(cont)
-                continue
-        except (ValueError, TypeError):
-            cont +=1
-            inicio = validacion.mensaje_validacion(cont)
+    while True:
+        print(Style.BRIGHT + Fore.BLUE)
+        print(msj.mensaje_menu("Gestión Cliente"\
+                               if opc_operacion ==1 else "Gestión Dispensador"))
+        print(Fore.WHITE + Style.NORMAL)
+        print("Ingresa el número de la acción a realizar:")
+        print(1, "Agregar")
+        print(6, "Regresar al Menú Administrador")
+        nro_accion = input("")
+        if nro_accion.isdigit() and int(nro_accion) in {1, 6}:
+            return int(nro_accion)
+        print(Style.BRIGHT + Fore.RED)
+        print("===============================")
+        print(msj.mensaje_opcion_ingresada_incorrecta())
+        print("===============================")
 
 # endregion
 

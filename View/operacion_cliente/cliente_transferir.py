@@ -40,7 +40,11 @@ def frm_cliente_transferencia():
         return
     if codigo_cliente==codigo_cliente_trans and\
             codigo_dispensador==codigo_dispensador_transferir:
-        mensaje_transferir_misma_cuenta()
+        print(Style.BRIGHT + Fore.RED)
+        print("===============================")
+        print(msj.mensaje_no_se_puede("TRANSFERIR A SU MISMA CUENTA"))
+        print("===============================")
+        print(Style.NORMAL + Fore.WHITE)
         return
     monto = elemento.ingresar_monto(codigo_dispensador,codigo_cliente)
     if monto==0:
@@ -64,14 +68,4 @@ def frm_cliente_transferencia():
         print("======================")
         print(msj.mensaje_error_al("registrar","transferencia"))
         print("======================")
-# endregion
-
-# region Formato de Mensajes
-def mensaje_transferir_misma_cuenta():
-    """Mensaje: No se puede transferir a la misma cuenta"""
-    print(Style.BRIGHT + Fore.RED)
-    print("===============================")
-    print(msj.mensaje_no_se_puede("TRANSFERIR A SU MISMA CUENTA"))
-    print("===============================")
-    print(Style.NORMAL + Fore.WHITE)
 # endregion

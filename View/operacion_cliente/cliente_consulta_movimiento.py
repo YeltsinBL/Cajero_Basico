@@ -29,6 +29,16 @@ def frm_consulta_movimiento():
     if clave is False:
         return
     resp_deposito = depositocontroller.buscar_deposito_codigo(codigo_cliente,0)
+    listado_deposito(resp_deposito)
+    sleep(1)
+    resp_retiro = retirocontroller.buscar_retiro(codigo_cliente)
+    listado_retiro(resp_retiro)
+    sleep(1)
+    resp_transferencia = transfereciacontroller.buscar_transferencia_codigo(codigo_cliente)
+    listado_transferencia(resp_transferencia)
+
+def listado_deposito(resp_deposito):
+    """Listado de los depósitos"""
     if len(resp_deposito)>0:
         print(Style.BRIGHT + Fore.CYAN)
         print("============================")
@@ -48,8 +58,8 @@ def frm_consulta_movimiento():
         print("===========================================")
         print(msj.mensaje_no_existe_lista("depósito"))
         print("===========================================")
-    sleep(1)
-    resp_retiro = retirocontroller.buscar_retiro(codigo_cliente)
+def listado_retiro(resp_retiro):
+    """Listadp de los Retiros"""
     if len(resp_retiro)>0:
         print(Style.BRIGHT + Fore.CYAN)
         print("============================")
@@ -69,8 +79,8 @@ def frm_consulta_movimiento():
         print("===========================================")
         print(msj.mensaje_no_existe_lista("retiro"))
         print("===========================================")
-    sleep(1)
-    resp_transferencia = transfereciacontroller.buscar_transferencia_codigo(codigo_cliente)
+def listado_transferencia(resp_transferencia):
+    """Listado de las Transferencias"""
     if len(resp_transferencia)>0:
         print(Style.BRIGHT + Fore.CYAN)
         print("============================")
@@ -98,5 +108,4 @@ def frm_consulta_movimiento():
         print("===========================================")
         print(msj.mensaje_no_existe_lista("transferencia"))
         print("===========================================")
-
 # endregion

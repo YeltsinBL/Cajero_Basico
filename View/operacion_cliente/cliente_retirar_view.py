@@ -49,9 +49,7 @@ def frm_registrar_retiro():
     sleep(1)
     resp = retirocontroller.registro_retiro(datos)
     if isinstance(resp, list) and len(resp)>0:
-        detalle_retiro(datos.get("codigo_cliente"), datos.get("nombre_cliente"),
-                    datos.get("codigo_dispensador"), datos.get("lugar_dispensador"),
-                    datos.get("monto"), resp)
+        detalle_retiro(datos,resp)
         print(Style.BRIGHT + Fore.GREEN)
         print("======================")
         print(msj.mensaje_registrado("retiro"))
@@ -67,16 +65,15 @@ def frm_registrar_retiro():
         print("======================")
         print(msj.mensaje_error_al("registrar","retiro"))
         print("======================")
-
-def detalle_retiro(codigo_cliente,nombre_cliente, codigo_dispensador,
-                   lugar_dispensador, monto, datos_retiro:list):
+def detalle_retiro(datos, resp):
     """Verificar el monto del Dispensador"""
-    print("CÓDIGO CLIENTE:", codigo_cliente)
-    print("NOMBRE CLIENTE:", nombre_cliente)
-    print("CÓDIGO DISPENSADOR:", codigo_dispensador,"-", lugar_dispensador)
-    print("MONTO:", monto)
+    print("CÓDIGO CLIENTE:", datos.get("codigo_cliente"))
+    print("NOMBRE CLIENTE:", datos.get("nombre_cliente"))
+    print("CÓDIGO DISPENSADOR:", datos.get("codigo_dispensador"),"-",
+                                 datos.get("lugar_dispensador"))
+    print("MONTO:", datos.get("monto"))
     print("BILLETES:")
-    for dato in datos_retiro:
+    for dato in resp:
         for nro_billete, vbillete in dato.items():
             print(str(nro_billete)+ ": ",vbillete)
 # endregion

@@ -1,8 +1,7 @@
 """Vista del menú de operaciones"""
 # region Importaciones
 from colorama import Fore, Style
-import Common.mensaje as mensaje
-import Common.Validacion as validacion
+from Common import mensaje
 import Controller.OperacionController as operacioncontroller
 import Controller.ClienteController as clientecontroller
 import View.administrador_view as administradorview
@@ -14,25 +13,20 @@ msj = mensaje.Mensaje()
 # region Funciones de Opciones
 def selecciona_operacion(nromenu):
     """Opción para escoger el formulario"""
-    inicio = True
-    cont = 0
-    while inicio:
-        try:
-            print(Style.BRIGHT + Fore.BLUE)
-            print(msj.mensaje_menu("Cliente" if nromenu ==1 else "Administrador"))
-            print(Fore.WHITE + Style.NORMAL)
-            print("Ingresa el número de operación a realizar:")
-            operacioncontroller.listado_opciones_por_menu(nromenu)
-            nro_operacion = int(input(""))
-            cant = operacioncontroller.cantidad_opciones_por_menu(nromenu)
-            if cant < nro_operacion or nro_operacion < 1:
-                cont += 1
-                inicio = validacion.mensaje_validacion(cont)
-                continue
-            return nro_operacion
-        except (ValueError, TypeError):
-            cont +=1
-            inicio = validacion.mensaje_validacion(cont)
+    while True:
+        print(Style.BRIGHT + Fore.BLUE)
+        print(msj.mensaje_menu("Cliente" if nromenu ==1 else "Administrador"))
+        print(Fore.WHITE + Style.NORMAL)
+        print("Ingresa el número de operación a realizar:")
+        operacioncontroller.listado_opciones_por_menu(nromenu)
+        cant = operacioncontroller.cantidad_opciones_por_menu(nromenu)
+        nro_operacion = input("")
+        if nro_operacion.isdigit() and int(nro_operacion) in range(1,cant+1):
+            return int(nro_operacion)
+        print(Style.BRIGHT + Fore.RED)
+        print("===============================")
+        print(msj.mensaje_opcion_ingresada_incorrecta())
+        print("===============================")
 
 # endregion
 
