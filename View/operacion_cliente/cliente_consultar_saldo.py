@@ -19,7 +19,7 @@ def frm_consulta_saldo():
     print("================================")
     print(Style.NORMAL + Fore.WHITE)
     opc_accion = opciones_consulta()
-    codigo_cuenta =0
+    codigo_cuenta =""
     codigo_cliente = elemento.ingresar_codigo_cliente(
         nombre="código del cliente", verificar_cuenta=True, verificar_estado=True)
     if codigo_cliente =="":
@@ -27,15 +27,12 @@ def frm_consulta_saldo():
     if opc_accion == 1:
         codigo_cuenta = elemento.ingresar_numero_cuenta(
             nombre="nro. cuenta soles", codigo_cliente=codigo_cliente)
-        if codigo_cuenta == 0:
+        if codigo_cuenta == "":
             return
     respt = cuentaclientecontroller.buscar_saldo_cuenta_cliente(
                                 codigo_cliente,
                                 codigo_cuenta)
-    if len(respt)>0:
-        lista_saldo(respt)
-    else:
-        error_lista_saldo(codigo_cliente,codigo_cuenta)
+    lista_saldo(respt)
 def opciones_consulta():
     """Consultar por código o Todos"""
     while True:
@@ -69,29 +66,4 @@ def lista_saldo(respt):
     print("============================")
     print(msj.mensaje_existe("saldo"))
     print("============================")
-def error_lista_saldo(codigo_cliente,codigo_dispensador):
-    """Error al listar los saldos"""
-    print(Style.BRIGHT + Fore.RED)
-    print("===========================================")
-    print(msj.mensaje_error_al("consultar","saldo"))
-    print("===========================================")
-    sleep(1)
-    existe_cliente = cuentaclientecontroller\
-            .buscar_saldo_cuenta_cliente(codigo_cliente)
-    if len(existe_cliente)>0:
-        existe_dis = False
-        for valor in existe_cliente:
-            if valor.codigo_dispensador != int(codigo_dispensador):
-                existe_dis = True
-        if existe_dis:
-            print(msj.mensaje_no_tiene("cliente", "cuenta en este dispensador"))
-            print("===========================================")
-        else: pass
-    else:
-        print(msj.mensaje_no_esta("la cuenta","activa"))
-        print("===============================")
-        sleep(1)
-        print(msj.mensaje_no_tiene("cliente", "depósito"))
-        print("===============================")
-
 # endregion

@@ -50,10 +50,14 @@ def listado_deposito(resp_deposito):
             respt_cliente = clientecontroller.buscar_cliente_codigo(deposito.codigo_cliente)
             respt_dispensador = dispensadorcontroller.\
                         buscar_dispensador_codigo(int(deposito.codigo_dispensador))
-            print("CLIENTE:",deposito.codigo_cliente, "-", respt_cliente.nombre)
-            print("DISPENSADOR:",deposito.codigo_dispensador, "-", respt_dispensador.lugar)
-            print("TOTAL:", deposito.monto)
-            print("============================")
+            cuenta_cliente = cuentaclientecontroller.buscar_saldo_cuenta_cliente(
+                                deposito.codigo_cliente)
+            for cuenta in cuenta_cliente:
+                print("CLIENTE:",deposito.codigo_cliente, "-", respt_cliente.nombre)
+                print("NRO. CUENTA SOLES:",cuenta.codigo_cuenta)
+                print("DISPENSADOR:",deposito.codigo_dispensador, "-", respt_dispensador.lugar)
+                print("TOTAL:", deposito.monto)
+                print("============================")
     else:
         print(Style.BRIGHT + Fore.YELLOW)
         print("===========================================")
@@ -71,10 +75,14 @@ def listado_retiro(resp_retiro):
             respt_cliente = clientecontroller.buscar_cliente_codigo(retiro.codigo_cliente)
             respt_dispensador = dispensadorcontroller.\
                         buscar_dispensador_codigo(int(retiro.codigo_dispensador))
-            print("CLIENTE:",retiro.codigo_cliente, "-", respt_cliente.nombre)
-            print("DISPENSADOR:",retiro.codigo_dispensador, "-", respt_dispensador.lugar)
-            print("MONTO:", retiro.monto)
-            print("============================")
+            cuenta_cliente = cuentaclientecontroller.buscar_saldo_cuenta_cliente(
+                                retiro.codigo_cliente)
+            for cuenta in cuenta_cliente:
+                print("CLIENTE:",retiro.codigo_cliente, "-", respt_cliente.nombre)
+                print("NRO. CUENTA SOLES:",cuenta.codigo_cuenta)
+                print("DISPENSADOR:",retiro.codigo_dispensador, "-", respt_dispensador.lugar)
+                print("MONTO:", retiro.monto)
+                print("============================")
     else:
         print(Style.BRIGHT + Fore.YELLOW)
         print("===========================================")
@@ -88,22 +96,22 @@ def listado_transferencia(resp_transferencia):
         print(msj.mensaje_listado("transferencia"))
         print("============================")
         print(Style.NORMAL + Fore.WHITE)
-        for retiro in resp_transferencia:
-            respt_cliente = clientecontroller.buscar_cliente_codigo(retiro.codigo_cliente)
+        for transferencia in resp_transferencia:
+            respt_cliente = clientecontroller.buscar_cliente_codigo(transferencia.codigo_cliente)
             cuenta_cliente = cuentaclientecontroller.buscar_saldo_cuenta_cliente(
-                retiro.codigo_cliente)
+                transferencia.codigo_cliente)
             respt_cliente_trans = clientecontroller.\
-                        buscar_cliente_codigo(retiro.codigo_cliente_transferir)
+                        buscar_cliente_codigo(transferencia.codigo_cliente_transferir)
             cuenta_cliente_trans = cuentaclientecontroller.buscar_saldo_cuenta_cliente(
-                retiro.codigo_cliente_transferir)
-            print("CLIENTE:",retiro.codigo_cliente, "-", respt_cliente.nombre)
+                transferencia.codigo_cliente_transferir)
+            print("CLIENTE:",transferencia.codigo_cliente, "-", respt_cliente.nombre)
             for cuenta in cuenta_cliente:
                 print("NRO. CUENTA SOLES:",cuenta.codigo_cuenta)
-            print("CLIENTE TRANSFERENCIA:",retiro.codigo_cliente_transferir, "-",
+            print("CLIENTE TRANSFERENCIA:",transferencia.codigo_cliente_transferir, "-",
                                         respt_cliente_trans.nombre)
             for cuenta in cuenta_cliente_trans:
                 print("NRO. CUENTA SOLES TRANSFERENCIA:",cuenta.codigo_cuenta)
-            print("MONTO:", retiro.monto)
+            print("MONTO:", transferencia.monto)
             print("============================")
     else:
         print(Style.BRIGHT + Fore.YELLOW)

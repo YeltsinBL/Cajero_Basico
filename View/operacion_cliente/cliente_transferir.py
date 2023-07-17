@@ -4,9 +4,7 @@ from time import sleep
 from colorama import Fore, Style
 from Common import mensaje
 from Common import elemento
-from Common import Validacion as validacion
 import Controller.transferencia_controller as transferenciacontroller
-import Controller.cuenta_cliente_controller as cuentaclientecontroller
 # endregion
 
 msj = mensaje.Mensaje()
@@ -28,7 +26,7 @@ def frm_cliente_transferencia():
         return
     nro_cuenta = elemento.ingresar_numero_cuenta(
         nombre="nro. cuenta soles",codigo_cliente=codigo_cliente, verificar_estado=True)
-    if nro_cuenta==0:
+    if nro_cuenta=="":
         return
     codigo_cliente_trans = elemento.ingresar_codigo_cliente(
         nombre="código del cliente a transferir", verificar_cuenta=True, verificar_estado=True)
@@ -37,7 +35,7 @@ def frm_cliente_transferencia():
     nro_cuenta_transferir = elemento.ingresar_numero_cuenta(
         nombre="nro. cuenta a transferir",codigo_cliente=codigo_cliente_trans,
         verificar_estado=True)
-    if nro_cuenta_transferir==0:
+    if nro_cuenta_transferir=="":
         return
     if codigo_cliente==codigo_cliente_trans and\
             nro_cuenta==nro_cuenta_transferir:
@@ -47,13 +45,13 @@ def frm_cliente_transferencia():
         print("===============================")
         print(Style.NORMAL + Fore.WHITE)
         return
-    monto = ingresar_monto(codigo_cliente, nro_cuenta)
-    if monto==0:
+    monto = elemento.ingresar_monto(codigo_cliente=codigo_cliente, numero_cuenta=nro_cuenta)
+    if monto==float(0):
         return
-    datos = {"codigo_cliente":codigo_cliente, "codigo_cuenta":int(nro_cuenta),
+    datos = {"codigo_cliente":codigo_cliente, "codigo_cuenta":nro_cuenta,
                 "codigo_cliente_transferir":codigo_cliente_trans, 
-                "codigo_cuenta_transferir":int(nro_cuenta_transferir),
-                "monto":float(monto)}
+                "codigo_cuenta_transferir":nro_cuenta_transferir,
+                "monto":monto}
     sleep(1)
     print(Style.BRIGHT + Fore.YELLOW+"===============================")
     print(msj.mensaje_realizando_accion("transferencia"))
@@ -70,39 +68,3 @@ def frm_cliente_transferencia():
         print(msj.mensaje_error_al("registrar","transferencia"))
         print("======================")
 # endregion
-def ingresar_monto(codigo_cliente, numero_cuenta):
-    """Ingresar el monto"""
-    vali_monto = True
-    while vali_monto:
-        monto = input("MONTO: ")
-        vali_monto = not validacion.valores_ingresados("MONTO",monto,2)
-        if vali_monto is False:
-            if int(monto) ==0:
-                print(Style.BRIGHT + Fore.RED)
-                print("===============================")
-                print(msj.mensaje_monto_mayor_cero())
-                print("===============================")
-                print(Style.BRIGHT + Fore.WHITE)
-                vali_monto = True
-            else:
-                print(Style.BRIGHT + Fore.YELLOW)
-                print("====================================================")
-                print(msj.mensaje_verificar_tipo("saldo","la cuenta del cliente"))
-                print("====================================================")
-                sleep(1)
-                cuenta = cuentaclientecontroller.buscar_saldo_cuenta_cliente(
-                            codigo_cliente, int(numero_cuenta))
-                for dato in cuenta:
-                    if dato.monto ==0.0:
-                        print(Style.BRIGHT + Fore.RED)
-                        print("====================================================")
-                        print(msj.mensaje_no_tiene("cliente", "saldo en su cuenta"))
-                        print("====================================================")
-                        return 0
-                    if dato.monto < float(monto):
-                        print(Style.BRIGHT + Fore.RED)
-                        print("====================================================")
-                        print(msj.mensaje_monto_excedido("el saldo del cliente"))
-                        print("====================================================")
-                        return 0
-    return int(monto)

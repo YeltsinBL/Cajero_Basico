@@ -28,24 +28,24 @@ def frm_registrar_retiro():
         return
     nro_cuenta = elemento.ingresar_numero_cuenta(
         nombre="nro. cuenta soles",codigo_cliente=codigo_cliente, verificar_estado=True)
-    if nro_cuenta==0:
+    if nro_cuenta=="":
         return
     codigo_dispensador = elemento.ingresar_codigo_dispensador(
             nombre="código del dispensador", verificar_estado=True)
     if codigo_dispensador == 0:
         return
-    monto = elemento.ingresar_monto(codigo_dispensador,codigo_cliente, nro_cuenta)
-    if monto==0:
+    monto = elemento.ingresar_monto(codigo_cliente, nro_cuenta, codigo_dispensador)
+    if monto==float(0):
         return
     respt_cliente = clientecontroller.buscar_cliente_codigo(codigo_cliente)
     respt_dispensador = dispensadorcontroller.\
-                        buscar_dispensador_codigo(int(codigo_dispensador))
+                        buscar_dispensador_codigo(codigo_dispensador)
     datos = {"codigo_cliente":codigo_cliente, "nombre_cliente":respt_cliente.nombre,
             "codigo_cuenta":nro_cuenta,
-            "codigo_dispensador":int(codigo_dispensador),
+            "codigo_dispensador":codigo_dispensador,
             "lugar_dispensador":respt_dispensador.lugar, 
             "estado_dispensador":respt_dispensador.estado, 
-            "monto":float(monto)}
+            "monto":monto}
     print("============================================")
     print(msj.mensaje_verificar_tipo("billetes","el dispensador"))
     print("============================================")
@@ -73,6 +73,7 @@ def detalle_retiro(datos, resp):
     """Verificar el monto del Dispensador"""
     print("CÓDIGO CLIENTE:", datos.get("codigo_cliente"))
     print("NOMBRE CLIENTE:", datos.get("nombre_cliente"))
+    print("NRO. CUENTA SOLES:", datos.get("codigo_cuenta"))
     print("CÓDIGO DISPENSADOR:", datos.get("codigo_dispensador"),"-",
                                  datos.get("lugar_dispensador"))
     print("MONTO:", datos.get("monto"))

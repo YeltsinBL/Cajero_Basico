@@ -27,7 +27,7 @@ class RetirarViewModel:
         if isinstance(respt, list) and len(respt)>0:
             respt_ctacliente = cuentacliente_vm.modificar_saldo_cuenta_cliente(
                                     datos_retiro.get("codigo_cliente"),
-                                    datos_retiro.get("codigo_dispensador"),
+                                    datos_retiro.get("codigo_cuenta"),
                                     datos_retiro.get("monto"))
             if respt_ctacliente:
                 service.retiros.append(retiro)

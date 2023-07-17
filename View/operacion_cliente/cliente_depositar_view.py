@@ -23,7 +23,7 @@ def frm_registrar_deposito():
     if codigo_cliente == "":
         return
     nro_cuenta = elemento.ingresar_numero_cuenta("nro. cuenta soles",codigo_cliente)
-    if nro_cuenta==0:
+    if nro_cuenta=="":
         return
     codigo_dispensador = elemento.ingresar_codigo_dispensador(
         nombre="código del dispensador", verificar_estado=True)
@@ -32,11 +32,11 @@ def frm_registrar_deposito():
     billetes = elemento.ingresar_cantidad_billetes()
     respt_cliente = clientecontroller.buscar_cliente_codigo(codigo_cliente)
     respt_dispensador = dispensadorcontroller.\
-                            buscar_dispensador_codigo(int(codigo_dispensador))
+                            buscar_dispensador_codigo(codigo_dispensador)
     dato_dispensador = {"codigo_cliente":codigo_cliente,
                             "nombre_cliente":respt_cliente.nombre,
                             "codigo_cuenta":nro_cuenta,
-                            "codigo_dispensador": int(codigo_dispensador),
+                            "codigo_dispensador": codigo_dispensador,
                             "lugar_dispensador":respt_dispensador.lugar,
                             "estado_dispensador":respt_dispensador.estado,
                             "billete":billetes}
@@ -69,6 +69,7 @@ def vista_previa_registro(datos_depositar:dict[str,any]):
     print("===========================")
     print(Style.BRIGHT + Fore.WHITE)
     print("CLIENTE:",datos_depositar.get("nombre_cliente"))
+    print("NRO. CUENTA SOLES:",datos_depositar.get("codigo_cuenta"))
     print("DISPENSADOR:",datos_depositar.get("codigo_dispensador"),"-",
           datos_depositar.get("lugar_dispensador"))
     print("CANTIDAD DE BILLETES:")
@@ -83,7 +84,7 @@ def vista_previa_registro(datos_depositar:dict[str,any]):
         confirmar = input("INGRESE OPCIÓN: ")
         if confirmar== "1":
             return int(total)
-        elif confirmar == "0":
+        if confirmar == "0":
             return 0
         msj.mensaje_opcion_ingresada_incorrecta()
 

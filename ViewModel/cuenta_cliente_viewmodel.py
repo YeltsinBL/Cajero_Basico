@@ -14,15 +14,16 @@ class CuentaClienteViewModel:
     def registro_cuenta_cliente(self, disp:dict[str,any]):
         """Registro Cuenta Cliente"""
         nueva_cuenta=len(self.lista_cuenta_cliente())+1
+        codigo_cuenta=str(nueva_cuenta).zfill(9)
         deposita = cuentacliente.CuentaCliente(
-                                codigo_cuenta=nueva_cuenta,
+                                codigo_cuenta=codigo_cuenta,
                                 codigo_cliente=disp.get("codigo_cliente"),
                                 monto=disp.get("monto"), estado=0)
         service.cuenta_cliente.append(deposita)
-        return nueva_cuenta
+        return codigo_cuenta
 
     def lista_cuenta_cliente(self):
-        """Lista de Depósito"""
+        """Lista de la Cuenta Cliente"""
         return service.cuenta_cliente
 
     def modificar_cuenta_cliente(self, dicts:dict[str,any]):
@@ -38,7 +39,7 @@ class CuentaClienteViewModel:
     def modificar_saldo_cuenta_cliente(self, codigo_cliente, codigo_cuenta, monto,
                                      operacion =0, activar=0):
         """Aumentar o Reducir el saldo del cliente"""
-        cta_cliente = self.buscar_cuenta_cliente_coddisp_codcli(codigo_cliente,codigo_cuenta)
+        cta_cliente = self.buscar_cuenta_cliente_codcuenta_codcli(codigo_cliente,codigo_cuenta)
         for valor in cta_cliente:
             valor.monto = valor.monto + monto if operacion ==1 else valor.monto - monto
             nuevo_cta_cliente = {"codigo_cliente":valor.codigo_cliente,
@@ -46,27 +47,27 @@ class CuentaClienteViewModel:
                         "monto":valor.monto, "estado":activar}
         return self.modificar_cuenta_cliente(nuevo_cta_cliente)
 
-    def buscar_cuenta_cliente_coddisp_codcli(self, codigo_cliente:str, codigo_cuenta = 0):
-        """Buscar Cuenta Cliente por Código Dispensdor y Código Cliente"""
+    def buscar_cuenta_cliente_codcuenta_codcli(self, codigo_cliente:str, codigo_cuenta = ""):
+        """Buscar Cuenta Cliente por Código Cuenta y Código Cliente"""
         dispensa = []
-        for dato in service.cuenta_cliente:
+        for dato in self.lista_cuenta_cliente():
             if dato.codigo_cliente == codigo_cliente and\
-                codigo_cuenta in [0, dato.codigo_cuenta]:
+                codigo_cuenta in ["", dato.codigo_cuenta]:
                 dispensa.append(dato)
         return dispensa
-    def verificar_cuenta_cliente(self, codigo_cliente, codigo_dispensador:int):
-        """Verificar el Saldo de la Cuenta del Cliente"""
-        lista_cuenta_cliente = self.lista_cuenta_cliente()
-        monto_v=0.0
-        for dato in lista_cuenta_cliente:
-            if dato.codigo_dispensador == codigo_dispensador and\
-                dato.codigo_cliente == codigo_cliente:
-                monto_v= float(dato.monto)
-        return monto_v
-    def buscar_cuenta_cliente(self, codigo_cliente, nro_cuenta):
-        """Buscar la cuenta del Cliente"""
-        lista_cuenta_cliente = self.lista_cuenta_cliente()
-        for dato in lista_cuenta_cliente:
-            if dato.nro_cuenta == nro_cuenta and\
-                dato.codigo_cliente == codigo_cliente:
-                pass
+    # def verificar_cuenta_cliente(self, codigo_cliente, codigo_dispensador:int):
+    #     """Verificar el Saldo de la Cuenta del Cliente"""
+    #     lista_cuenta_cliente = self.lista_cuenta_cliente()
+    #     monto_v=0.0
+    #     for dato in lista_cuenta_cliente:
+    #         if dato.codigo_dispensador == codigo_dispensador and\
+    #             dato.codigo_cliente == codigo_cliente:
+    #             monto_v= float(dato.monto)
+    #     return monto_v
+    # def buscar_cuenta_cliente(self, codigo_cliente, nro_cuenta):
+    #     """Buscar la cuenta del Cliente"""
+    #     lista_cuenta_cliente = self.lista_cuenta_cliente()
+    #     for dato in lista_cuenta_cliente:
+    #         if dato.nro_cuenta == nro_cuenta and\
+    #             dato.codigo_cliente == codigo_cliente:
+    #             pass

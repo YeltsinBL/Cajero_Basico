@@ -21,7 +21,7 @@ def ingresar_codigo_cliente(nombre:str, verificar_cuenta=False, verificar_estado
         if vali_codigo_cliente is False:
             vali_codigo_cliente = not clientecontroller.verifica_cliente_codigo(codigo_cliente)
             if vali_codigo_cliente:
-                mensaje_codigo_cliente(nombre)
+                mensaje_codigo(nombre)
             else:
                 if verificar_estado:
                     dispensador = clientecontroller\
@@ -61,7 +61,7 @@ def ingresar_codigo_dispensador(nombre,verificar_estado = False):
             vali_codigo_dispensador = not dispensadorcontroller\
                                     .verifica_dispensador_codigo(int(codigo_dispensador))
             if vali_codigo_dispensador:
-                mensaje_codigo_dispensador(nombre)
+                mensaje_codigo(nombre)
             else:
                 if verificar_estado:
                     dispensador = dispensadorcontroller\
@@ -70,7 +70,7 @@ def ingresar_codigo_dispensador(nombre,verificar_estado = False):
                         mensaje_no_activo("el dispensador", "activo")
                         return 0
     return int(codigo_dispensador)
-def ingresar_monto(codigo_dispensador,codigo_cliente, numero_cuenta):
+def ingresar_monto(codigo_cliente, numero_cuenta, codigo_dispensador = 0):
     """Ingresar el monto"""
     vali_monto = True
     while vali_monto:
@@ -85,40 +85,12 @@ def ingresar_monto(codigo_dispensador,codigo_cliente, numero_cuenta):
                 print(Style.BRIGHT + Fore.WHITE)
                 vali_monto = True
             else:
-                print(Style.BRIGHT + Fore.YELLOW)
-                print("====================================================")
-                print(msj.mensaje_verificar_tipo("saldo","el dispensador"))
-                print("====================================================")
-                sleep(1)
-                vali_monto = not dispensadorcontroller.verificar_monto_dispensador(
-                                            int(codigo_dispensador), float(monto))
-                if vali_monto:
-                    print(Style.BRIGHT + Fore.RED)
-                    print("===============================")
-                    print(msj.mensaje_monto_excedido("al dispensador"))
-                    print("===============================")
-                    print(Style.NORMAL + Fore.WHITE)
+                if codigo_dispensador>0:
+                    verificar_dispensador(codigo_dispensador, codigo_cliente, numero_cuenta,
+                                          float(monto))
                 else:
-                    print("====================================================")
-                    print(msj.mensaje_verificar_tipo("saldo","la cuenta del cliente"))
-                    print("====================================================")
-                    sleep(1)
-                    cuenta = cuentaclientecontroller.buscar_saldo_cuenta_cliente(
-                                codigo_cliente, int(numero_cuenta))
-                    for dato in cuenta:
-                        if dato.monto ==0.0:
-                            print(Style.BRIGHT + Fore.RED)
-                            print("====================================================")
-                            print(msj.mensaje_no_tiene("cliente", "saldo en su cuenta"))
-                            print("====================================================")
-                            return 0
-                        if dato.monto < float(monto):
-                            print(Style.BRIGHT + Fore.RED)
-                            print("====================================================")
-                            print(msj.mensaje_monto_excedido("el saldo del cliente"))
-                            print("====================================================")
-                            return 0
-    return int(monto)
+                    verificar_saldo_cuenta(codigo_cliente, numero_cuenta, float(monto))
+    return float(monto)
 def ingresar_cantidad_billetes():
     """Ingresar cantidad de billetes"""
     vali_bill_200=True
@@ -172,30 +144,69 @@ def ingresar_numero_cuenta(nombre,codigo_cliente, verificar_estado = False):
                                 valores_ingresados(nombre,numero_cuenta,1)
         if vali_numero_cuenta is False:
             cuenta = cuentaclientecontroller.buscar_saldo_cuenta_cliente(
-                                codigo_cliente, int(numero_cuenta))
+                                codigo_cliente, numero_cuenta)
             if len(cuenta)>0:
                 if verificar_estado:
                     for dato in cuenta:
                         if dato.estado==1:
-                            return int(numero_cuenta)
+                            return numero_cuenta
                         mensaje_no_activo("la cuenta","activa")
-                        return 0
-                return int(numero_cuenta)
+                        return ""
+                return numero_cuenta
             print(Style.BRIGHT + Fore.RED)
             print("===============================")
             print(msj.mensaje_clave_incorrecta("cuenta"))
             print("===============================")
             print(Style.NORMAL + Fore.WHITE)
-            return 0
-
+            return ""
+def verificar_dispensador(codigo_dispensador:int, codigo_cliente, numero_cuenta, monto:float):
+    """Verificar el Dispensador"""
+    print(Style.BRIGHT + Fore.YELLOW)
+    print("====================================================")
+    print(msj.mensaje_verificar_tipo("saldo","el dispensador"))
+    print("====================================================")
+    sleep(1)
+    vali_monto = not dispensadorcontroller.verificar_monto_dispensador(
+                                codigo_dispensador, monto)
+    if vali_monto:
+        print(Style.BRIGHT + Fore.RED)
+        print("===============================")
+        print(msj.mensaje_monto_excedido("al dispensador"))
+        print("===============================")
+        print(Style.NORMAL + Fore.WHITE)
+    else:
+        verificar_saldo_cuenta(codigo_cliente, numero_cuenta, monto)
+def verificar_saldo_cuenta(codigo_cliente, numero_cuenta, monto:float):
+    """Verificar Saldo de la cuenta"""
+    print(Style.BRIGHT + Fore.YELLOW)
+    print("====================================================")
+    print(msj.mensaje_verificar_tipo("saldo","la cuenta del cliente"))
+    print("====================================================")
+    sleep(1)
+    cuenta = cuentaclientecontroller.buscar_saldo_cuenta_cliente(
+                codigo_cliente, numero_cuenta)
+    for dato in cuenta:
+        if dato.monto ==0.0:
+            print(Style.BRIGHT + Fore.RED)
+            print("====================================================")
+            print(msj.mensaje_no_tiene("cliente", "saldo en su cuenta"))
+            print("====================================================")
+            return float(0)
+        if dato.monto < monto:
+            print(Style.BRIGHT + Fore.RED)
+            print("====================================================")
+            print(msj.mensaje_monto_excedido("el saldo del cliente"))
+            print("====================================================")
+            return float(0)
+    return monto
 # endregion
 
 # region Mensajes de Validación
-def mensaje_codigo_cliente(msj_codigo_cliente):
-    """mensaje el código del cliente"""
+def mensaje_codigo(msj_codigo):
+    """Mensaje del código no existe"""
     print(Style.BRIGHT + Fore.RED)
     print("===============================")
-    print(msj.mensaje_no_existe(msj_codigo_cliente))
+    print(msj.mensaje_no_existe(msj_codigo))
     print("===============================")
     print(Style.NORMAL + Fore.WHITE)
 def mensaje_clave_cliente(msj_clave_cliente, contador):
@@ -207,13 +218,6 @@ def mensaje_clave_cliente(msj_clave_cliente, contador):
     intent = lambda cont : "intento" if(3-contador == 1) else "intentos"
     print(f"LE QUEDA {3 - contador}", intent(contador).upper())
     print("===================================")
-    print(Style.NORMAL + Fore.WHITE)
-def mensaje_codigo_dispensador(msj_codigo_dispensador):
-    """mensaje el código del dispensador"""
-    print(Style.BRIGHT + Fore.RED)
-    print("===============================")
-    print(msj.mensaje_no_existe(msj_codigo_dispensador))
-    print("===============================")
     print(Style.NORMAL + Fore.WHITE)
 def mensaje_relacion_cliente_dispensador(codigo_dispensador,existe_cliente,
                                          mensaje_cliente):
@@ -230,10 +234,7 @@ def mensaje_relacion_cliente_dispensador(codigo_dispensador,existe_cliente,
     return existe_dis
 def mensaje_cuenta_activa(nombre, detalle):
     """mensaje si la cuenta no esta activa"""
-    print(Style.BRIGHT + Fore.RED)
-    print("===============================")
-    print(msj.mensaje_no_esta("la cuenta","activa"))
-    print("===============================")
+    mensaje_no_activo(nombre[11:], detalle)
     sleep(1)
     print(msj.mensaje_no_tiene(nombre[11:], detalle))
     print("===============================")
