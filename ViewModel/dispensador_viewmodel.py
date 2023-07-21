@@ -91,11 +91,23 @@ class DispensadorViewModel:
 
     def lista_dispensador_estado(self, estado):
         """Listar los Dispensadores por su estado"""
-        dispensa = []
-        for dato in service.dispensadores:
-            if dato.estado == estado:
-                dispensa.append(dato)
-        return dispensa
+        # dispensa = []
+        # for dato in service.dispensadores:
+        #     if dato.estado == estado:
+        #         dispensa.append(dato)
+        # return dispensa
+        try:
+            connection= conexion()
+            cursor = connection.cursor()
+            store_proc = "exec sp_ListarDispensador_Codigo_Estado @bitEstado=?"
+            params = estado
+            cursor.execute(store_proc, params)
+            resultset= cursor.fetchall()
+            connection.close()
+            return self.formaterar_datos(resultset)
+        except ImportError as ex:
+            print(ex)
+            return  []
 
     def verificar_monto_dispensador(self, codigo_dispensador:int, monto:float):
         """Verificar el Monto del Dispensador"""

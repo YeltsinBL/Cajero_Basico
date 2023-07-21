@@ -129,13 +129,13 @@ def frm_estado_dispensador():
         print("=====================================")
         print(Style.BRIGHT + Fore.WHITE)
         for dato in respt:
-            print("CÓDIGO:",dato.codigo)
-            print("LUGAR:",dato.lugar)
+            print("CÓDIGO:",dato.get("codigo"))
+            print("LUGAR:",dato.get("lugar"))
             print("BILLETES:")
-            for valor in dato.billete:
+            for valor in dato.get("billete"):
                 for nro_billete, vbillete in valor.items():
                     print(str(nro_billete).upper()+ ": ",vbillete)
-            print("ESTADO:",estado)
+            print("ESTADO:","Activo" if dato.get("estado") else "Inactivo")
             print("====================================")
         print(Style.BRIGHT + Fore.GREEN)
         print("====================================")
