@@ -18,8 +18,6 @@ class  ClienteViewModel:
             cursor = connection.cursor()
             cursor.execute("exec sp_ListaCliente")
             resultset= cursor.fetchall()
-            # for cliente in resultset:
-            #     print("SP1:",cliente)
             connection.close()
             return resultset
         except ImportError as ex:
@@ -63,9 +61,8 @@ class  ClienteViewModel:
         #     if dato.codigo == codigo:
         #         return True
         # return False
-        for dato in self.lista_cliente():
-            if dato[1] == codigo:
-                return True
+        if len(self.buscar_cliente_codigo(codigo))>0:
+            return True
         return False
 
     def modificar_cliente(self, dicts:dict[str,any]):
@@ -91,12 +88,24 @@ class  ClienteViewModel:
 
     def buscar_cliente_codigo(self, codigo):
         """Buscar Cliente por Código"""
-        cliente = []
-        for dato in self.lista_cliente():
-            if dato[1] == codigo:
-                cliente = dato
-                return cliente
-        return cliente
+        # cliente = []
+        # for dato in self.lista_cliente():
+        #     if dato[1] == codigo:
+        #         cliente = dato
+        #         return cliente
+        # return cliente
+        try:
+            connection= conexion()
+            cursor = connection.cursor()
+            store_proc = "exec sp_ListarCliente_Codigo @strCodigo = ?"
+            params = codigo
+            cursor.execute(store_proc, params)
+            resultset= cursor.fetchone()
+            connection.close()
+            return resultset
+        except ImportError as ex:
+            print(ex)
+            return []
 
     def lista_cliente_estado(self, estado):
         """Listar los Clientes por su estado"""

@@ -79,18 +79,26 @@ def frm_buscar_cliente():
     codigo_cliente = elemento.\
                     ingresar_codigo_cliente("código")
     respt = clientecontroller.buscar_cliente_codigo(codigo_cliente)
-    if not isinstance(respt,list):
-        cuenta_cliente = cuentaclientecontroller.buscar_saldo_cuenta_cliente(
-                            codigo_cliente)
-        for cuenta in cuenta_cliente:
-            print("NOMBRE:",respt.nombre)
-            print("NRO. CUENTA SOLES:",cuenta.codigo_cuenta)
-            print("SALDO:",cuenta.monto)
-            print("ESTADO:","Activo" if respt.estado == 1 else "Inactivo")
-            print(Style.BRIGHT + Fore.GREEN)
-            print("====================")
-            print(msj.mensaje_existe("CLIENTE"))
-            print("====================")
+    if respt is None:
+        print("====================")
+        print(msj.mensaje_no_existe("código"))
+        print("====================")
+    elif not isinstance(respt,list):
+        # cuenta_cliente = cuentaclientecontroller.buscar_saldo_cuenta_cliente(
+        #                     codigo_cliente)
+        # for cuenta in cuenta_cliente:
+        #     print("NOMBRE:",respt.nombre)
+        #     print("NRO. CUENTA SOLES:",cuenta.codigo_cuenta)
+        #     print("SALDO:",cuenta.monto)
+        #     print("ESTADO:","Activo" if respt.estado == 1 else "Inactivo")
+        print("NOMBRE:",respt[2])
+        print("NRO. CUENTA SOLES:",respt[3])
+        print("SALDO:",respt[4])
+        print("ESTADO:","Activo" if respt[5] == 1 else "Inactivo")
+        print(Style.BRIGHT + Fore.GREEN)
+        print("====================")
+        print(msj.mensaje_existe("CLIENTE"))
+        print("====================")
     else:
         print(Style.BRIGHT + Fore.RED)
         print("====================================")
