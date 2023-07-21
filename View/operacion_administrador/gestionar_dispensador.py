@@ -87,18 +87,19 @@ def frm_buscar_dispensador():
     print(Style.NORMAL + Fore.WHITE)
     codigo_dispensador = elemento.\
                     ingresar_codigo_dispensador(nombre="código del dispensador")
-    respt = dispensadorcontroller.buscar_dispensador_codigo(int(codigo_dispensador))
-    if not isinstance(respt,list):
-        print("LUGAR:",respt.lugar)
-        print("BILLETES:")
-        for valor in respt.billete:
-            for nro_billete, vbillete in valor.items():
-                print(str(nro_billete).upper()+ ": ",vbillete)
-        print("ESTADO:","Activo" if respt.estado == 1 else "Inactivo")
-        print(Style.BRIGHT + Fore.GREEN)
-        print("============================")
-        print(msj.mensaje_existe("DISPENSADOR"))
-        print("============================")
+    result = dispensadorcontroller.buscar_dispensador_codigo(int(codigo_dispensador))
+    if len(result)>0:
+        for respt in result:
+            print("LUGAR:",respt.get("lugar"))
+            print("BILLETES:")
+            for valor in respt.get("billete"):
+                for nro_billete, vbillete in valor.items():
+                    print(str(nro_billete).upper()+ ": ",vbillete)
+            print("ESTADO:","Activo" if respt.get("estado") else "Inactivo")
+            print(Style.BRIGHT + Fore.GREEN)
+            print("============================")
+            print(msj.mensaje_existe("DISPENSADOR"))
+            print("============================")
     else:
         print(Style.BRIGHT + Fore.RED)
         print("===========================================")

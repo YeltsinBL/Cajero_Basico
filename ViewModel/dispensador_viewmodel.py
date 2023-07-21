@@ -34,7 +34,7 @@ class DispensadorViewModel:
         try:
             connection= conexion()
             cursor = connection.cursor()
-            params = [2, disp.get("lugar")]
+            params = [disp.get("codigo"), disp.get("lugar")]
             for valor in disp.get("billete"):
                 for _, vbillete in valor.items():
                     params.append(vbillete)
@@ -50,10 +50,12 @@ class DispensadorViewModel:
     def verifica_dispensador_codigo(self, codigo):
         """Buscar Dispensador por código"""
         existe= False
-        for dato in service.dispensadores:
-            existe = dato.codigo == codigo
-            if existe:
-                return existe
+        # for dato in service.dispensadores:
+        #     existe = dato.codigo == codigo
+        #     if existe:
+        #         return existe
+        if len(self.buscar_dispensador_codigo(codigo))>0:
+            return True
         return existe
 
     def modificar_dispensador(self, dicts:dict[str,any]):
@@ -68,12 +70,24 @@ class DispensadorViewModel:
 
     def buscar_dispensador_codigo(self, codigo):
         """Buscar Dispensador por Código"""
-        dispensa = []
-        for dato in service.dispensadores:
-            if dato.codigo == codigo:
-                dispensa = dato
-                return dispensa
-        return dispensa
+        # dispensa = []
+        # for dato in service.dispensadores:
+        #     if dato.codigo == codigo:
+        #         dispensa = dato
+        #         return dispensa
+        # return dispensa
+        try:
+            connection= conexion()
+            cursor = connection.cursor()
+            store_proc = "exec sp_ListarDispensador_Codigo_Estado @strCodigo=?"
+            params = codigo
+            cursor.execute(store_proc, params)
+            resultset= cursor.fetchall()
+            connection.close()
+            return self.formaterar_datos(resultset)
+        except ImportError as ex:
+            print(ex)
+            return  []
 
     def lista_dispensador_estado(self, estado):
         """Listar los Dispensadores por su estado"""
@@ -102,15 +116,16 @@ class DispensadorViewModel:
         nueva_lista=[]
         # Lista guardada del Dispensador
         respt_dispensador = self.buscar_dispensador_codigo(cod_dispensador)
-        for valor in respt_dispensador.billete:
-            for nro_billete, vbillete in valor.items():
-                # Lista de los nuevos valores de billetes para el Dispensdaor
-                for val_billete in billete:
-                    for nro_billete2, vbillete2 in val_billete.items():
-                        # Comparación de las claves de las listas para sumar sus valores
-                        if nro_billete == nro_billete2:
-                            nueva_lista.append({nro_billete: vbillete+vbillete2})
-                            break
+        for result in respt_dispensador:
+            for valor in result.get("billete"):
+                for nro_billete, vbillete in valor.items():
+                    # Lista de los nuevos valores de billetes para el Dispensdaor
+                    for val_billete in billete:
+                        for nro_billete2, vbillete2 in val_billete.items():
+                            # Comparación de las claves de las listas para sumar sus valores
+                            if nro_billete == nro_billete2:
+                                nueva_lista.append({nro_billete: vbillete+vbillete2})
+                                break
         disp={"codigo":cod_dispensador,"lugar":lugar_dispensador,
               "estado":estado_dispensador, "billete": nueva_lista}
         return self.modificar_dispensador(disp)
