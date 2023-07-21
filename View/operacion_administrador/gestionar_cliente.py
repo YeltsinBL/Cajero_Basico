@@ -46,13 +46,13 @@ def frm_modificar_cliente():
     estado = elemento.ingresar_estado("estado")
     if estado==0:
         cliente = clientecontroller.buscar_cliente_codigo(codigo_cliente)
-        if cliente.saldo>0:
+        if cliente[4]>0:
             print(Style.BRIGHT + Fore.RED)
             print("=====================")
             print(msj.mensaje_no_se_puede("desactivar el cliente"))
             print("=====================")
             sleep(1)
-            print(msj.mensaje_usted_cuenta("un saldo de",cliente.saldo))
+            print(msj.mensaje_usted_cuenta("un saldo de",cliente[4]))
             print("=====================")
             return
     datos_cliente = {"codigo":codigo_cliente, "nombre": nombre,

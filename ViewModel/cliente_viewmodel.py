@@ -59,25 +59,41 @@ class  ClienteViewModel:
 
     def verifica_cliente_codigo(self, codigo):
         """Buscar Cliente por Código"""
-        for dato in service.clientes:
-            if dato.codigo == codigo:
+        # for dato in service.clientes:
+        #     if dato.codigo == codigo:
+        #         return True
+        # return False
+        for dato in self.lista_cliente():
+            if dato[1] == codigo:
                 return True
         return False
 
     def modificar_cliente(self, dicts:dict[str,any]):
         """Modificar Cliente"""
-        for dato in service.clientes:
-            if dato.codigo == dicts.get("codigo"):
-                dato.nombre=dicts["nombre"]
-                dato.estado=dicts["estado"]
-                return True
-        return False
+        # for dato in service.clientes:
+        #     if dato.codigo == dicts.get("codigo"):
+        #         dato.nombre=dicts["nombre"]
+        #         dato.estado=dicts["estado"]
+        #         return True
+        # return False
+        try:
+            connection= conexion()
+            cursor = connection.cursor()
+            store_proc = "exec sp_ModificarCliente @strCodigo = ?, @strNombre = ?, @bitEstado = ?"
+            params = (dicts.get("codigo"), dicts.get("nombre"), dicts.get("estado"))
+            cursor.execute(store_proc, params)
+            cursor.commit()
+            cursor.close()
+            return True
+        except ImportError as ex:
+            print(ex)
+            return False
 
     def buscar_cliente_codigo(self, codigo):
         """Buscar Cliente por Código"""
         cliente = []
-        for dato in service.clientes:
-            if dato.codigo == codigo:
+        for dato in self.lista_cliente():
+            if dato[1] == codigo:
                 cliente = dato
                 return cliente
         return cliente
@@ -85,13 +101,13 @@ class  ClienteViewModel:
     def lista_cliente_estado(self, estado):
         """Listar los Clientes por su estado"""
         cliente = []
-        for dato in service.clientes:
-            if dato.estado == estado:
+        for dato in self.lista_cliente():
+            if dato[5] == estado:
                 cliente.append(dato)
         return cliente
     def verifica_cliente_codigo_clave(self, codigo, clave):
         """Buscar Cliente por Código"""
-        for dato in service.clientes:
+        for dato in self.lista_cliente():
             if dato.codigo == codigo and dato.clave ==clave:
                 return True
         return False
