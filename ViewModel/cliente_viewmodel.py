@@ -1,6 +1,6 @@
 """Cliente ViewModel"""
-import Data.service as service
-import Model.Cliente as clientemodel
+#import Data.service as service
+#import Model.Cliente as clientemodel
 import ViewModel.cuenta_cliente_viewmodel as cuentaclienteviewmodel
 from Data.conexion import conexion
 
@@ -16,7 +16,7 @@ class  ClienteViewModel:
         try:
             connection= conexion()
             cursor = connection.cursor()
-            cursor.execute("exec sp_ListaCliente")
+            cursor.execute("exec sp_ListarCliente_Codigo")
             resultset= cursor.fetchall()
             connection.close()
             return resultset
@@ -107,13 +107,25 @@ class  ClienteViewModel:
             print(ex)
             return []
 
-    def lista_cliente_estado(self, estado):
+    def lista_cliente_estado(self, estado = None):
         """Listar los Clientes por su estado"""
-        cliente = []
-        for dato in self.lista_cliente():
-            if dato[5] == estado:
-                cliente.append(dato)
-        return cliente
+        # cliente = []
+        # for dato in self.lista_cliente():
+        #     if dato[5] == estado:
+        #         cliente.append(dato)
+        # return cliente
+        try:
+            connection= conexion()
+            cursor = connection.cursor()
+            store_proc = "exec sp_ListarCliente_Codigo @bitEstado = ?"
+            params = estado
+            cursor.execute(store_proc, params)
+            resultset= cursor.fetchall()
+            connection.close()
+            return resultset
+        except ImportError as ex:
+            print(ex)
+            return []
     def verifica_cliente_codigo_clave(self, codigo, clave):
         """Buscar Cliente por Código"""
         for dato in self.lista_cliente():

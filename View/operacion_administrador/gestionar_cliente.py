@@ -7,7 +7,7 @@ from Common import mensaje
 from Common import elemento
 import Controller.ClienteController as clientecontroller
 import Controller.OperacionController as operacioncontroller
-import Controller.cuenta_cliente_controller as cuentaclientecontroller
+#import Controller.cuenta_cliente_controller as cuentaclientecontroller
 # endregion
 
 msj = mensaje.Mensaje()
@@ -121,22 +121,20 @@ def frm_listado_cliente():
     print("=======================")
     print(Style.BRIGHT + Fore.WHITE)
     for dato in clientes:
-        cuenta_cliente = cuentaclientecontroller.buscar_saldo_cuenta_cliente(
-                            dato[1])
-        for cuenta in cuenta_cliente:
+        # cuenta_cliente = cuentaclientecontroller.buscar_saldo_cuenta_cliente(
+        #                     dato[1])
+        # for cuenta in cuenta_cliente:
             # print("CÓDIGO:",dato.codigo)
             # print("NOMBRE:",dato.nombre)
             # print("NRO. CUENTA SOLES:",cuenta.codigo_cuenta)
             # print("SALDO:",cuenta.monto)
             # print("ESTADO:","Activo" if dato.estado == 1 else "Inactivo")
-            print("CÓDIGO:",dato[1])
-            print("NOMBRE:",dato[2])
-            # print("NRO. CUENTA SOLES:",dato[3])
-            # print("SALDO:",dato[4])
-            print("NRO. CUENTA SOLES:",cuenta.codigo_cuenta)
-            print("SALDO:",cuenta.monto)
-            print("ESTADO:","Activo" if dato[5] == 1 else "Inactivo")
-            print("=======================")
+        print("CÓDIGO:",dato[1])
+        print("NOMBRE:",dato[2])
+        print("NRO. CUENTA SOLES:",dato[3])
+        print("SALDO:",dato[4])
+        print("ESTADO:","Activo" if dato[5] == 1 else "Inactivo")
+        print("=======================")
     print(Style.BRIGHT + Fore.GREEN)
     print("=======================")
     print(msj.mensaje_listado("CLIENTES"))
@@ -174,15 +172,20 @@ def frm_estado_cliente():
         print("=================================")
         print(Style.BRIGHT + Fore.WHITE)
         for dato in respt:
-            cuenta_cliente = cuentaclientecontroller.buscar_saldo_cuenta_cliente(
-                                dato.codigo)
-            for cuenta in cuenta_cliente:
-                print("CÓDIGO:",dato.codigo)
-                print("NOMBRE:",dato.nombre)
-                print("NRO. CUENTA SOLES:",cuenta.codigo_cuenta)
-                print("SALDO:",cuenta.monto)
-                print("ESTADO:",estado)
-                print("===============================")
+            # cuenta_cliente = cuentaclientecontroller.buscar_saldo_cuenta_cliente(
+            #                     dato.codigo)
+            # for cuenta in cuenta_cliente:
+            #     print("CÓDIGO:",dato.codigo)
+            #     print("NOMBRE:",dato.nombre)
+            #     print("NRO. CUENTA SOLES:",cuenta.codigo_cuenta)
+            #     print("SALDO:",cuenta.monto)
+            #     print("ESTADO:",estado)
+            print("CÓDIGO:",dato[1])
+            print("NOMBRE:",dato[2])
+            print("NRO. CUENTA SOLES:",dato[3])
+            print("SALDO:",dato[4])
+            print("ESTADO:","Activo" if dato[5] == 1 else "Inactivo")
+            print("===============================")
         print(Style.BRIGHT + Fore.GREEN)
         print("===============================")
         print(msj.mensaje_encontro_por_estado("CLIENTES", estado.upper()+"S"))
