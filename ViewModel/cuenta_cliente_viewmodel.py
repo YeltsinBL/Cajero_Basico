@@ -3,6 +3,7 @@
 import Data.service as service
 import Model.cuenta_cliente as cuentacliente
 import ViewModel.dispensador_viewmodel as dispensadorviewmodel
+from Data.conexion import conexion
 #endregion
 
 dispensador_vm = dispensadorviewmodel.DispensadorViewModel()
@@ -24,7 +25,17 @@ class CuentaClienteViewModel:
 
     def lista_cuenta_cliente(self):
         """Lista de la Cuenta Cliente"""
-        return service.cuenta_cliente
+        try:
+            connection= conexion()
+            cursor = connection.cursor()
+            cursor.execute("exec sp_ListaCuentaCliente")
+            resultset= cursor.fetchall()
+            connection.close()
+            return resultset
+        except ImportError as ex:
+            print(ex)
+            return []
+        #return service.cuenta_cliente
 
     def modificar_cuenta_cliente(self, dicts:dict[str,any]):
         """Modificar la Cuenta Cliente"""
