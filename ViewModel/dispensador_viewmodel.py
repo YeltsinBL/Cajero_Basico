@@ -1,7 +1,8 @@
 """Dispensador ViewModel"""
 # region Importación
 import Data.service as service
-import Model.dispensador as dispensador
+#import Model.dispensador as dispensador
+from Data.conexion import conexion
 #endregion
 
 class DispensadorViewModel:
@@ -14,11 +15,26 @@ class DispensadorViewModel:
 
     def registrar_dispensador(self, disp:dict[str,any]):
         """Registro Dispensador"""
-        dispensa = dispensador.Dispensador(codigo=disp.get("codigo"),
-                                     lugar=disp.get("lugar"),
-                                     estado=disp.get("estado"),
-                                     billete=disp.get("billete"))
-        service.dispensadores.append(dispensa)
+        # dispensa = dispensador.Dispensador(codigo=disp.get("codigo"),
+        #                              lugar=disp.get("lugar"),
+        #                              estado=disp.get("estado"),
+        #                              billete=disp.get("billete"))
+        # service.dispensadores.append(dispensa)
+        try:
+            connection= conexion()
+            cursor = connection.cursor()
+            params = [2, disp.get("lugar")]
+            for valor in disp.get("billete"):
+                for _, vbillete in valor.items():
+                    params.append(vbillete)
+            store_proc = "exec sp_Registrar_Dispensador @strCodigo = ?,\
+                @strLugar = ?, @intDoscientos = ?, @intCien= ?, @intCincuenta=?,\
+                @intVeinte =?, @intDiez=?"
+            cursor.execute(store_proc, params)
+            cursor.commit()
+            cursor.close()
+        except ImportError as ex:
+            print(ex)
 
     def verifica_dispensador_codigo(self, codigo):
         """Buscar Dispensador por código"""
