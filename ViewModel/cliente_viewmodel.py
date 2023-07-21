@@ -2,6 +2,7 @@
 import Data.service as service
 import Model.Cliente as clientemodel
 import ViewModel.cuenta_cliente_viewmodel as cuentaclienteviewmodel
+from Data.conexion import conexion
 
 cuentacliente_vm = cuentaclienteviewmodel.CuentaClienteViewModel()
 
@@ -12,16 +13,28 @@ class  ClienteViewModel:
 
     def lista_cliente(self):
         """LISTADO DE CLIENTES"""
-        cantidad = len(service.clientes)
-        if cantidad > 0:
-            for i in range(0, cantidad-1):
-                for k in range(0, cantidad-(i+1)):
-                    if service.clientes[k].codigo>service.clientes[k+1].codigo:
-                        aux=service.clientes[k]
-                        service.clientes[k]=service.clientes[k+1]
-                        service.clientes[k+1]= aux
-            return service.clientes
-        return service.clientes
+        try:
+            connection= conexion()
+            cursor = connection.cursor()
+            cursor.execute("exec sp_ListaCliente")
+            resultset= cursor.fetchall()
+            # for cliente in resultset:
+            #     print("SP1:",cliente)
+            connection.close()
+            return resultset
+        except ImportError as ex:
+            print(ex)
+            return []
+        # cantidad = len(service.clientes)
+        # if cantidad > 0:
+        #     for i in range(0, cantidad-1):
+        #         for k in range(0, cantidad-(i+1)):
+        #             if service.clientes[k].codigo>service.clientes[k+1].codigo:
+        #                 aux=service.clientes[k]
+        #                 service.clientes[k]=service.clientes[k+1]
+        #                 service.clientes[k+1]= aux
+        #     return service.clientes
+        # return service.clientes
 
     def registrar_cliente(self, dicts:dict[str,any]):
         """Registro Cliente"""
