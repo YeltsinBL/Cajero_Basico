@@ -114,7 +114,7 @@ def frm_listado_cliente():
     print(Style.BRIGHT + Fore.WHITE)
     for dato in clientes:
         cuenta_cliente = cuentaclientecontroller.buscar_saldo_cuenta_cliente(
-                            dato.codigo)
+                            dato[1])
         for cuenta in cuenta_cliente:
             # print("CÓDIGO:",dato.codigo)
             # print("NOMBRE:",dato.nombre)
@@ -123,8 +123,10 @@ def frm_listado_cliente():
             # print("ESTADO:","Activo" if dato.estado == 1 else "Inactivo")
             print("CÓDIGO:",dato[1])
             print("NOMBRE:",dato[2])
-            print("NRO. CUENTA SOLES:",cuenta[3])
-            print("SALDO:",cuenta[4])
+            # print("NRO. CUENTA SOLES:",dato[3])
+            # print("SALDO:",dato[4])
+            print("NRO. CUENTA SOLES:",cuenta.codigo_cuenta)
+            print("SALDO:",cuenta.monto)
             print("ESTADO:","Activo" if dato[5] == 1 else "Inactivo")
             print("=======================")
     print(Style.BRIGHT + Fore.GREEN)

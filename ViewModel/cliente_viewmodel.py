@@ -38,11 +38,21 @@ class  ClienteViewModel:
 
     def registrar_cliente(self, dicts:dict[str,any]):
         """Registro Cliente"""
-        cliente = clientemodel.Cliente(codigo=dicts.get("codigo"),
-                                     nombre=dicts.get("nombre"),
-                                     clave=dicts.get("clave"),
-                                     estado=dicts.get("estado"))
-        service.clientes.append(cliente)
+        # cliente = clientemodel.Cliente(codigo=dicts.get("codigo"),
+        #                              nombre=dicts.get("nombre"),
+        #                              clave=dicts.get("clave"),
+        #                              estado=dicts.get("estado"))
+        # service.clientes.append(cliente)
+        try:
+            connection= conexion()
+            cursor = connection.cursor()
+            store_proc = "exec sp_CrearCliente @strCodigo = ?, @strNombre = ?, @strClave = ?"
+            params = (dicts.get("codigo"), dicts.get("nombre"), dicts.get("clave"))
+            cursor.execute(store_proc, params)
+            cursor.commit()
+            cursor.close()
+        except ImportError as ex:
+            print(ex)
         cuenta_cliente={"codigo_cliente":dicts.get("codigo"),
                         "monto":0}
         return cuentacliente_vm.registro_cuenta_cliente(cuenta_cliente)
