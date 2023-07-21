@@ -38,13 +38,13 @@ def frm_listado_dispensadores():
     print("============================")
     print(Style.NORMAL + Fore.WHITE)
     for dato in dispensa:
-        print("CODIGO:", dato.codigo)
-        print("LUGAR:", dato.lugar)
+        print("CODIGO:", dato.get("codigo"))
+        print("LUGAR:", dato.get("lugar"))
         print("BILLETES:")
-        for valor in dato.billete:
+        for valor in dato.get("billete"):
             for nro_billete, vbillete in valor.items():
                 print(str(nro_billete).upper()+ ": ",vbillete)
-        print("ESTADO:", "Activo" if dato.estado == 1 else "Inactivo")
+        print("ESTADO:", "Activo" if dato.get("estado") else "Inactivo")
         print("============================")
     print(Style.BRIGHT + Fore.GREEN)
     print("============================")

@@ -11,7 +11,18 @@ class DispensadorViewModel:
         pass
     def lista_dispensadores(self):
         """Lista de Dispensadores"""
-        return service.dispensadores
+        #return service.dispensadores
+        lista_dispensador = []
+        try:
+            connection= conexion()
+            cursor = connection.cursor()
+            cursor.execute("exec sp_Lista_Dispensador")
+            resultset= cursor.fetchall()
+            lista_dispensador = self.formaterar_datos(resultset)
+            connection.close()
+        except ImportError as ex:
+            print(ex)
+        return  lista_dispensador
 
     def registrar_dispensador(self, disp:dict[str,any]):
         """Registro Dispensador"""
@@ -77,8 +88,8 @@ class DispensadorViewModel:
         cantidad:float = 0
         lista_dispensador = self.lista_dispensadores()
         for dato in lista_dispensador:
-            if dato.codigo == codigo_dispensador:
-                for valor in dato.billete:
+            if dato.get("codigo") == codigo_dispensador:
+                for valor in dato.get("billete"):
                     for nro_billete, vbillete in valor.items():
                         cantidad = cantidad +(nro_billete * vbillete)
         if cantidad >= monto:
@@ -103,3 +114,16 @@ class DispensadorViewModel:
         disp={"codigo":cod_dispensador,"lugar":lugar_dispensador,
               "estado":estado_dispensador, "billete": nueva_lista}
         return self.modificar_dispensador(disp)
+
+    def formaterar_datos(self, datos):
+        """Formatear los datos  que llegan del SP"""
+        lista_dispensador =[]
+        for resultado in datos:
+            billetes =[]
+            billetes.append({200:int(resultado[4]), 100:int(resultado[5]),
+                             50:int(resultado[6]), 20:int(resultado[7]),
+                             10:int(resultado[8])})
+            lista_dispensador.append({"codigo":resultado[1],"lugar":resultado[2],
+                                      "billete": billetes,"estado": resultado[3]})
+        return lista_dispensador
+        
