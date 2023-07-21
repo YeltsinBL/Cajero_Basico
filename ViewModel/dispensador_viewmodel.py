@@ -60,13 +60,30 @@ class DispensadorViewModel:
 
     def modificar_dispensador(self, dicts:dict[str,any]):
         """Modificar Dispensador"""
-        for dato in service.dispensadores:
-            if dato.codigo == dicts.get("codigo"):
-                dato.lugar=dicts["lugar"]
-                dato.estado=dicts["estado"]
-                dato.billete=dicts["billete"]
-                return True
-        return False
+        # for dato in service.dispensadores:
+        #     if dato.codigo == dicts.get("codigo"):
+        #         dato.lugar=dicts["lugar"]
+        #         dato.estado=dicts["estado"]
+        #         dato.billete=dicts["billete"]
+        #         return True
+        # return False
+        try:
+            connection= conexion()
+            cursor = connection.cursor()
+            params = [dicts.get("codigo"), dicts.get("lugar"), dicts.get("estado")]
+            for valor in dicts.get("billete"):
+                for _, vbillete in valor.items():
+                    params.append(vbillete)
+            store_proc = "exec sp_Modificar_Dispensador @strCodigo = ?,\
+                @strLugar = ?, @bitEstado =?, @intDoscientos = ?, @intCien= ?,\
+                @intCincuenta=?, @intVeinte =?, @intDiez=?"
+            cursor.execute(store_proc, params)
+            cursor.commit()
+            cursor.close()
+            return True
+        except ImportError as ex:
+            print(ex)
+            return False
 
     def buscar_dispensador_codigo(self, codigo):
         """Buscar Dispensador por Código"""
