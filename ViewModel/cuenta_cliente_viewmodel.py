@@ -1,7 +1,7 @@
 """Depositar ViewModel"""
 # region Importación
 import Data.service as service
-import Model.cuenta_cliente as cuentacliente
+# import Model.cuenta_cliente as cuentacliente
 import ViewModel.dispensador_viewmodel as dispensadorviewmodel
 from Data.conexion import conexion
 #endregion
@@ -16,11 +16,22 @@ class CuentaClienteViewModel:
         """Registro Cuenta Cliente"""
         nueva_cuenta=len(self.lista_cuenta_cliente())+1
         codigo_cuenta=str(nueva_cuenta).zfill(9)
-        deposita = cuentacliente.CuentaCliente(
-                                codigo_cuenta=codigo_cuenta,
-                                codigo_cliente=disp.get("codigo_cliente"),
-                                monto=disp.get("monto"), estado=0)
-        service.cuenta_cliente.append(deposita)
+        # deposita = cuentacliente.CuentaCliente(
+        #                         codigo_cuenta=codigo_cuenta,
+        #                         codigo_cliente=disp.get("codigo_cliente"),
+        #                         monto=disp.get("monto"), estado=0)
+        # service.cuenta_cliente.append(deposita)
+        try:
+            connection= conexion()
+            cursor = connection.cursor()
+            store_proc = "exec sp_CrearCuentaCliente @strNumeroCuentaCliente = ?,\
+                            @strCodigoCliente = ?, @dcmMonto = ?"
+            params = (codigo_cuenta, disp.get("codigo_cliente"), disp.get("monto"))
+            cursor.execute(store_proc, params)
+            cursor.commit()
+            cursor.close()
+        except ImportError as ex:
+            print(ex)
         return codigo_cuenta
 
     def lista_cuenta_cliente(self):
