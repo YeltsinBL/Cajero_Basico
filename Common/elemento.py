@@ -26,7 +26,7 @@ def ingresar_codigo_cliente(nombre:str, verificar_cuenta=False, verificar_estado
                 if verificar_estado:
                     dispensador = clientecontroller\
                         .buscar_cliente_codigo(codigo_cliente)
-                    if dispensador.estado == 0:
+                    if not dispensador[5]:
                         mensaje_no_activo("el cliente", "activo")
                         return ""
                 if verificar_cuenta:
@@ -66,9 +66,10 @@ def ingresar_codigo_dispensador(nombre,verificar_estado = False):
                 if verificar_estado:
                     dispensador = dispensadorcontroller\
                         .buscar_dispensador_codigo(int(codigo_dispensador))
-                    if dispensador.estado == 0:
-                        mensaje_no_activo("el dispensador", "activo")
-                        return 0
+                    for respt in dispensador:
+                        if not respt.get("estado"):
+                            mensaje_no_activo("el dispensador", "activo")
+                            return 0
     return int(codigo_dispensador)
 def ingresar_monto(codigo_cliente, numero_cuenta, codigo_dispensador = 0):
     """Ingresar el monto"""

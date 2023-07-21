@@ -1,6 +1,6 @@
 """Depositar ViewModel"""
 # region Importación
-import Data.service as service
+#import Data.service as service
 # import Model.cuenta_cliente as cuentacliente
 import ViewModel.dispensador_viewmodel as dispensadorviewmodel
 from Data.conexion import conexion
@@ -50,31 +50,49 @@ class CuentaClienteViewModel:
 
     def modificar_cuenta_cliente(self, dicts:dict[str,any]):
         """Modificar la Cuenta Cliente"""
-        for dato in service.cuenta_cliente:
-            if dato.codigo_cliente == dicts.get("codigo_cliente") and\
-                dato.codigo_cuenta == dicts.get("codigo_cuenta"):
-                dato.monto=dicts["monto"]
-                dato.estado=dicts["estado"]if dicts["estado"]==1 else dato.estado
-                return True
-        return False
+        # for dato in service.cuenta_cliente:
+        #     if dato.codigo_cliente == dicts.get("codigo_cliente") and\
+        #         dato.codigo_cuenta == dicts.get("codigo_cuenta"):
+        #         dato.monto=dicts["monto"]
+        #         dato.estado=dicts["estado"]if dicts["estado"]==1 else dato.estado
+        #         return True
+        # return False
+        try:
+            connection= conexion()
+            cursor = connection.cursor()
+            store_proc = "exec sp_ModificarCuentaCliente @strNumeroCuentaCliente = ?,\
+                            @strCodigoCliente = ?, @dcmMonto = ?"
+            params = (dicts.get("codigo_cuenta"), dicts.get("codigo_cliente"),
+                      dicts.get("monto"))
+            cursor.execute(store_proc, params)
+            cursor.commit()
+            cursor.close()
+            return True
+        except ImportError as ex:
+            print(ex)
+            return False
 
     def modificar_saldo_cuenta_cliente(self, codigo_cliente, codigo_cuenta, monto,
-                                     operacion =0, activar=0):
+                                     operacion =0):
         """Aumentar o Reducir el saldo del cliente"""
         cta_cliente = self.buscar_cuenta_cliente_codcuenta_codcli(codigo_cliente,codigo_cuenta)
+        # for valor in cta_cliente:
+        # valor.monto = valor.monto + monto if operacion ==1 else valor.monto - monto
+        # nuevo_cta_cliente = {"codigo_cliente":valor.codigo_cliente,
+        #             "codigo_cuenta":valor.codigo_cuenta,
+        #             "monto":valor.monto, "estado":activar}
         for valor in cta_cliente:
-            valor.monto = valor.monto + monto if operacion ==1 else valor.monto - monto
-            nuevo_cta_cliente = {"codigo_cliente":valor.codigo_cliente,
-                        "codigo_cuenta":valor.codigo_cuenta,
-                        "monto":valor.monto, "estado":activar}
+            calculado = float(valor[3]) + monto if operacion ==1 else float(valor[3]) - monto
+            nuevo_cta_cliente = {"codigo_cliente":valor[2], "codigo_cuenta":valor[1],
+                        "monto":calculado}
         return self.modificar_cuenta_cliente(nuevo_cta_cliente)
 
     def buscar_cuenta_cliente_codcuenta_codcli(self, codigo_cliente:str, codigo_cuenta = ""):
         """Buscar Cuenta Cliente por Código Cuenta y Código Cliente"""
         dispensa = []
         for dato in self.lista_cuenta_cliente():
-            if dato.codigo_cliente == codigo_cliente and\
-                codigo_cuenta in ["", dato.codigo_cuenta]:
+            if dato[2] == codigo_cliente and\
+                codigo_cuenta in ["", dato[1]]:
                 dispensa.append(dato)
         return dispensa
     # def verificar_cuenta_cliente(self, codigo_cliente, codigo_dispensador:int):

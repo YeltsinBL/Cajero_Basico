@@ -33,12 +33,13 @@ def frm_registrar_deposito():
     respt_cliente = clientecontroller.buscar_cliente_codigo(codigo_cliente)
     respt_dispensador = dispensadorcontroller.\
                             buscar_dispensador_codigo(codigo_dispensador)
-    dato_dispensador = {"codigo_cliente":codigo_cliente,
-                            "nombre_cliente":respt_cliente.nombre,
+    for resp in respt_dispensador:
+        dato_dispensador = {"codigo_cliente":codigo_cliente,
+                            "nombre_cliente":respt_cliente[2],
                             "codigo_cuenta":nro_cuenta,
                             "codigo_dispensador": codigo_dispensador,
-                            "lugar_dispensador":respt_dispensador.lugar,
-                            "estado_dispensador":respt_dispensador.estado,
+                            "lugar_dispensador":resp.get("lugar"),
+                            "estado_dispensador":resp.get("estado"),
                             "billete":billetes}
     respt= vista_previa_registro(dato_dispensador)
     if respt:
