@@ -1,6 +1,6 @@
 """Vista para las Operaciones por Cliente Consultar Saldo"""
 # region importaciones
-from time import sleep
+# from time import sleep
 from colorama import Fore, Style
 from Common import mensaje
 from Common import elemento
@@ -54,13 +54,13 @@ def lista_saldo(respt):
     print("============================")
     print(Style.NORMAL + Fore.WHITE)
     for deposito in respt:
-        respt_cliente = clientecontroller.buscar_cliente_codigo(deposito.codigo_cliente)
+        respt_cliente = clientecontroller.buscar_cliente_codigo(deposito[2])
         cuenta_cliente = cuentaclientecontroller.buscar_saldo_cuenta_cliente(
-                            deposito.codigo_cliente)
+                            deposito[2])
         for cuenta in cuenta_cliente:
-            print("CLIENTE:",deposito.codigo_cliente, "-", respt_cliente.nombre)
-            print("NRO. CUENTA SOLES:", cuenta.codigo_cuenta)
-            print("TOTAL:", cuenta.monto)
+            print("CLIENTE:",deposito[2], "-", respt_cliente[2])
+            print("NRO. CUENTA SOLES:", cuenta[1])
+            print("TOTAL:", float(cuenta[3]))
             print("============================")
     print(Style.BRIGHT + Fore.GREEN)
     print("============================")

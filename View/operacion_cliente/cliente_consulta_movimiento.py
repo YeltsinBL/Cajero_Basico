@@ -47,17 +47,19 @@ def listado_deposito(resp_deposito):
         print("============================")
         print(Style.NORMAL + Fore.WHITE)
         for deposito in resp_deposito:
-            respt_cliente = clientecontroller.buscar_cliente_codigo(deposito.codigo_cliente)
+            respt_cliente = clientecontroller.buscar_cliente_codigo(deposito.get("codigo_cliente"))
             respt_dispensador = dispensadorcontroller.\
-                        buscar_dispensador_codigo(int(deposito.codigo_dispensador))
+                        buscar_dispensador_codigo(int(deposito.get("codigo_dispensador")))
             cuenta_cliente = cuentaclientecontroller.buscar_saldo_cuenta_cliente(
-                                deposito.codigo_cliente)
-            for cuenta in cuenta_cliente:
-                print("CLIENTE:",deposito.codigo_cliente, "-", respt_cliente.nombre)
-                print("NRO. CUENTA SOLES:",cuenta.codigo_cuenta)
-                print("DISPENSADOR:",deposito.codigo_dispensador, "-", respt_dispensador.lugar)
-                print("TOTAL:", deposito.monto)
-                print("============================")
+                                deposito.get("codigo_cliente"))
+            for dispensador in respt_dispensador:
+                for cuenta in cuenta_cliente:
+                    print("CLIENTE:",deposito.get("codigo_cliente"), "-", respt_cliente[2])
+                    print("NRO. CUENTA SOLES:",cuenta[1])
+                    print("DISPENSADOR:",deposito.get("codigo_dispensador"), "-",
+                          dispensador.get("lugar"))
+                    print("TOTAL:", deposito.get("monto"))
+                    print("============================")
     else:
         print(Style.BRIGHT + Fore.YELLOW)
         print("===========================================")
@@ -72,17 +74,20 @@ def listado_retiro(resp_retiro):
         print("============================")
         print(Style.NORMAL + Fore.WHITE)
         for retiro in resp_retiro:
-            respt_cliente = clientecontroller.buscar_cliente_codigo(retiro.codigo_cliente)
+            respt_cliente = clientecontroller.buscar_cliente_codigo(retiro.get("codigo_cliente"))
             respt_dispensador = dispensadorcontroller.\
-                        buscar_dispensador_codigo(int(retiro.codigo_dispensador))
+                        buscar_dispensador_codigo(int(retiro.get("codigo_dispensador")))
             cuenta_cliente = cuentaclientecontroller.buscar_saldo_cuenta_cliente(
-                                retiro.codigo_cliente)
-            for cuenta in cuenta_cliente:
-                print("CLIENTE:",retiro.codigo_cliente, "-", respt_cliente.nombre)
-                print("NRO. CUENTA SOLES:",cuenta.codigo_cuenta)
-                print("DISPENSADOR:",retiro.codigo_dispensador, "-", respt_dispensador.lugar)
-                print("MONTO:", retiro.monto)
-                print("============================")
+                                retiro.get("codigo_cliente"))
+            for dispensador in respt_dispensador:
+
+                for cuenta in cuenta_cliente:
+                    print("CLIENTE:",retiro.get("codigo_cliente"), "-", respt_cliente[2])
+                    print("NRO. CUENTA SOLES:",cuenta[1])
+                    print("DISPENSADOR:",retiro.get("codigo_dispensador"), "-",
+                          dispensador.get("lugar"))
+                    print("MONTO:", retiro.get("monto"))
+                    print("============================")
     else:
         print(Style.BRIGHT + Fore.YELLOW)
         print("===========================================")
@@ -97,21 +102,22 @@ def listado_transferencia(resp_transferencia):
         print("============================")
         print(Style.NORMAL + Fore.WHITE)
         for transferencia in resp_transferencia:
-            respt_cliente = clientecontroller.buscar_cliente_codigo(transferencia.codigo_cliente)
+            respt_cliente = clientecontroller.buscar_cliente_codigo(
+                                transferencia.get("codigo_cliente"))
             cuenta_cliente = cuentaclientecontroller.buscar_saldo_cuenta_cliente(
-                transferencia.codigo_cliente)
+                transferencia.get("codigo_cliente"))
             respt_cliente_trans = clientecontroller.\
-                        buscar_cliente_codigo(transferencia.codigo_cliente_transferir)
+                        buscar_cliente_codigo(transferencia.get("codigo_cliente_transferir"))
             cuenta_cliente_trans = cuentaclientecontroller.buscar_saldo_cuenta_cliente(
-                transferencia.codigo_cliente_transferir)
-            print("CLIENTE:",transferencia.codigo_cliente, "-", respt_cliente.nombre)
+                transferencia.get("codigo_cliente_transferir"))
+            print("CLIENTE:",transferencia.get("codigo_cliente"), "-", respt_cliente[2])
             for cuenta in cuenta_cliente:
-                print("NRO. CUENTA SOLES:",cuenta.codigo_cuenta)
-            print("CLIENTE TRANSFERENCIA:",transferencia.codigo_cliente_transferir, "-",
-                                        respt_cliente_trans.nombre)
+                print("NRO. CUENTA SOLES:",cuenta[1])
+            print("CLIENTE TRANSFERENCIA:",transferencia.get("codigo_cliente_transferir"), "-",
+                                        respt_cliente_trans[2])
             for cuenta in cuenta_cliente_trans:
-                print("NRO. CUENTA SOLES TRANSFERENCIA:",cuenta.codigo_cuenta)
-            print("MONTO:", transferencia.monto)
+                print("NRO. CUENTA SOLES TRANSFERENCIA:",cuenta[1])
+            print("MONTO:", transferencia.get("monto"))
             print("============================")
     else:
         print(Style.BRIGHT + Fore.YELLOW)

@@ -69,9 +69,27 @@ class DepositarViewModel:
 
     def buscar_deposito(self, codigo_cliente:str, cod_dispensador:int):
         """Buscar depósito por Código"""
-        dispensa = []
-        for dato in service.depositos:
-            if dato.codigo_cliente == codigo_cliente and\
-                (cod_dispensador == 0 or dato.codigo_dispensador == cod_dispensador):
-                dispensa.append(dato)
-        return dispensa
+        # dispensa = []
+        # for dato in service.depositos:
+        #     if dato.codigo_cliente == codigo_cliente and\
+        #         (cod_dispensador == 0 or dato.codigo_dispensador == cod_dispensador):
+        #         dispensa.append(dato)
+        # return dispensa
+        lista_dispensador = []
+        try:
+            connection= conexion()
+            cursor = connection.cursor()
+            store_proc = "exec sp_Listar_Deposito_Cliente_Dispensador @strCodigoCliente = ?,\
+                            @strCodigoDispensador = ?"
+            params = (codigo_cliente, cod_dispensador)
+            cursor.execute(store_proc, params)
+            resultset= cursor.fetchall()
+            for resultado in resultset:
+                lista_dispensador.append({"codigo_deposito":resultado[1],
+                                          "codigo_cliente":resultado[2],
+                                          "codigo_dispensador": resultado[3],
+                                          "monto": resultado[4]})
+            connection.close()
+        except ImportError as ex:
+            print(ex)
+        return  lista_dispensador
