@@ -167,7 +167,7 @@ class DispensadorViewModel:
             billetes.append({200:int(resultado[4]), 100:int(resultado[5]),
                              50:int(resultado[6]), 20:int(resultado[7]),
                              10:int(resultado[8])})
-            lista_dispensador.append({"codigo":resultado[1],"lugar":resultado[2],
+            lista_dispensador.append({"codigo":int(resultado[1]),"lugar":resultado[2],
                                       "billete": billetes,"estado": resultado[3]})
         return lista_dispensador
         

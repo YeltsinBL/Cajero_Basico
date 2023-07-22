@@ -128,7 +128,19 @@ class  ClienteViewModel:
             return []
     def verifica_cliente_codigo_clave(self, codigo, clave):
         """Buscar Cliente por Código"""
-        for dato in self.lista_cliente():
-            if dato.codigo == codigo and dato.clave ==clave:
-                return True
-        return False
+        # for dato in self.lista_cliente():
+        #     if dato.codigo == codigo and dato.clave ==clave:
+        #         return True
+        # return False
+        try:
+            connection= conexion()
+            cursor = connection.cursor()
+            store_proc = "exec sp_Listar_Cliente_Clave @strCodigo = ?, @strClave =?"
+            params = (codigo, clave)
+            cursor.execute(store_proc, params)
+            resultset= cursor.fetchone()
+            connection.close()
+            return True if len(resultset)>0 else False
+        except ImportError as ex:
+            print(ex)
+            return False

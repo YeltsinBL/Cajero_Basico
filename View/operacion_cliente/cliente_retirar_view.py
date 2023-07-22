@@ -40,11 +40,12 @@ def frm_registrar_retiro():
     respt_cliente = clientecontroller.buscar_cliente_codigo(codigo_cliente)
     respt_dispensador = dispensadorcontroller.\
                         buscar_dispensador_codigo(codigo_dispensador)
-    datos = {"codigo_cliente":codigo_cliente, "nombre_cliente":respt_cliente.nombre,
+    for respt in respt_dispensador:
+        datos = {"codigo_cliente":codigo_cliente, "nombre_cliente":respt_cliente[2],
             "codigo_cuenta":nro_cuenta,
             "codigo_dispensador":codigo_dispensador,
-            "lugar_dispensador":respt_dispensador.lugar, 
-            "estado_dispensador":respt_dispensador.estado, 
+            "lugar_dispensador":respt.get("lugar"), 
+            "estado_dispensador":respt.get("estado"), 
             "monto":monto}
     print("============================================")
     print(msj.mensaje_verificar_tipo("billetes","el dispensador"))
@@ -61,7 +62,7 @@ def frm_registrar_retiro():
     elif isinstance(resp, str):
         print(Style.BRIGHT + Fore.RED)
         print("============================================")
-        print(msj.mensaje_error_al("registrar","el dispensador"))
+        print(msj.mensaje_error_al("obtener","billete"))
         print(msj.mensaje_no_tiene("dispensador",f"suficientes billetes de {resp[:-3]}"))
         print("============================================")
     else:

@@ -87,7 +87,7 @@ def ingresar_monto(codigo_cliente, numero_cuenta, codigo_dispensador = 0):
                 vali_monto = True
             else:
                 if codigo_dispensador>0:
-                    verificar_dispensador(codigo_dispensador, codigo_cliente, numero_cuenta,
+                    monto = verificar_dispensador(codigo_dispensador, codigo_cliente, numero_cuenta,
                                           float(monto))
                 else:
                     verificar_saldo_cuenta(codigo_cliente, numero_cuenta, float(monto))
@@ -149,7 +149,7 @@ def ingresar_numero_cuenta(nombre,codigo_cliente, verificar_estado = False):
             if len(cuenta)>0:
                 if verificar_estado:
                     for dato in cuenta:
-                        if dato.estado==1:
+                        if dato[4]:
                             return numero_cuenta
                         mensaje_no_activo("la cuenta","activa")
                         return ""
@@ -175,8 +175,8 @@ def verificar_dispensador(codigo_dispensador:int, codigo_cliente, numero_cuenta,
         print(msj.mensaje_monto_excedido("al dispensador"))
         print("===============================")
         print(Style.NORMAL + Fore.WHITE)
-    else:
-        verificar_saldo_cuenta(codigo_cliente, numero_cuenta, monto)
+        return float(0)
+    return verificar_saldo_cuenta(codigo_cliente, numero_cuenta, monto)
 def verificar_saldo_cuenta(codigo_cliente, numero_cuenta, monto:float):
     """Verificar Saldo de la cuenta"""
     print(Style.BRIGHT + Fore.YELLOW)
@@ -187,13 +187,13 @@ def verificar_saldo_cuenta(codigo_cliente, numero_cuenta, monto:float):
     cuenta = cuentaclientecontroller.buscar_saldo_cuenta_cliente(
                 codigo_cliente, numero_cuenta)
     for dato in cuenta:
-        if dato.monto ==0.0:
+        if float(dato[3]) ==0.0:
             print(Style.BRIGHT + Fore.RED)
             print("====================================================")
             print(msj.mensaje_no_tiene("cliente", "saldo en su cuenta"))
             print("====================================================")
             return float(0)
-        if dato.monto < monto:
+        if float(dato[3]) < monto:
             print(Style.BRIGHT + Fore.RED)
             print("====================================================")
             print(msj.mensaje_monto_excedido("el saldo del cliente"))
