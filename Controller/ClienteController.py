@@ -10,9 +10,6 @@ def registro_cliente(datos_cliente:dict[str,any]):
 def listado_cliente():
     """Verificar si hay Clientes"""
     return clientevm.lista_cliente()
-def verifica_cliente_codigo(codigo):
-    """Verifica Cliente por Código"""
-    return clientevm.verifica_cliente_codigo(codigo)
 def modificar_cliente(datos_cliente:dict[str,any]):
     """Modificar Cliente"""
     return clientevm.modificar_cliente(datos_cliente)

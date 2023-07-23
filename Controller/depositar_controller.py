@@ -10,7 +10,7 @@ depositar_vm = depositarviewmodel.DepositarViewModel()
 def registro_deposito(datos_depositar:dict[str,any]):
     """Registro Depósito"""
     return depositar_vm.registro_deposito(datos_depositar)
-def buscar_deposito_codigo(codigo_cliente:str, cod_dispensador:int):
+def buscar_deposito_codigo(codigo_cliente:str):
     """Buscar Dispensador por código"""
-    return depositar_vm.buscar_deposito(codigo_cliente, cod_dispensador)
+    return depositar_vm.buscar_deposito(codigo_cliente)
 # endregion

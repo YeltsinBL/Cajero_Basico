@@ -19,14 +19,14 @@ def ingresar_codigo_cliente(nombre:str, verificar_cuenta=False, verificar_estado
         vali_codigo_cliente = not validacion.\
                                 valores_ingresados(nombre,codigo_cliente,4)
         if vali_codigo_cliente is False:
-            vali_codigo_cliente = not clientecontroller.verifica_cliente_codigo(codigo_cliente)
-            if vali_codigo_cliente:
+            cliente = clientecontroller\
+                        .buscar_cliente_codigo(codigo_cliente)
+            if len(cliente)<=0:
                 mensaje_codigo(nombre)
+                vali_codigo_cliente = True
             else:
                 if verificar_estado:
-                    dispensador = clientecontroller\
-                        .buscar_cliente_codigo(codigo_cliente)
-                    if not dispensador[5]:
+                    if not cliente[5]:
                         mensaje_no_activo("el cliente", "activo")
                         return ""
                 if verificar_cuenta:
@@ -58,14 +58,13 @@ def ingresar_codigo_dispensador(nombre,verificar_estado = False):
         vali_codigo_dispensador = not validacion.\
                             valores_ingresados(nombre, codigo_dispensador,1)
         if vali_codigo_dispensador is False:
-            vali_codigo_dispensador = not dispensadorcontroller\
-                                    .verifica_dispensador_codigo(int(codigo_dispensador))
-            if vali_codigo_dispensador:
+            dispensador = dispensadorcontroller\
+                        .buscar_dispensador_codigo(int(codigo_dispensador))
+            if len(dispensador)==0:
                 mensaje_codigo(nombre)
+                vali_codigo_dispensador = True
             else:
                 if verificar_estado:
-                    dispensador = dispensadorcontroller\
-                        .buscar_dispensador_codigo(int(codigo_dispensador))
                     for respt in dispensador:
                         if not respt.get("estado"):
                             mensaje_no_activo("el dispensador", "activo")

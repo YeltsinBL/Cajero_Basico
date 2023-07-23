@@ -1,7 +1,5 @@
 """Dispensador ViewModel"""
 # region Importación
-#import Data.service as service
-#import Model.dispensador as dispensador
 from Data.conexion import conexion
 #endregion
 
@@ -11,7 +9,6 @@ class DispensadorViewModel:
         pass
     def lista_dispensadores(self):
         """Lista de Dispensadores"""
-        #return service.dispensadores
         lista_dispensador = []
         try:
             connection= conexion()
@@ -26,11 +23,6 @@ class DispensadorViewModel:
 
     def registrar_dispensador(self, disp:dict[str,any]):
         """Registro Dispensador"""
-        # dispensa = dispensador.Dispensador(codigo=disp.get("codigo"),
-        #                              lugar=disp.get("lugar"),
-        #                              estado=disp.get("estado"),
-        #                              billete=disp.get("billete"))
-        # service.dispensadores.append(dispensa)
         try:
             connection= conexion()
             cursor = connection.cursor()
@@ -47,26 +39,8 @@ class DispensadorViewModel:
         except ImportError as ex:
             print(ex)
 
-    def verifica_dispensador_codigo(self, codigo):
-        """Buscar Dispensador por código"""
-        existe= False
-        # for dato in service.dispensadores:
-        #     existe = dato.codigo == codigo
-        #     if existe:
-        #         return existe
-        if len(self.buscar_dispensador_codigo(codigo))>0:
-            return True
-        return existe
-
     def modificar_dispensador(self, dicts:dict[str,any]):
         """Modificar Dispensador"""
-        # for dato in service.dispensadores:
-        #     if dato.codigo == dicts.get("codigo"):
-        #         dato.lugar=dicts["lugar"]
-        #         dato.estado=dicts["estado"]
-        #         dato.billete=dicts["billete"]
-        #         return True
-        # return False
         try:
             connection= conexion()
             cursor = connection.cursor()
@@ -87,12 +61,6 @@ class DispensadorViewModel:
 
     def buscar_dispensador_codigo(self, codigo):
         """Buscar Dispensador por Código"""
-        # dispensa = []
-        # for dato in service.dispensadores:
-        #     if dato.codigo == codigo:
-        #         dispensa = dato
-        #         return dispensa
-        # return dispensa
         try:
             connection= conexion()
             cursor = connection.cursor()
@@ -108,11 +76,6 @@ class DispensadorViewModel:
 
     def lista_dispensador_estado(self, estado):
         """Listar los Dispensadores por su estado"""
-        # dispensa = []
-        # for dato in service.dispensadores:
-        #     if dato.estado == estado:
-        #         dispensa.append(dato)
-        # return dispensa
         try:
             connection= conexion()
             cursor = connection.cursor()

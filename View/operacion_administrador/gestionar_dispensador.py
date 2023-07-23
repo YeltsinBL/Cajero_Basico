@@ -23,7 +23,7 @@ def frm_agregar_dispensador():
     lugar = elemento.ingresar_lugar("lugar")
     billetes = elemento.ingresar_cantidad_billetes()
     dispensadorcontroller.registro_dispensador(
-        {"codigo":cant_disp+1,"lugar":lugar, "billete": billetes,"estado": 1})
+        {"codigo":cant_disp+1,"lugar":lugar, "billete": billetes})
     print(Style.BRIGHT + Fore.GREEN)
     print("============================")
     print(msj.mensaje_registrado("DISPENSADOR"))
@@ -106,13 +106,10 @@ def frm_buscar_dispensador():
         print(msj.mensaje_error_al("buscar","DISPENSADOR"))
         print("===========================================")
         sleep(1)
-        existe_dispensador = dispensadorcontroller.\
-                                verifica_dispensador_codigo(int(codigo_dispensador))
-        if not existe_dispensador:
-            print(msj.mensaje_no_existe("CÓDIGO"))
-            print("===============================")
-            sleep(1)
-            frm_listado_dispensadores()
+        print(msj.mensaje_no_existe("CÓDIGO"))
+        print("===============================")
+        sleep(1)
+        frm_listado_dispensadores()
 
 def frm_estado_dispensador():
     """Lista de los Dispensadores por estado"""

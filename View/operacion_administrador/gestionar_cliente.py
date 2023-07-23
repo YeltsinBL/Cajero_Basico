@@ -7,7 +7,6 @@ from Common import mensaje
 from Common import elemento
 import Controller.ClienteController as clientecontroller
 import Controller.OperacionController as operacioncontroller
-#import Controller.cuenta_cliente_controller as cuentaclientecontroller
 # endregion
 
 msj = mensaje.Mensaje()
@@ -24,7 +23,7 @@ def frm_registrar_cliente():
     nombre = ingresar_nombre()
     clave = input("CLAVE: ")
     nrocuentasoles = clientecontroller.registro_cliente({"codigo":codigo, "nombre": nombre,
-                                        "clave":clave, "estado": 1})
+                                        "clave":clave})
     print(Style.BRIGHT + Fore.GREEN)
     print("======================")
     print(msj.mensaje_registrado("CLIENTE"))
@@ -84,13 +83,6 @@ def frm_buscar_cliente():
         print(msj.mensaje_no_existe("código"))
         print("====================")
     elif not isinstance(respt,list):
-        # cuenta_cliente = cuentaclientecontroller.buscar_saldo_cuenta_cliente(
-        #                     codigo_cliente)
-        # for cuenta in cuenta_cliente:
-        #     print("NOMBRE:",respt.nombre)
-        #     print("NRO. CUENTA SOLES:",cuenta.codigo_cuenta)
-        #     print("SALDO:",cuenta.monto)
-        #     print("ESTADO:","Activo" if respt.estado == 1 else "Inactivo")
         print("NOMBRE:",respt[2])
         print("NRO. CUENTA SOLES:",respt[3])
         print("SALDO:",respt[4])
@@ -105,8 +97,7 @@ def frm_buscar_cliente():
         print(msj.mensaje_error_al("buscar","CLIENTE"))
         print("====================================")
         sleep(1)
-        existe_clientes = clientecontroller.verifica_cliente_codigo(codigo_cliente)
-        if not existe_clientes:
+        if len(respt)<=0:
             print(msj.mensaje_no_existe("CÓDIGO"))
             print("================================")
             sleep(1)
@@ -121,14 +112,6 @@ def frm_listado_cliente():
     print("=======================")
     print(Style.BRIGHT + Fore.WHITE)
     for dato in clientes:
-        # cuenta_cliente = cuentaclientecontroller.buscar_saldo_cuenta_cliente(
-        #                     dato[1])
-        # for cuenta in cuenta_cliente:
-            # print("CÓDIGO:",dato.codigo)
-            # print("NOMBRE:",dato.nombre)
-            # print("NRO. CUENTA SOLES:",cuenta.codigo_cuenta)
-            # print("SALDO:",cuenta.monto)
-            # print("ESTADO:","Activo" if dato.estado == 1 else "Inactivo")
         print("CÓDIGO:",dato[1])
         print("NOMBRE:",dato[2])
         print("NRO. CUENTA SOLES:",dato[3])
@@ -172,14 +155,6 @@ def frm_estado_cliente():
         print("=================================")
         print(Style.BRIGHT + Fore.WHITE)
         for dato in respt:
-            # cuenta_cliente = cuentaclientecontroller.buscar_saldo_cuenta_cliente(
-            #                     dato.codigo)
-            # for cuenta in cuenta_cliente:
-            #     print("CÓDIGO:",dato.codigo)
-            #     print("NOMBRE:",dato.nombre)
-            #     print("NRO. CUENTA SOLES:",cuenta.codigo_cuenta)
-            #     print("SALDO:",cuenta.monto)
-            #     print("ESTADO:",estado)
             print("CÓDIGO:",dato[1])
             print("NOMBRE:",dato[2])
             print("NRO. CUENTA SOLES:",dato[3])

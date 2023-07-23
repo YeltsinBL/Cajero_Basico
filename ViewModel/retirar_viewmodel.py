@@ -1,7 +1,5 @@
 """Retirar ViewModel"""
 # region Importación
-# import Data.service as service
-# import Model.retirar as retirar
 import ViewModel.dispensador_viewmodel as dispensadorviewmodel
 import ViewModel.depositar_viewmodel as depositarviewmodel
 import ViewModel.cuenta_cliente_viewmodel as cuentaclienteviewmodel
@@ -18,21 +16,6 @@ class RetirarViewModel:
         pass
     def registro_retiro(self,datos_retiro:dict[str,any]):
         """Registrar Retiro"""
-        # retiro = retirar.Retirar(datos_retiro.get("codigo_cliente"),
-        #                          datos_retiro.get("codigo_dispensador"),
-        #                          datos_retiro.get("monto"))
-        # respt = self.calcular_billetes_dispensador(datos_retiro.get("codigo_dispensador"),
-        #                      datos_retiro.get("lugar_dispensador"),
-        #                      datos_retiro.get("estado_dispensador"),
-        #                      datos_retiro.get("monto"))
-        # if isinstance(respt, list) and len(respt)>0:
-        #     respt_ctacliente = cuentacliente_vm.modificar_saldo_cuenta_cliente(
-        #                             datos_retiro.get("codigo_cliente"),
-        #                             datos_retiro.get("codigo_cuenta"),
-        #                             datos_retiro.get("monto"))
-        #     if respt_ctacliente:
-        #         service.retiros.append(retiro)
-        # return respt
         try:
             respt = self.calcular_billetes_dispensador(datos_retiro.get("codigo_dispensador"),
                                  datos_retiro.get("lugar_dispensador"),
@@ -54,8 +37,6 @@ class RetirarViewModel:
                     cursor.execute(store_proc, params)
                     cursor.commit()
                     cursor.close()
-
-                    #service.retiros.append(retiro)
                     return respt
             return respt
         except ImportError as ex:
@@ -101,11 +82,6 @@ class RetirarViewModel:
 
     def buscar_retiro(self, codigo_cliente:str):
         """Buscar Retiro por Código"""
-        # retiro = []
-        # for dato in service.retiros:
-        #     if dato.codigo_cliente == codigo_cliente:
-        #         retiro.append(dato)
-        # return retiro
         try:
             retiro = []
             connection= conexion()
@@ -117,7 +93,10 @@ class RetirarViewModel:
             for resultado in resultset:
                 retiro.append({"codigo_cliente":resultado[1],
                                 "codigo_dispensador":resultado[2],
-                                "monto": resultado[3]})
+                                "monto": resultado[3],
+                                "nombre_persona":resultado[4],
+                                "numero_cuenta":resultado[5],
+                                "dispensador_lugar":resultado[6]})
             connection.close()
             return retiro
         except ImportError as ex:

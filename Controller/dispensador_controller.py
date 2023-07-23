@@ -15,10 +15,6 @@ def listado_dispensador():
     """Verificar si hay Dispensadores"""
     return dispensador_vm.lista_dispensadores()
 
-def verifica_dispensador_codigo(codigo:int):
-    """Verifica Dispensador por Código"""
-    return dispensador_vm.verifica_dispensador_codigo(codigo)
-
 def modificar_dispensador(datos_dispensador:dict[str,any]):
     """Modificar Dispensador"""
     return dispensador_vm.modificar_dispensador(datos_dispensador)

@@ -1,6 +1,4 @@
 """Cliente ViewModel"""
-#import Data.service as service
-#import Model.Cliente as clientemodel
 import ViewModel.cuenta_cliente_viewmodel as cuentaclienteviewmodel
 from Data.conexion import conexion
 
@@ -23,24 +21,9 @@ class  ClienteViewModel:
         except ImportError as ex:
             print(ex)
             return []
-        # cantidad = len(service.clientes)
-        # if cantidad > 0:
-        #     for i in range(0, cantidad-1):
-        #         for k in range(0, cantidad-(i+1)):
-        #             if service.clientes[k].codigo>service.clientes[k+1].codigo:
-        #                 aux=service.clientes[k]
-        #                 service.clientes[k]=service.clientes[k+1]
-        #                 service.clientes[k+1]= aux
-        #     return service.clientes
-        # return service.clientes
 
     def registrar_cliente(self, dicts:dict[str,any]):
         """Registro Cliente"""
-        # cliente = clientemodel.Cliente(codigo=dicts.get("codigo"),
-        #                              nombre=dicts.get("nombre"),
-        #                              clave=dicts.get("clave"),
-        #                              estado=dicts.get("estado"))
-        # service.clientes.append(cliente)
         try:
             connection= conexion()
             cursor = connection.cursor()
@@ -55,24 +38,8 @@ class  ClienteViewModel:
                         "monto":0}
         return cuentacliente_vm.registro_cuenta_cliente(cuenta_cliente)
 
-    def verifica_cliente_codigo(self, codigo):
-        """Buscar Cliente por Código"""
-        # for dato in service.clientes:
-        #     if dato.codigo == codigo:
-        #         return True
-        # return False
-        if len(self.buscar_cliente_codigo(codigo))>0:
-            return True
-        return False
-
     def modificar_cliente(self, dicts:dict[str,any]):
         """Modificar Cliente"""
-        # for dato in service.clientes:
-        #     if dato.codigo == dicts.get("codigo"):
-        #         dato.nombre=dicts["nombre"]
-        #         dato.estado=dicts["estado"]
-        #         return True
-        # return False
         try:
             connection= conexion()
             cursor = connection.cursor()
@@ -88,12 +55,6 @@ class  ClienteViewModel:
 
     def buscar_cliente_codigo(self, codigo):
         """Buscar Cliente por Código"""
-        # cliente = []
-        # for dato in self.lista_cliente():
-        #     if dato[1] == codigo:
-        #         cliente = dato
-        #         return cliente
-        # return cliente
         try:
             connection= conexion()
             cursor = connection.cursor()
@@ -109,11 +70,6 @@ class  ClienteViewModel:
 
     def lista_cliente_estado(self, estado = None):
         """Listar los Clientes por su estado"""
-        # cliente = []
-        # for dato in self.lista_cliente():
-        #     if dato[5] == estado:
-        #         cliente.append(dato)
-        # return cliente
         try:
             connection= conexion()
             cursor = connection.cursor()
@@ -128,10 +84,6 @@ class  ClienteViewModel:
             return []
     def verifica_cliente_codigo_clave(self, codigo, clave):
         """Buscar Cliente por Código"""
-        # for dato in self.lista_cliente():
-        #     if dato.codigo == codigo and dato.clave ==clave:
-        #         return True
-        # return False
         try:
             connection= conexion()
             cursor = connection.cursor()

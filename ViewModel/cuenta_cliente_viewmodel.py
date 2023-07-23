@@ -1,7 +1,5 @@
 """Depositar ViewModel"""
 # region Importación
-#import Data.service as service
-# import Model.cuenta_cliente as cuentacliente
 import ViewModel.dispensador_viewmodel as dispensadorviewmodel
 from Data.conexion import conexion
 #endregion
@@ -16,11 +14,6 @@ class CuentaClienteViewModel:
         """Registro Cuenta Cliente"""
         nueva_cuenta=len(self.lista_cuenta_cliente())+1
         codigo_cuenta=str(nueva_cuenta).zfill(9)
-        # deposita = cuentacliente.CuentaCliente(
-        #                         codigo_cuenta=codigo_cuenta,
-        #                         codigo_cliente=disp.get("codigo_cliente"),
-        #                         monto=disp.get("monto"), estado=0)
-        # service.cuenta_cliente.append(deposita)
         try:
             connection= conexion()
             cursor = connection.cursor()
@@ -50,13 +43,6 @@ class CuentaClienteViewModel:
 
     def modificar_cuenta_cliente(self, dicts:dict[str,any]):
         """Modificar la Cuenta Cliente"""
-        # for dato in service.cuenta_cliente:
-        #     if dato.codigo_cliente == dicts.get("codigo_cliente") and\
-        #         dato.codigo_cuenta == dicts.get("codigo_cuenta"):
-        #         dato.monto=dicts["monto"]
-        #         dato.estado=dicts["estado"]if dicts["estado"]==1 else dato.estado
-        #         return True
-        # return False
         try:
             connection= conexion()
             cursor = connection.cursor()
@@ -76,11 +62,6 @@ class CuentaClienteViewModel:
                                      operacion =0):
         """Aumentar o Reducir el saldo del cliente"""
         cta_cliente = self.buscar_cuenta_cliente_codcuenta_codcli(codigo_cliente,codigo_cuenta)
-        # for valor in cta_cliente:
-        # valor.monto = valor.monto + monto if operacion ==1 else valor.monto - monto
-        # nuevo_cta_cliente = {"codigo_cliente":valor.codigo_cliente,
-        #             "codigo_cuenta":valor.codigo_cuenta,
-        #             "monto":valor.monto, "estado":activar}
         for valor in cta_cliente:
             calculado = float(valor[3]) + monto if operacion ==1 else float(valor[3]) - monto
             nuevo_cta_cliente = {"codigo_cliente":valor[2], "codigo_cuenta":valor[1],
@@ -89,12 +70,19 @@ class CuentaClienteViewModel:
 
     def buscar_cuenta_cliente_codcuenta_codcli(self, codigo_cliente:str, codigo_cuenta = ""):
         """Buscar Cuenta Cliente por Código Cuenta y Código Cliente"""
-        dispensa = []
-        for dato in self.lista_cuenta_cliente():
-            if dato[2] == codigo_cliente and\
-                codigo_cuenta in ["", dato[1]]:
-                dispensa.append(dato)
-        return dispensa
+        try:
+            connection= conexion()
+            cursor = connection.cursor()
+            store_proc = "exec sp_ListaCuentaCliente @strNumeroCuentaCliente = ?,\
+                            @strCodigoCliente = ?"
+            params = (codigo_cuenta, codigo_cliente)
+            cursor.execute(store_proc, params)
+            resultset= cursor.fetchall()
+            connection.close()
+            return resultset
+        except ImportError as ex:
+            print(ex)
+            return []
     # def verificar_cuenta_cliente(self, codigo_cliente, codigo_dispensador:int):
     #     """Verificar el Saldo de la Cuenta del Cliente"""
     #     lista_cuenta_cliente = self.lista_cuenta_cliente()
