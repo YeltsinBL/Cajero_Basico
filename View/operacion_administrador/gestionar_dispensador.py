@@ -6,7 +6,7 @@ from colorama import Fore, Style
 from Common import mensaje
 from Common import elemento
 import Controller.dispensador_controller as dispensadorcontroller
-import Controller.OperacionController as operacioncontroller
+import Controller.MenuController as menucontroller
 # endregion
 
 msj = mensaje.Mensaje()
@@ -111,9 +111,9 @@ def frm_buscar_dispensador():
         sleep(1)
         frm_listado_dispensadores()
 
-def frm_estado_dispensador():
+def frm_estado_dispensador(nro_menu):
     """Lista de los Dispensadores por estado"""
-    nro_estado = selecciona_estado_cliente()
+    nro_estado = selecciona_estado_cliente(nro_menu)
     if nro_estado == 3:
         return
     estado = "Activo" if nro_estado == 1 else "Inactivo"
@@ -145,16 +145,22 @@ def frm_estado_dispensador():
         print("==================================")
 #endregion
 
-def selecciona_estado_cliente():
+def selecciona_estado_cliente(nro_menu):
     """Selecciona el tipo a listar de los Clientes por estado"""
     while True:
         print(Fore.BLUE + Style.BRIGHT)
         print("¡SELECCIONE UN ESTADO!")
         print(Fore.WHITE + Style.NORMAL)
         print("Ingresa el número del estado")
-        operacioncontroller.listado_estados_clientes()
+        lista_menu =[]
+        nueva_lista={}
+        if len(lista_menu)==0:
+            lista_menu = menucontroller.listar_menu(nro_menu)
+        for resultado in lista_menu:
+            print(resultado[0], resultado[1])
+            nueva_lista[resultado[0]]=resultado[0]
         nro_menu = int(input(""))
-        if nro_menu in [3,2,1]:
+        if nro_menu in list(range(len(lista_menu)+1)):
             return nro_menu
         print(Style.BRIGHT + Fore.RED)
         print("=================================")

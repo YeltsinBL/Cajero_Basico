@@ -19,10 +19,20 @@ def selecciona_menu():
         print(msj.mensaje_menu("Principal"))
         print(Fore.WHITE + Style.NORMAL)
         print("Ingresa el número de tu tipo de usuario:")
-        menucontroller.listado_menu()
+        lista_menu =[]
+        nueva_lista={}
+        nombre_lista={}
+        if len(lista_menu)==0:
+            lista_menu = menucontroller.listar_menu(1)
+        for resultado in lista_menu:
+            print(resultado[0], resultado[1])
+            nueva_lista[resultado[0]]=resultado[2]
+            nombre_lista[resultado[0]]=resultado[1]
         nro_menu = input("")
-        if nro_menu.isdigit() and int(nro_menu) in {1, 2, 3}:
-            return int(nro_menu)
+        if nro_menu.isdigit() and int(nro_menu) \
+            in list(range(len(lista_menu)+1)):
+            return nueva_lista.get(int(nro_menu)), nombre_lista.get(int(nro_menu))
+        print(list(range(len(lista_menu)+1)))
         print(Style.BRIGHT + Fore.RED)
         print("===============================")
         print(msj.mensaje_opcion_ingresada_incorrecta())
@@ -38,12 +48,12 @@ def iniciar_sistema():
 
     iniciar_principal = True
     while iniciar_principal:
-        opc_menu = selecciona_menu()
-        if opc_menu == 3:
+        opc_menu, nombre = selecciona_menu()
+        if opc_menu == 0:
             msj.mensaje_despedida()
             iniciar_principal = False
             break
-        if opc_menu == 1:
+        if opc_menu == 2:
             if len(clientecontroller.listado_cliente())==0:
                 print(Style.BRIGHT + Fore.RED)
                 print("===============================")
@@ -56,4 +66,4 @@ def iniciar_sistema():
                 print(msj.mensaje_mantenimiento("dispensadores"))
                 print("===============================")
                 continue
-        operacionview.seleccionar_operaciones(opc_menu=opc_menu)
+        operacionview.seleccionar_operaciones(opc_menu=opc_menu, nombre_seleccion=nombre)

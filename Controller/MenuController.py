@@ -1,8 +1,10 @@
 """Función que interactúa con la opción del Menú"""
+# region Imports
+import ViewModel.menu_viewmodel as menuviewmodel
+#endregion
 
-import Model.Menu as menu
+menu_vm = menuviewmodel.MenuViewModel()
 
-def listado_menu():
-    """Muestra las opciones del menú principal"""
-    for idk, valor in menu.opcion_fuera.items():
-        print(idk,valor)
+def listar_menu(codigo):
+    """Listado de los Menús"""
+    return menu_vm.listar_menu(codigo)
